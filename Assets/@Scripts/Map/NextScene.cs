@@ -27,18 +27,11 @@ public class NextScene : MonoBehaviour
         {
             _checkpointManager?.ClearCheckpoint();
         }
-        NextSceneSound();
 
         _sceneFlowManager.SetCurrentStage(_sceneName);
         _sceneFlowManager.LoadStage();
     }
 
-    private void NextSceneSound()
-    {
-        if (_isBossStage) SoundManager.instance.StopBGM();
-        else SoundManager.instance.HandleMainStart();
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

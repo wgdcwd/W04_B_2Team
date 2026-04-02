@@ -123,8 +123,6 @@ public class DeadeyeSkill : MonoBehaviour
 
         Time.timeScale = _slowTimeScale;
         Time.fixedDeltaTime = _originalFixedDeltaTime * _slowTimeScale;
-        if (SoundManager.instance != null)
-            SoundManager.instance.SetSlowAudio(Time.timeScale);
     }
 
     private void ExitSlow()
@@ -155,8 +153,6 @@ public class DeadeyeSkill : MonoBehaviour
             float t = elapsed / _slowExitDuration;
             Time.timeScale = Mathf.Lerp(startTimeScale, 1f, t);
             Time.fixedDeltaTime = Mathf.Lerp(startFixedDeltaTime, _originalFixedDeltaTime, t);
-            if (SoundManager.instance != null)
-                    SoundManager.instance.SetSlowAudio(Time.timeScale);
             yield return null;
         }
 
