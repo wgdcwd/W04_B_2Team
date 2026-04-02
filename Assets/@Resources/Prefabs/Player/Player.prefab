@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92abb298b8a095d449fc6177613929b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  _maxHp: 10
+  _maxHp: 5
   _attackDamage: 1
   _invincibleDuration: 1.5
   _spriteRenderer: {fileID: 634643051373191999}
