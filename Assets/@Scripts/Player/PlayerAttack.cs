@@ -1,6 +1,20 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+public readonly struct DryFireContext
+{
+    public WeaponInstance Weapon { get; }
+    public bool IsShotgun { get; }
+
+    public DryFireContext(WeaponInstance weapon, bool isShotgun)
+    {
+        Weapon = weapon;
+        IsShotgun = isShotgun;
+    }
+}
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -37,6 +51,8 @@ public class PlayerAttack : MonoBehaviour
     bool _gravityDone = false;
     bool _dampingDone = false;
 
+    // 총알없음 액션
+    public event Action<DryFireContext> OnDryFire;
 
     private void Awake()
     {
@@ -64,27 +80,30 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
+
     public void FireShotgun()
     {
-        if (!TryFireWeapon(_shotgunInstance)) return;
+        if (!TryFireWeapon(_shotgunInstance, true))
+            return;
+
         Fire(_shotgunData);
-
-        //_hapticManager?.PlayShotgunShot();
         SoundManager.instance.HandleShotGunSFX();
-        float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg + 180f;
-        _shotgunPivot.DORotate(new Vector3(0f, 0f, angle), 0f); // 0f = 즉시 회전
-
     }
+
 
     public void FireCurrentWeapon()
     {
-        if (_player.deadeyeSkill.IsDeadeyeActive) return;
-        if (currentWeaponData == null) return;
-        if (!TryFireWeapon(_currentWeaponInstance)) return;
-        SoundManager.instance.HandlePistolSFX();
+        if (_player.deadeyeSkill.IsDeadeyeActive)
+            return;
 
+        if (currentWeaponData == null)
+            return;
+
+        if (!TryFireWeapon(_currentWeaponInstance, false))
+            return;
+
+        SoundManager.instance.HandlePistolSFX();
         Fire(currentWeaponData);
-        //_hapticManager?.PlayPistolShot();
     }
 
     void Fire(SO_WeaponBase data)
@@ -106,9 +125,20 @@ public class PlayerAttack : MonoBehaviour
         TriggerRecoilRoutines(shootDir);
     }
 
-    bool TryFireWeapon(WeaponInstance instance)
+    private bool TryFireWeapon(WeaponInstance instance, bool isShotgun)
     {
-        return instance.TryConsume();
+        var result = instance.TryConsumeDetailed();
+
+        if (result == WeaponConsumeResult.Success)
+            return true;
+
+        if (result == WeaponConsumeResult.NoAmmo)
+        {
+            var context = new DryFireContext(instance, isShotgun);
+            OnDryFire?.Invoke(context);
+        }
+
+        return false;
     }
 
     Vector2 SnapTo8Direction(Vector2 dir)

@@ -4,7 +4,7 @@ public class MetaUIVignetteBinder : MonoBehaviour
 {
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private VignetteService _vignetteService;
-    [SerializeField] float duration;
+    [SerializeField] private VignetteEffectSettings _settings;
 
     private void Start()
     {
@@ -18,6 +18,6 @@ public class MetaUIVignetteBinder : MonoBehaviour
 
     private void HandleHit(int damage)
     {
-        _vignetteService.DoTweenPlay();
+        _vignetteService.Play(_settings);
     }
 }
