@@ -62,7 +62,8 @@ public class MetaUIVignetteBinder : MonoBehaviour
 
     private void HandleHeal(int amount)
     {
-        RefreshHeartbeatState();
+        StopHeartbeat();
+        _vignetteService.RestoreDefault();
     }
 
     private void HandleDie()

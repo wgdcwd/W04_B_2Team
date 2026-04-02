@@ -7274,72 +7274,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_304
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 21424071da798ed4db0d6dae5935d653
-      internalID: 465308923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_305
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7019d1b39580e3849a02529c473d3e97
-      internalID: 468121699
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_306
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 144
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4ce2021a7cb79147ac8dbcac77c5f3f
-      internalID: -1542255229
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Raven Fantasy GUI Starter Set_307
       rect:
         serializedVersion: 2
@@ -7802,57 +7736,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_328
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 121bb8437b9105f4ab0fefae9ba854a6
-      internalID: 2083451633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_329
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa6a4914cd4492242a09a7708764a3dc
-      internalID: -722175604
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Raven Fantasy GUI Starter Set_330
       rect:
         serializedVersion: 2
-        x: 368
-        y: 128
-        width: 16
-        height: 16
+        x: 338
+        y: 130
+        width: 44
+        height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7868,34 +7758,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_331
+      name: Raven Fantasy GUI Starter Set_332
       rect:
         serializedVersion: 2
         x: 0
         y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6b23d76de41dd346a2e0d25a0adcd1c
-      internalID: 1518090394
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_332
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 112
-        width: 16
+        width: 32
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -8154,34 +8022,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_344
+      name: Raven Fantasy GUI Starter Set_345
       rect:
         serializedVersion: 2
         x: 208
         y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e8eced3b8222984cad99c2f98dc0eec
-      internalID: 2018985509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_345
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 112
-        width: 16
+        width: 48
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -8193,28 +8039,6 @@ TextureImporter:
       bones: []
       spriteID: 94b98fd6b92fea94581f68502142e3c2
       internalID: -687138139
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_346
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f42430656ddccd4c8ff4cb64cf31787
-      internalID: 591744743
       vertices: []
       indices: 
       edges: []
@@ -8325,72 +8149,6 @@ TextureImporter:
       bones: []
       spriteID: 525951626a435aa47b06eec3540456e2
       internalID: -685787527
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_352
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3965db701b6daac429d10fc80767a7cd
-      internalID: -398501092
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_353
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0340fd20fcda1d04e92831f3ac44ed41
-      internalID: -910130813
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_354
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 112
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ecd7b66c4b4ab948bf9c2582bda6a37
-      internalID: 1147736572
       vertices: []
       indices: 
       edges: []
@@ -8726,57 +8484,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_370
+      name: _P
       rect:
         serializedVersion: 2
-        x: 336
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd9f28f58fdbb4d41930d8c7565b8fc1
-      internalID: -535210316
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_371
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb5c564f42830ed419517025a51f3501
-      internalID: 549460904
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_372
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 96
-        width: 16
-        height: 16
+        x: 337
+        y: 98
+        width: 46
+        height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -9122,57 +8836,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_388
+      name: _Key
       rect:
         serializedVersion: 2
-        x: 336
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 514421e74d1b2994b9b1a67882044ad7
-      internalID: 904796666
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_389
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: acb1fb5e55aebd449af63bdb12615a36
-      internalID: 1907821371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_390
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 80
-        width: 16
-        height: 16
+        x: 340
+        y: 68
+        width: 42
+        height: 25
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -9601,72 +9271,6 @@ TextureImporter:
       bones: []
       spriteID: c970e2ac9aaaba140b2a3aee6ae2335e
       internalID: -831471653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_410
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6a86dc33d64df7c4982ba88c95e5785f
-      internalID: -897772529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_411
-      rect:
-        serializedVersion: 2
-        x: 352
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e68f57c7aede91439e7040a1fcd1260
-      internalID: -1186003559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_412
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e49250b39ed8c4d4d910ab31dab45ad1
-      internalID: -528412005
       vertices: []
       indices: 
       edges: []
@@ -11344,56 +10948,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_489
+      name: Raven Fantasy GUI Starter Set_491
       rect:
         serializedVersion: 2
         x: 208
         y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0824e7cd237c824d8417be90fbd5e4d
-      internalID: 1782016047
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_490
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7d8049e4258c814e97cef9623a5921f
-      internalID: 1980375494
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Raven Fantasy GUI Starter Set_491
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 0
-        width: 16
+        width: 48
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -11729,7 +11289,6 @@ TextureImporter:
       Raven Fantasy GUI Starter Set_37: 2950719539404616125
       Raven Fantasy GUI Starter Set_370: -535210316
       Raven Fantasy GUI Starter Set_371: 549460904
-      Raven Fantasy GUI Starter Set_372: 1863370304
       Raven Fantasy GUI Starter Set_373: -908069882
       Raven Fantasy GUI Starter Set_374: -828690308
       Raven Fantasy GUI Starter Set_375: -1961826233
@@ -11749,7 +11308,6 @@ TextureImporter:
       Raven Fantasy GUI Starter Set_388: 904796666
       Raven Fantasy GUI Starter Set_389: 1907821371
       Raven Fantasy GUI Starter Set_39: 8151862851494317136
-      Raven Fantasy GUI Starter Set_390: 977001627
       Raven Fantasy GUI Starter Set_391: -1695172413
       Raven Fantasy GUI Starter Set_392: -1166903127
       Raven Fantasy GUI Starter Set_393: -908195209
@@ -11917,6 +11475,8 @@ TextureImporter:
       Raven Fantasy GUI Starter Set_97: -5831682549767590275
       Raven Fantasy GUI Starter Set_98: 2853417096336894614
       Raven Fantasy GUI Starter Set_99: 4446651196642065428
+      _Key: 977001627
+      _P: 1863370304
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

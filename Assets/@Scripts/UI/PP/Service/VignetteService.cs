@@ -10,11 +10,21 @@ public class VignetteService : MonoBehaviour
     private Vignette _vignette;
     private Tween _intensityTween;
     private Tween _colorTween;
+    private float _defaultIntensity;
+    private Color _defaultColor;
+    private bool _hasDefaultState;
 
     private void Start()
     {
         if (_volume != null)
             _volume.profile.TryGet(out _vignette);
+
+        if (_vignette == null)
+            return;
+
+        _defaultIntensity = _vignette.intensity.value;
+        _defaultColor = _vignette.color.value;
+        _hasDefaultState = true;
     }
 
     private void OnDisable()
@@ -43,6 +53,15 @@ public class VignetteService : MonoBehaviour
             settings.endColor,
             settings.duration
         );
+    }
+
+    public void RestoreDefault()
+    {
+        if (_vignette == null || !_hasDefaultState)
+            return;
+
+        StopEffect();
+        SetState(_defaultIntensity, _defaultColor);
     }
 
     private void SetState(float intensity, Color color)
