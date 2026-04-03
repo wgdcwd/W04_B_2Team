@@ -27,6 +27,14 @@ public class PlayerHealth : EntityBase
         _originalColor = _spriteRenderer.color; // 원래 색깔 저장
     }
 
+    public void SetInvincible(bool value)
+    {
+        _isInvincible = value;
+
+        if (!value)
+            StopVisual();
+    }
+
     public override void TakeDamage(int damage)
     {
         if (_isInvincible) return;

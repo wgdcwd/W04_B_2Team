@@ -34,13 +34,10 @@ public class Boss2Controller : EnemyBase
 
     private void OnEnable()
     {
-        CameraManager.OnBossOutro -= StartBoss2;
-        CameraManager.OnBossOutro += StartBoss2;
     }
 
     private void OnDisable()
     {
-        CameraManager.OnBossOutro -= StartBoss2;
     }
 
     protected override void Initialize()

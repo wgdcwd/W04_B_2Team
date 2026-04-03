@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAimer : MonoBehaviour
 {
     [SerializeField] private Camera _cam;
     [SerializeField] private Transform _gunPivot; // 주무기(권총) 피봇
+
+    Player _player;
+    Rigidbody2D _rb;
 
     [Header("Aim Assist")]
     [SerializeField] private float _aimAssistRadiusMouse = 1.5f;
@@ -13,6 +17,24 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] private float _aimAssistStrengthMouse = 0.15f; // 당기는 강도 (낮을수록 자연스러움)
     [SerializeField] private float _aimAssistStrengthGamepad = 0.3f;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private LayerMask _groundLayer;
+
+    [Header("Camera Aim Offset")]
+    [SerializeField] CinemachineCamera _vcam;
+    [SerializeField] float _aimOffsetStrength = 2f;
+    [SerializeField] float _smoothSpeed = 3f;
+
+    CinemachinePositionComposer _composer;
+
+    [Header("Lookahead")]
+    [SerializeField] float _lookaheadStrength = 2f;   // 미리 볼 거리
+    [SerializeField] float _lookaheadSmooth = 3f;      // 이동 시 따라가는 속도
+    [SerializeField] float _returnDelay = 1.5f;        // 멈추고 몇 초 후에 복귀할지 (0이면 안 돌아옴)
+    [SerializeField] float _returnSmooth = 1.5f;       // 복귀 속도
+
+    Vector2 _lastMoveDir = Vector2.zero;
+    Vector2 _lookaheadOffset = Vector2.zero;
+    float _stopTimer = 0f;
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
 
@@ -22,6 +44,19 @@ public class PlayerAimer : MonoBehaviour
     {
         if (_cam == null)
             _cam = Camera.main;
+
+        _player = GetComponent<Player>();
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
+        _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+    }
+
+    void Update()
+    {
+        UpdateLookahead();
     }
 
     public void HandleLook(InputAction.CallbackContext ctx)
@@ -75,6 +110,16 @@ public class PlayerAimer : MonoBehaviour
 
             if (angle > maxAngle) continue; // 각도 범위 밖이면 무시
 
+            // 벽 체크 추가
+            float dist = Vector2.Distance(transform.position, hit.transform.position);
+            RaycastHit2D wallCheck = Physics2D.Raycast(
+                transform.position,
+                toEnemy,
+                dist,
+                _groundLayer  // 벽 레이어
+            );
+            if (wallCheck.collider != null) continue; // 벽 있으면 무시
+
             if (angle < closestAngle)
             {
                 closestAngle = angle;
@@ -87,5 +132,37 @@ public class PlayerAimer : MonoBehaviour
         Vector2 toClosest = ((Vector2)closest.transform.position - (Vector2)transform.position).normalized;
         float strength = IsUsingGamepad ? _aimAssistStrengthGamepad : _aimAssistStrengthMouse;
         return Vector2.Lerp(aimDir, toClosest, strength).normalized;
+    }
+
+    void UpdateLookahead()
+    {
+        Vector2 velocity = _rb.linearVelocity;
+        bool moving = velocity.sqrMagnitude > 0.1f;
+
+        if (moving)
+        {
+            _lastMoveDir = velocity.normalized;
+            _stopTimer = 0f;
+
+            Vector2 targetLookahead = _lastMoveDir * _lookaheadStrength;
+            _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, targetLookahead, Time.deltaTime * _lookaheadSmooth);
+        }
+        else
+        {
+            _stopTimer += Time.deltaTime;
+
+            if (_returnDelay > 0f && _stopTimer >= _returnDelay)
+                _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, Vector2.zero, Time.deltaTime * _returnSmooth);
+        }
+
+        // 에임 오프셋 + Lookahead 합산
+        Vector2 aimOffset = AimDirection * _aimOffsetStrength;
+        Vector2 totalOffset = aimOffset + _lookaheadOffset;
+
+        _composer.TargetOffset = Vector3.Lerp(
+            _composer.TargetOffset,
+            new Vector3(totalOffset.x, totalOffset.y, 0f),
+            Time.deltaTime * _smoothSpeed
+        );
     }
 }
