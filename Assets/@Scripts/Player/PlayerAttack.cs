@@ -42,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
 
     // 샷건 위치 조정
     [SerializeField] private Transform _shotgunPivot;
-    [SerializeField] private float _shotgunIdleAngle = 270f; // 평소 위로 든 각도
+    [SerializeField] private float _shotgunIdleAngle = 70f; // 평소 위로 든 각도
 
     private PoolManager _poolManager;
     private HapticManager _hapticManager;
@@ -84,17 +84,20 @@ public class PlayerAttack : MonoBehaviour
     public void FireShotgun()
     {
         if (!TryFireWeapon(_shotgunInstance, true))
-            return;
+        return;
 
-        Fire(_shotgunData);
-        //SoundManager.instance.HandleShotGunSFX();
+        Fire(_shotgunData);
+
+        //_hapticManager?.PlayShotgunShot();
+        float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg + 180f;
+        _shotgunPivot.DORotate(new Vector3(0f, 0f, (angle - 180 )), 0f); // 0f = 즉시 회전
     }
 
 
     public void FireCurrentWeapon()
     {
-        if (_player.deadeyeSkill.IsDeadeyeActive)
-            return;
+        // if (_player.deadeyeSkill.IsDeadeyeActive)
+        //     return;
 
         if (currentWeaponData == null)
             return;
