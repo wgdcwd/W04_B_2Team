@@ -1,6 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
+public enum WeaponConsumeResult
+{
+    Success,
+    Cooldown,
+    NoAmmo
+}
+
+
 public class WeaponInstance
 {
     public SO_WeaponBase Data { get; private set; }
@@ -17,15 +25,20 @@ public class WeaponInstance
         CurrentAmmo = data.maxAmmo;
     }
 
-    public bool TryConsume()
+    // 탄창이 없을 때에만 UX 표기 위한 enum으로 판정 변경
+    public WeaponConsumeResult TryConsumeDetailed()
     {
-        if (!IsReady) return false;
-        if (CurrentAmmo <= 0) return false;
+        if (!IsReady)
+            return WeaponConsumeResult.Cooldown;
+
+        if (CurrentAmmo <= 0)
+            return WeaponConsumeResult.NoAmmo;
 
         CurrentAmmo--;
         OnAmmoChanged?.Invoke(CurrentAmmo);
         _nextFireTime = Time.time + Data.fireRate;
-        return true;
+
+        return WeaponConsumeResult.Success;
     }
 
     public void Reload()
