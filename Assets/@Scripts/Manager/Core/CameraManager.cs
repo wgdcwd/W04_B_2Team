@@ -2,7 +2,7 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour, IInitializable
+public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
@@ -11,13 +11,9 @@ public class CameraManager : MonoBehaviour, IInitializable
 
     private CinemachineCamera curCam;
 
-    public bool IsInitialized { get; private set; }
-
-    public void Initialize()
+    private void Awake()
     {
-        if (IsInitialized) return;
-
-        IsInitialized = true;
+        Instance = this;
     }
 
     public void SetLiveCamera(CinemachineCamera cam)

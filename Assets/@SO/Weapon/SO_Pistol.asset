@@ -23,5 +23,3 @@ MonoBehaviour:
   lowFrequency: 0.15
   highFrequency: 0.35
   duration: 0.08
-  groundCameraShakeForce: 0.1
-  airCameraShakeForce: 0.15

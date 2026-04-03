@@ -12,6 +12,7 @@ public class PlayerHealth : EntityBase
     private HapticManager _hapticManager;
 
     public bool IsInvincible => _isInvincible;
+    public float InvincibleDuration => _invincibleDuration;
 
     public event Action<int> OnHit; // Amount   
     public event Action<int> OnHeal;
@@ -24,14 +25,6 @@ public class PlayerHealth : EntityBase
         if (!ManagerRegistry.TryGet<HapticManager>(out _hapticManager))
             _hapticManager = null;
         _originalColor = _spriteRenderer.color; // 원래 색깔 저장
-    }
-
-    public void SetInvincible(bool value)
-    {
-        _isInvincible = value;
-
-        if (!value)
-            StopVisual();
     }
 
     public override void TakeDamage(int damage)

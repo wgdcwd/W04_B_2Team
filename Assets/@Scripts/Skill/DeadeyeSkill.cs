@@ -214,7 +214,6 @@ public class DeadeyeSkill : MonoBehaviour
         _player.SetSkillState(SkillState.Deadeye);
         ConsumeGauge(_gaugeCostDeadeye);
         EnterSlow();
-        _player.playerHealth.SetInvincible(true);
 
         _currentRadius = 0f;
         _rangeTransform.localScale = Vector3.zero;
@@ -317,7 +316,6 @@ public class DeadeyeSkill : MonoBehaviour
         }
 
         _isFiring = false;
-        _player.playerAttack.ReloadAll();
         ExitDeadeye();
     }
 
@@ -325,7 +323,6 @@ public class DeadeyeSkill : MonoBehaviour
     {
         _player.SetSkillState(SkillState.None);
         _isFiring = false;
-        _player.playerHealth.SetInvincible(false);
 
         // 범위 숨기기
         _rangeRenderer.enabled = false;
@@ -343,7 +340,6 @@ public class DeadeyeSkill : MonoBehaviour
 
     public void ResetState()
     {
-        _player.playerHealth.SetInvincible(false);
         _isFiring = false;
         StopAllCoroutines();
 

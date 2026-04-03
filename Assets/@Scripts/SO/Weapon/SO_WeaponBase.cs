@@ -22,9 +22,5 @@ public class SO_WeaponBase : ScriptableObject
     public float lowFrequency = 0.15f;
     public float highFrequency = 0.35f;
     public float duration = 0.08f;
-
-    [Header("Camera Shake")]
-    public float groundCameraShakeForce = 0.5f;  // 땅: 약하게
-    public float airCameraShakeForce = 1.5f;     // 공중: 강하게
 }
 
