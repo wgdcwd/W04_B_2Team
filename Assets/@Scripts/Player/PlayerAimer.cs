@@ -35,7 +35,6 @@ public class PlayerAimer : MonoBehaviour
     Vector2 _lastMoveDir = Vector2.zero;
     Vector2 _lookaheadOffset = Vector2.zero;
     float _stopTimer = 0f;
-    bool _isMoving = false;
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
 
