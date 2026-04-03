@@ -166,9 +166,9 @@ public class PlayerAimer : MonoBehaviour
         );
     }
 
-    public void SetVCam(CinemachineCamera newCam)
-    {
-        _vcam = newCam;
-        _composer = _vcam.GetComponent<CinemachinePositionComposer>();
-    }
+    //public void SetVCam(CinemachineCamera newCam)
+    //{
+    //    _vcam = newCam;
+    //    _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+    //}
 }

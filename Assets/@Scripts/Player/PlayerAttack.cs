@@ -318,4 +318,9 @@ public class PlayerAttack : MonoBehaviour
         TriggerRecoilRoutines(shootDir);
     }
 
+    public void AddAmmo()
+    {
+        _shotgunInstance.AddAmmo(1);
+        _currentWeaponInstance.AddAmmo(1);
+    }
 }

@@ -47,4 +47,10 @@ public class WeaponInstance
         CurrentAmmo = Data.maxAmmo;
         OnAmmoChanged?.Invoke(CurrentAmmo);
     }
+
+    public void AddAmmo(int amount)
+    {
+        CurrentAmmo = Mathf.Clamp(CurrentAmmo + amount, 0, Data.maxAmmo);
+        OnAmmoChanged?.Invoke(CurrentAmmo);
+    }
 }
