@@ -2,8 +2,9 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour, IInitializable
 {
+    public bool IsInitialized { get; private set; }
     public static CameraManager Instance { get; private set; }
 
     [SerializeField] private int livePriority = 10;
@@ -16,6 +17,12 @@ public class CameraManager : MonoBehaviour
         Instance = this;
     }
 
+    public void Initialize()
+    {
+        if (IsInitialized) return;
+        IsInitialized = true;
+    }
+
     public void SetLiveCamera(CinemachineCamera cam)
     {
         if (curCam != null)
@@ -24,8 +31,12 @@ public class CameraManager : MonoBehaviour
         curCam.Priority = livePriority;
     }
 
+ 
+
     public void SetBoundary(Collider2D boundary)
     {
         curCam.GetComponent<CinemachineConfiner2D>().BoundingShape2D = boundary;
     }
+
+
 }
