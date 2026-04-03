@@ -15,7 +15,6 @@ public readonly struct DryFireContext
         IsShotgun = isShotgun;
     }
 }
-
 public class PlayerAttack : MonoBehaviour
 {
     Player _player;
@@ -37,15 +36,17 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _ceilingCheckRadius = 0.1f;
 
     // 총알 스폰 위치
-    [SerializeField] private Transform _gunMuzzle;      
+    [SerializeField] private Transform _gunMuzzle;
     [SerializeField] private Transform _shotgunMuzzle;
 
     // 샷건 위치 조정
+    private Transform _pistolPivot;
     [SerializeField] private Transform _shotgunPivot;
-    [SerializeField] private float _shotgunIdleAngle = 270f; // 평소 위로 든 각도
+    [SerializeField] private float _shotgunIdleAngle = 90f; // 평소 위로 든 각도
 
     private PoolManager _poolManager;
     private HapticManager _hapticManager;
+
 
     // Temp: 둘 다 끝났는지 추적
     bool _gravityDone = false;
@@ -53,6 +54,15 @@ public class PlayerAttack : MonoBehaviour
 
     // 총알없음 액션
     public event Action<DryFireContext> OnDryFire;
+
+    // 총 flip용 참조
+    private SpriteRenderer _pistolRenderer;
+    private SpriteRenderer _shotgunRenderer;
+    private int _pistolBaseSortingOrder;
+    private int _shotgunBaseSortingOrder;
+    private Vector3 _pistolBaseScale;
+    private Vector3 _shotgunBaseScale;
+    private bool _lastLookingLeft;
 
     private void Awake()
     {
@@ -71,15 +81,29 @@ public class PlayerAttack : MonoBehaviour
         if (!ManagerRegistry.TryGet<HapticManager>(out _hapticManager))
             _hapticManager = null;
 
-        _player.OnLocomotionChanged += HandleLocomotionChanged;
+        if (_player != null && _player.playerAimer != null)
+        {
+            _pistolPivot = _player.playerAimer.GunPivot;
+        }
+
+        Debug.Log($"PlayerAttack Awake: pistolPivot={_pistolPivot}, shotgunPivot={_shotgunPivot}");
+
+        if (_pistolPivot != null)
+        {
+            _pistolBaseScale = _pistolPivot.localScale;
+            _pistolRenderer = _pistolPivot.GetComponentInChildren<SpriteRenderer>();
+            if (_pistolRenderer != null)
+                _pistolBaseSortingOrder = _pistolRenderer.sortingOrder;
+        }
+
+        if (_shotgunPivot != null)
+        {
+            _shotgunBaseScale = _shotgunPivot.localScale;
+            _shotgunRenderer = _shotgunPivot.GetComponentInChildren<SpriteRenderer>();
+            if (_shotgunRenderer != null)
+                _shotgunBaseSortingOrder = _shotgunRenderer.sortingOrder;
+        }
     }
-
-    void OnDestroy()
-    {
-        _player.OnLocomotionChanged -= HandleLocomotionChanged;
-    }
-
-
 
     public void FireShotgun()
     {
@@ -87,7 +111,10 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Fire(_shotgunData);
-        //SoundManager.instance.HandleShotGunSFX();
+
+        //_hapticManager?.PlayShotgunShot();
+        float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg;
+        _shotgunPivot.DORotate(new Vector3(0f, 0f, angle), 0f); // 0f = 즉시 회전
     }
 
 
@@ -239,6 +266,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _shotgunInstance.Reload();
         _currentWeaponInstance?.Reload();
+        RaiseShotgun();
     }
 
     // 무기 추가 시 필요.
@@ -248,16 +276,45 @@ public class PlayerAttack : MonoBehaviour
         _currentWeaponInstance = new WeaponInstance(newWeapon); // 교체 시 인스턴스도 새로 생성 (기존꺼는 자동으로 GC가 해결.)
     }
 
-
-    // 지워야 할 코드
-    void HandleLocomotionChanged(LocomotionState state)
+    public void RaiseShotgun()
     {
-        if (state == LocomotionState.Land)
+        _shotgunPivot.DORotate(new Vector3(0f, 0f, _shotgunIdleAngle), 0.2f);
+    }
+
+    public void UpdateWeaponFlip()
+    {
+        bool isLookingLeft = _player.playerAimer.IsLookingLeft;
+
+        if (_lastLookingLeft == isLookingLeft)
+            return;
+
+        _lastLookingLeft = isLookingLeft;
+
+        if (_pistolRenderer != null)
         {
-            // 착지 시 샷건 원래 자세로 복귀
-            _shotgunPivot.DORotate(new Vector3(0f, 0f, _shotgunIdleAngle), 0.2f);
+            _pistolRenderer.flipX = isLookingLeft;
+        }
+
+        if (_shotgunRenderer != null)
+        {
+            _shotgunRenderer.flipY = isLookingLeft;
+        }
+
+        if (_pistolRenderer != null && _shotgunRenderer != null)
+        {
+            if (isLookingLeft)
+            {
+                _pistolRenderer.sortingOrder = _shotgunBaseSortingOrder;
+                _shotgunRenderer.sortingOrder = _pistolBaseSortingOrder;
+            }
+            else
+            {
+                _pistolRenderer.sortingOrder = _pistolBaseSortingOrder;
+                _shotgunRenderer.sortingOrder = _shotgunBaseSortingOrder;
+            }
         }
     }
+
 
     // 상태 다 종료
     public void ResetState()

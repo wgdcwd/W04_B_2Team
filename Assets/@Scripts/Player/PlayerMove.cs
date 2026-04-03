@@ -23,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     private float _landTimer = 0f;
     private Vector2 mouseScreenPos = Vector2.zero;
     private Vector3 mouseWorldPos = Vector3.zero;
-    private bool _isLookingLeft => mouseWorldPos.x < transform.position.x;
+    private bool _isLookingLeft => _player.playerAimer.IsLookingLeft;
 
     void Start()
     {
@@ -43,7 +43,9 @@ public class PlayerMove : MonoBehaviour
     {
         // 반동이 끝났는데 여전히 땅이면 재장전
         if (state == RecoilState.None && _player.IsGrounded)
+        {
             _player.playerAttack.ReloadAll();
+        }
     }
 
     void FixedUpdate()
@@ -79,10 +81,12 @@ public class PlayerMove : MonoBehaviour
         _playerAnimationController.GetGoundCheck(isGrounded);
 
         _playerHeadRotate.RotateHead(mouseWorldPos);
-        _playerAnimationController.FlipSprite(_isLookingLeft);
         _playerHeadRotate.FlipHead(_isLookingLeft);
+        _playerAnimationController.FlipSprite(_isLookingLeft);
 
+        _player.playerAttack.UpdateWeaponFlip();
         _playerAnimationController.SetWalkByMovment(_rb.linearVelocityX);
+
 
         // 공중 -> 착지 순간 감지
         if (isGrounded && !_player.IsGrounded)
