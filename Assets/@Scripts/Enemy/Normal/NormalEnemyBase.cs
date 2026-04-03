@@ -253,23 +253,7 @@ public abstract class NormalEnemyBase : EnemyBase
     // =====================
     // 전투
     // =====================
-    public override void Die()
-    {
-        if (_isDead) return;
-        _isDead = true;
-        RaiseDeath();
-        _rb.linearVelocity = Vector2.zero;
-
-        if (_isAddGauge)
-            _player.GetComponent<DeadeyeSkill>().AddGauge(15);
-
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null)
-            col.enabled = false;
-
-        ShowMark(false);
-        StartCoroutine(DieRoutine());
-    }
+    
 
     protected abstract void DoAttack();
 
