@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9d67f68213ebef949a9b2cdf6e25969e
+guid: 892ade7c4d71f5b44b870f7a4b54f45e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6673312695985084743
-    second: lava_0
+      213: 6135164051610502614
+    second: Acid_surface_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lava_0
+      name: Acid_surface_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7499b4f4a8e5c9c50800000000000000
-      internalID: 6673312695985084743
+      spriteID: 6d58dfe033b742550800000000000000
+      internalID: 6135164051610502614
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9bac866d91935f1448b41c41afdbe313
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      lava_0: 6673312695985084743
+      Acid_surface_0: 6135164051610502614
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
