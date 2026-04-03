@@ -19,6 +19,7 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private LayerMask _groundLayer;
 
+
     [Header("Camera Aim Offset")]
     [SerializeField] CinemachineCamera _vcam;
     [SerializeField] float _aimOffsetStrength = 2f;
@@ -35,6 +36,8 @@ public class PlayerAimer : MonoBehaviour
     Vector2 _lastMoveDir = Vector2.zero;
     Vector2 _lookaheadOffset = Vector2.zero;
     float _stopTimer = 0f;
+
+    
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
 
