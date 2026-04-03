@@ -92,7 +92,11 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Fire(_shotgunData);
-        SoundManager.instance.HandleShotGunSFX();
+
+        //_hapticManager?.PlayShotgunShot();
+        float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg + 180f;
+        _shotgunPivot.DORotate(new Vector3(0f, 0f, angle), 0f); // 0f = 즉시 회전
+
     }
 
 
@@ -100,7 +104,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_player.deadeyeSkill.IsDeadeyeActive) return;
         if (currentWeaponData == null) return;
-        if (!TryFireWeapon(_currentWeaponInstance)) return;
+        if (!TryFireWeapon(_currentWeaponInstance, false)) return;
 
         Fire(currentWeaponData);
     }
