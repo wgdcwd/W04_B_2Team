@@ -11,7 +11,7 @@ public abstract class NormalEnemyBase : EnemyBase
     [SerializeField] protected float _detectionRange = 5f;
     [SerializeField] protected float _attackCooldown = 1.5f;
     [SerializeField] protected bool _isFlying = false;
-
+    [SerializeField] protected bool _isAmmoEnemy = false;
     // =====================
     // 순찰
     // =====================
@@ -330,6 +330,29 @@ public abstract class NormalEnemyBase : EnemyBase
             yield return new WaitForSeconds(_hitFlashInterval);
         }
     }
+
+
+    public override void Die()
+    {
+        if (_isDead) return;
+        _isDead = true;
+        RaiseDeath();
+        _rb.linearVelocity = Vector2.zero;
+
+        if (_isAddGauge)
+            _player.GetComponent<DeadeyeSkill>().AddGauge(15);
+
+        if (_isAmmoEnemy)
+            _player.GetComponent<PlayerAttack>().AddAmmo();
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
+
+        ShowMark(false);
+        StartCoroutine(DieRoutine());
+    }
+
 
 
 }
