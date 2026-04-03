@@ -276,4 +276,10 @@ public class PlayerAttack : MonoBehaviour
         _gravityDone = false;
         _dampingDone = false;
     }
+
+    public void AddAmmo()
+    {
+        _shotgunInstance.AddAmmo(1);
+        _currentWeaponInstance.AddAmmo(1);
+    }
 }
