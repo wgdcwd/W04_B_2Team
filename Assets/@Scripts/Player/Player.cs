@@ -8,6 +8,14 @@ public enum SkillState { None, Slow, Deadeye }
 // 원래는 해당 상태가 되면 해당 함수 실행 (HandleStateChanged) 이런 식으로 해야 하는데 현재는 그냥 이렇게 둠.
 
 
+[RequireComponent(typeof(PlayerAimer))]
+[RequireComponent(typeof(PlayerAttack))]
+[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerMove))]
+[RequireComponent(typeof(PlayerJump))]
+[RequireComponent(typeof(Rigidbody2D))]
+
+
 public class Player : MonoBehaviour
 {
 

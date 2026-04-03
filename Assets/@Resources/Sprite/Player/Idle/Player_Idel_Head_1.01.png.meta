@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f7a61aaae33358549b748c8f6af12018
+guid: a3e9f64d8fee9104996c642ce5cbdc7d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1003751102412047778
-    second: Pistol_1.2_0
+      213: -7611903495017607516
+    second: Player_Idel_Head_1.01_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 9
-  spritePivot: {x: 0.21521035, y: 0.35976255}
+  spritePivot: {x: 0.5, y: 0.32}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pistol_1.2_0
+      name: Player_Idel_Head_1.01_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 28
-        height: 20
+        x: 7
+        y: 9
+        width: 17
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a54d2e3f4a0eed00800000000000000
-      internalID: 1003751102412047778
+      spriteID: 4aecbe2d9161d5690800000000000000
+      internalID: -7611903495017607516
       vertices: []
       indices: 
       edges: []
@@ -132,14 +132,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures:
-    - texture: {fileID: 2800000, guid: 85a3e261c36d9cc43a6269edbbdce83a, type: 3}
+    - texture: {fileID: 2800000, guid: 80759ed1c47c7f741bbdb24d6359b876, type: 3}
       name: _NormalMap
-    - texture: {fileID: 2800000, guid: 5d99bb7ce4d199440ba418fab4760f5c, type: 3}
+    - texture: {fileID: 2800000, guid: 54e8e3f98aae13847a4a639adb8342bd, type: 3}
       name: _MaskTex
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Pistol_1.2_0: 1003751102412047778
+      Player_Idel_Head_1.01_0: -7611903495017607516
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
