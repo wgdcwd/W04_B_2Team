@@ -114,6 +114,7 @@ public abstract class NormalEnemyBase : EnemyBase
 
         if (!TryFindPlayer())
         {
+            _wasDetecting = false;
             _rb.linearVelocity = Vector2.zero;
             Patrol();
             return;
@@ -122,6 +123,9 @@ public abstract class NormalEnemyBase : EnemyBase
         bool detecting = DetectPlayer();
         if (detecting)
         {
+            if (!_wasDetecting)
+                RaiseAlerted();
+
             _wasDetecting = true;
 
             if (IsInAttackRange())
@@ -253,6 +257,7 @@ public abstract class NormalEnemyBase : EnemyBase
     {
         if (_isDead) return;
         _isDead = true;
+        RaiseDeath();
         _rb.linearVelocity = Vector2.zero;
 
         if (_isAddGauge)
