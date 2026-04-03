@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: e138eaddb1899d346afe02774ecfc100
+guid: a5038cc0d30f30942bedb26b45996800
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8237826366852546144
-    second: Player_Running_Mask_0
+      213: 6217101718984376133
+    second: Player_Running_Maskl_0
   - first:
-      213: -6538072593085373545
-    second: Player_Running_Mask_1
+      213: 8975409852447882254
+    second: Player_Running_Maskl_1
   - first:
-      213: -8453762149144347688
-    second: Player_Running_Mask_2
+      213: -1597038012392932628
+    second: Player_Running_Maskl_2
   - first:
-      213: 2103123913723090850
-    second: Player_Running_Mask_3
+      213: -2279267021800498039
+    second: Player_Running_Maskl_3
   - first:
-      213: -5372113307703202197
-    second: Player_Running_Mask_4
+      213: -8513391578741478879
+    second: Player_Running_Maskl_4
   - first:
-      213: 182223030396415712
-    second: Player_Running_Mask_5
+      213: 5605680855646538561
+    second: Player_Running_Maskl_5
   - first:
-      213: 5756294492628298094
-    second: Player_Running_Mask_6
+      213: -3585559127924731714
+    second: Player_Running_Maskl_6
   - first:
-      213: -7061766316618062108
-    second: Player_Running_Mask_7
+      213: -521052385077964841
+    second: Player_Running_Maskl_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -93,7 +93,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -121,177 +121,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Running_Mask_0
+      name: Player_Running_Maskl_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 3
+        y: 2
+        width: 26
+        height: 19
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a14862b09c5dad80800000000000000
-      internalID: -8237826366852546144
+      spriteID: 54fb884e215974650800000000000000
+      internalID: 6217101718984376133
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_1
+      name: Player_Running_Maskl_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 39
         y: 0
-        width: 32
-        height: 32
+        width: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 793ed65ed991445a0800000000000000
-      internalID: -6538072593085373545
+      spriteID: e0c72b005bf0f8c70800000000000000
+      internalID: 8975409852447882254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_2
+      name: Player_Running_Maskl_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 72
         y: 0
-        width: 32
-        height: 32
+        width: 14
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8dbbb948d143eaa80800000000000000
-      internalID: -8453762149144347688
+      spriteID: ceaf582a36e26d9e0800000000000000
+      internalID: -1597038012392932628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_3
+      name: Player_Running_Maskl_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 101
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a718148e0ccf2d10800000000000000
-      internalID: 2103123913723090850
+      spriteID: 98c915148ba6e50e0800000000000000
+      internalID: -2279267021800498039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_4
+      name: Player_Running_Maskl_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
+        x: 131
+        y: 2
+        width: 26
+        height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6ea339c86b6275b0800000000000000
-      internalID: -5372113307703202197
+      spriteID: 12aef4b077b5ad980800000000000000
+      internalID: -8513391578741478879
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_5
+      name: Player_Running_Maskl_5
       rect:
         serializedVersion: 2
-        x: 160
+        x: 167
         y: 0
-        width: 32
-        height: 32
+        width: 17
+        height: 19
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ee6ca471e2678200800000000000000
-      internalID: 182223030396415712
+      spriteID: 14b050db9016bcd40800000000000000
+      internalID: 5605680855646538561
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_6
+      name: Player_Running_Maskl_6
       rect:
         serializedVersion: 2
-        x: 192
+        x: 200
         y: 0
-        width: 32
-        height: 32
+        width: 14
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e69a5a7c75772ef40800000000000000
-      internalID: 5756294492628298094
+      spriteID: eb013e268f88d3ec0800000000000000
+      internalID: -3585559127924731714
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Running_Mask_7
+      name: Player_Running_Maskl_7
       rect:
         serializedVersion: 2
-        x: 224
+        x: 229
         y: 0
-        width: 32
-        height: 32
+        width: 22
+        height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e6692b23f09ffd90800000000000000
-      internalID: -7061766316618062108
+      spriteID: 7dfce0ecd99d4c8f0800000000000000
+      internalID: -521052385077964841
       vertices: []
       indices: 
       edges: []
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e70d09188e336fe49ada55006329c0f9
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -308,18 +308,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Player_Running_Mask_0: -8237826366852546144
-      Player_Running_Mask_1: -6538072593085373545
-      Player_Running_Mask_2: -8453762149144347688
-      Player_Running_Mask_3: 2103123913723090850
-      Player_Running_Mask_4: -5372113307703202197
-      Player_Running_Mask_5: 182223030396415712
-      Player_Running_Mask_6: 5756294492628298094
-      Player_Running_Mask_7: -7061766316618062108
+      Player_Running_Maskl_0: 6217101718984376133
+      Player_Running_Maskl_1: 8975409852447882254
+      Player_Running_Maskl_2: -1597038012392932628
+      Player_Running_Maskl_3: -2279267021800498039
+      Player_Running_Maskl_4: -8513391578741478879
+      Player_Running_Maskl_5: 5605680855646538561
+      Player_Running_Maskl_6: -3585559127924731714
+      Player_Running_Maskl_7: -521052385077964841
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

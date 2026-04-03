@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: c6401c445cc66324d9b4e512045db068
+guid: 6b1152e9485c38741a73a4076418560c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2180481692337849075
-    second: Player_Idle_Body_1.01_0
+      213: 6279920859315884745
+    second: Player_Idle_Maskl_0
   - first:
-      213: 1603859506119997731
-    second: Player_Idle_Body_1.01_1
+      213: -92666195623160837
+    second: Player_Idle_Maskl_1
   - first:
-      213: -5142743987234391872
-    second: Player_Idle_Body_1.01_2
+      213: -8995189001155831401
+    second: Player_Idle_Maskl_2
   - first:
-      213: -4115727304202376733
-    second: Player_Idle_Body_1.01_3
+      213: 6515077613676939536
+    second: Player_Idle_Maskl_3
   - first:
-      213: 3703388321981937127
-    second: Player_Idle_Body_1.01_4
+      213: -3079323330636360454
+    second: Player_Idle_Maskl_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,111 +112,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Idle_Body_1.01_0
+      name: Player_Idle_Maskl_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3f24a07eb80a24e10800000000000000
-      internalID: 2180481692337849075
+      spriteID: 9c2d615cfb2c62750800000000000000
+      internalID: 6279920859315884745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_Body_1.01_1
+      name: Player_Idle_Maskl_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 42
         y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3297ae329bd024610800000000000000
-      internalID: 1603859506119997731
+      spriteID: bf3d1370698c6bef0800000000000000
+      internalID: -92666195623160837
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_Body_1.01_2
+      name: Player_Idle_Maskl_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 74
         y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0c83e1e479d41a8b0800000000000000
-      internalID: -5142743987234391872
+      spriteID: 7991b92134baa2380800000000000000
+      internalID: -8995189001155831401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_Body_1.01_3
+      name: Player_Idle_Maskl_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 106
         y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3e924a8a2dff1e6c0800000000000000
-      internalID: -4115727304202376733
+      spriteID: 019405f32943a6a50800000000000000
+      internalID: 6515077613676939536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Idle_Body_1.01_4
+      name: Player_Idle_Maskl_4
       rect:
         serializedVersion: 2
-        x: 128
+        x: 138
         y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e53015be04156330800000000000000
-      internalID: 3703388321981937127
+      spriteID: af4d8d8eebb0445d0800000000000000
+      internalID: -3079323330636360454
       vertices: []
       indices: 
       edges: []
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1328bb22eab25d745833757980d12b66
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -233,15 +233,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Player_Idle_Body_1.01_0: 2180481692337849075
-      Player_Idle_Body_1.01_1: 1603859506119997731
-      Player_Idle_Body_1.01_2: -5142743987234391872
-      Player_Idle_Body_1.01_3: -4115727304202376733
-      Player_Idle_Body_1.01_4: 3703388321981937127
+      Player_Idle_Maskl_0: 6279920859315884745
+      Player_Idle_Maskl_1: -92666195623160837
+      Player_Idle_Maskl_2: -8995189001155831401
+      Player_Idle_Maskl_3: 6515077613676939536
+      Player_Idle_Maskl_4: -3079323330636360454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,37 +1,28 @@
 fileFormatVersion: 2
-guid: d04fddd5ddefe0144a63055fde58c377
+guid: c6401c445cc66324d9b4e512045db068
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1261154327222936483
-    second: Player_Runnin_Normalg_0
+      213: 2180481692337849075
+    second: Player_Idle_Body_1.01_0
   - first:
-      213: 8397587554997621348
-    second: Player_Runnin_Normalg_1
+      213: 1603859506119997731
+    second: Player_Idle_Body_1.01_1
   - first:
-      213: 5813222743907638237
-    second: Player_Runnin_Normalg_2
+      213: -5142743987234391872
+    second: Player_Idle_Body_1.01_2
   - first:
-      213: 4881917935978218926
-    second: Player_Runnin_Normalg_3
+      213: -4115727304202376733
+    second: Player_Idle_Body_1.01_3
   - first:
-      213: -8906037978630857075
-    second: Player_Runnin_Normalg_4
-  - first:
-      213: 1091563342063181934
-    second: Player_Runnin_Normalg_5
-  - first:
-      213: 8983632876131425475
-    second: Player_Runnin_Normalg_6
-  - first:
-      213: -8306563352145721924
-    second: Player_Runnin_Normalg_7
+      213: 3703388321981937127
+    second: Player_Idle_Body_1.01_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
-    sRGBTexture: 0
+    enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -76,9 +67,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -93,7 +84,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -121,177 +112,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Runnin_Normalg_0
+      name: Player_Idle_Body_1.01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5c1eee32da7f7ee0800000000000000
-      internalID: -1261154327222936483
+      spriteID: 3f24a07eb80a24e10800000000000000
+      internalID: 2180481692337849075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Runnin_Normalg_1
+      name: Player_Idle_Body_1.01_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 462dfd193693a8470800000000000000
-      internalID: 8397587554997621348
+      spriteID: 3297ae329bd024610800000000000000
+      internalID: 1603859506119997731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Runnin_Normalg_2
+      name: Player_Idle_Body_1.01_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ddb16da2947bca050800000000000000
-      internalID: 5813222743907638237
+      spriteID: 0c83e1e479d41a8b0800000000000000
+      internalID: -5142743987234391872
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Runnin_Normalg_3
+      name: Player_Idle_Body_1.01_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ea5079c4f7e00c340800000000000000
-      internalID: 4881917935978218926
+      spriteID: 3e924a8a2dff1e6c0800000000000000
+      internalID: -4115727304202376733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Runnin_Normalg_4
+      name: Player_Idle_Body_1.01_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8ed19705a5676480800000000000000
-      internalID: -8906037978630857075
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Runnin_Normalg_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e60a3858313062f00800000000000000
-      internalID: 1091563342063181934
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Runnin_Normalg_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3cc9556e0864cac70800000000000000
-      internalID: 8983632876131425475
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Runnin_Normalg_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cb5831b24a829bc80800000000000000
-      internalID: -8306563352145721924
+      spriteID: 7e53015be04156330800000000000000
+      internalID: 3703388321981937127
       vertices: []
       indices: 
       edges: []
@@ -300,26 +225,27 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1b185c8142db1c84f81dcfeca99eb255
+    spriteID: 1328bb22eab25d745833757980d12b66
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: 6b1152e9485c38741a73a4076418560c, type: 3}
+      name: _MaskTex
+    - texture: {fileID: 2800000, guid: e9e25907639b0714193ba33b5d10c5ee, type: 3}
+      name: _NormalMap
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Player_Runnin_Normalg_0: -1261154327222936483
-      Player_Runnin_Normalg_1: 8397587554997621348
-      Player_Runnin_Normalg_2: 5813222743907638237
-      Player_Runnin_Normalg_3: 4881917935978218926
-      Player_Runnin_Normalg_4: -8906037978630857075
-      Player_Runnin_Normalg_5: 1091563342063181934
-      Player_Runnin_Normalg_6: 8983632876131425475
-      Player_Runnin_Normalg_7: -8306563352145721924
+      Player_Idle_Body_1.01_0: 2180481692337849075
+      Player_Idle_Body_1.01_1: 1603859506119997731
+      Player_Idle_Body_1.01_2: -5142743987234391872
+      Player_Idle_Body_1.01_3: -4115727304202376733
+      Player_Idle_Body_1.01_4: 3703388321981937127
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

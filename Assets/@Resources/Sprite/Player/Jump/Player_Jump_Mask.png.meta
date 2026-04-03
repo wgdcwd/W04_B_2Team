@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: 0b645568f912c0e44a74dd847207d86e
+guid: c8d12048e19d77a488e9fcc173b6f97a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3194105007442245930
-    second: Character_Idle_Normal_1.1_0
+      213: -7823207428922883751
+    second: Player_Jump_Mask_0
   - first:
-      213: -190079973577524787
-    second: Character_Idle_Normal_1.1_1
-  - first:
-      213: -1758197341339275687
-    second: Character_Idle_Normal_1.1_2
-  - first:
-      213: 4488935814559760279
-    second: Character_Idle_Normal_1.1_3
+      213: 4954348517935145934
+    second: Player_Jump_Mask_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
-    sRGBTexture: 0
+    enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -64,9 +58,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -81,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -109,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Idle_Normal_1.1_0
+      name: Player_Jump_Mask_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 0
-        width: 17
-        height: 31
+        x: 8
+        y: 1
+        width: 16
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6d6cb183b624ca3d0800000000000000
-      internalID: -3194105007442245930
+      spriteID: 951cad2ea426e6390800000000000000
+      internalID: -7823207428922883751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Idle_Normal_1.1_1
+      name: Player_Jump_Mask_1
       rect:
         serializedVersion: 2
         x: 39
         y: 0
         width: 17
-        height: 30
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,52 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dc9fef76543bc5df0800000000000000
-      internalID: -190079973577524787
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Character_Idle_Normal_1.1_2
-      rect:
-        serializedVersion: 2
-        x: 71
-        y: 0
-        width: 17
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 95eaf6855d0a997e0800000000000000
-      internalID: -1758197341339275687
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Character_Idle_Normal_1.1_3
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 0
-        width: 17
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 79ffc560757eb4e30800000000000000
-      internalID: 4488935814559760279
+      spriteID: ec3e1015ab161c440800000000000000
+      internalID: 4954348517935145934
       vertices: []
       indices: 
       edges: []
@@ -210,10 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Character_Idle_Normal_1.1_0: -3194105007442245930
-      Character_Idle_Normal_1.1_1: -190079973577524787
-      Character_Idle_Normal_1.1_2: -1758197341339275687
-      Character_Idle_Normal_1.1_3: 4488935814559760279
+      Player_Jump_Mask_0: -7823207428922883751
+      Player_Jump_Mask_1: 4954348517935145934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
