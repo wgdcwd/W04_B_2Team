@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: f7a61aaae33358549b748c8f6af12018
+guid: 1ec358fdf1233564792fa7ec2ac7bb53
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1003751102412047778
-    second: Pistol_1.2_0
+      213: -5565234632898558359
+    second: Player_Jump_1.1 1_0
+  - first:
+      213: 6968075698383931040
+    second: Player_Jump_1.1 1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +49,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.21521035, y: 0.35976255}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -72,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +103,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pistol_1.2_0
+      name: Player_Jump_1.1 1_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 28
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a54d2e3f4a0eed00800000000000000
-      internalID: 1003751102412047778
+      spriteID: 9664166569054c2b0800000000000000
+      internalID: -5565234632898558359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Jump_1.1 1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a6c432ede393b060800000000000000
+      internalID: 6968075698383931040
       vertices: []
       indices: 
       edges: []
@@ -125,21 +150,20 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: bf2af4ced08a1b44da637f050548f8fe
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 85a3e261c36d9cc43a6269edbbdce83a, type: 3}
-      name: _NormalMap
-    - texture: {fileID: 2800000, guid: 5d99bb7ce4d199440ba418fab4760f5c, type: 3}
-      name: _MaskTex
+    secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Pistol_1.2_0: 1003751102412047778
+      Player_Jump_1.1 1_0: -5565234632898558359
+      Player_Jump_1.1 1_1: 6968075698383931040
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

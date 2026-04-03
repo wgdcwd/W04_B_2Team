@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 //using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMove : MonoBehaviour
@@ -6,6 +8,9 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D _rb;
     Player _player;
     Vector2 _dir;
+
+    // 애니메이션 값을 위한 참조
+    PlayerAnimationController _playerAnimationController;
 
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
@@ -21,6 +26,7 @@ public class PlayerMove : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _player = GetComponent<Player>();
         _player.OnRecoilStateChanged += HandleRecoilStateChanged;
+        _playerAnimationController = GetComponent<PlayerAnimationController>();
     }
 
     void OnDestroy()
@@ -50,7 +56,7 @@ public class PlayerMove : MonoBehaviour
             _rb.linearVelocity = new Vector2(newX, _rb.linearVelocityY);
             return;
         }
-
+        
         _rb.linearVelocity = new Vector2(_player.moveSpeed * _dir.x, _rb.linearVelocityY);
 
     }
@@ -58,6 +64,10 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         bool isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
+
+        _playerAnimationController.GetGoundCheck(isGrounded);
+        _playerAnimationController.SetWalkByMovment(_rb.linearVelocityX);
+        _playerAnimationController.FlipSpriteByInput(_dir.x);
 
         // 공중 → 착지 순간 감지
         if (isGrounded && !_player.IsGrounded)
@@ -91,7 +101,6 @@ public class PlayerMove : MonoBehaviour
             else
                 _player.SetLocomotionState(LocomotionState.Falling);
         }
-
     }
 
     public void CanMove(Vector2 input)

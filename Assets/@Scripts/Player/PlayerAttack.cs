@@ -87,7 +87,7 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Fire(_shotgunData);
-        SoundManager.instance.HandleShotGunSFX();
+        //SoundManager.instance.HandleShotGunSFX();
     }
 
 
@@ -102,7 +102,7 @@ public class PlayerAttack : MonoBehaviour
         if (!TryFireWeapon(_currentWeaponInstance, false))
             return;
 
-        SoundManager.instance.HandlePistolSFX();
+        //SoundManager.instance.HandlePistolSFX();
         Fire(currentWeaponData);
     }
 
