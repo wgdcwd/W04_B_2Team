@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 5f458c0ec226bda4787707b0d0611e56
+guid: 0d2d6a28ffe798b48a72de30602e1aba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4451503861473779029
-    second: Shotgunl_Normal_1.1_0
+      213: -1280236444826358938
+    second: Shotgun_Mask_1.2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
-    sRGBTexture: 0
+    enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -55,9 +55,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shotgunl_Normal_1.1_0
+      name: Shotgun_Mask_1.2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 9
         width: 32
-        height: 32
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ba26394b2d41932c0800000000000000
-      internalID: -4451503861473779029
+      spriteID: 66bad958cbfab3ee0800000000000000
+      internalID: -1280236444826358938
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9eefd7da98a219543867f3f4412d932c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shotgunl_Normal_1.1_0: -4451503861473779029
+      Shotgun_Mask_1.2_0: -1280236444826358938
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
