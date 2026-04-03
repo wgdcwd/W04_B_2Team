@@ -301,6 +301,11 @@ public abstract class NormalEnemyBase : EnemyBase
         if (_flashCoroutine != null) StopCoroutine(_flashCoroutine);
         _flashCoroutine = StartCoroutine(HitFlashRoutine());
         _isAddGauge = isAddGauge;
+        if (_isAmmoEnemy)
+        {
+            _player.GetComponent<PlayerAttack>().AddAmmo();
+            return;
+        }
         base.TakeDamage(damage);
     }
 
