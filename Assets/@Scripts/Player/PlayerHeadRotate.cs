@@ -1,8 +1,6 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class PlayerHeadRotate : MonoBehaviour
-
 {
     [Header("References")]
     [SerializeField] private Transform headTransform;
@@ -11,14 +9,14 @@ public class PlayerHeadRotate : MonoBehaviour
     [SerializeField] private float minAngle = -60f;
     [SerializeField] private float maxAngle = 60f;
     [SerializeField] private int step = 16;
+    [SerializeField] private float angleOffset = 0f;
 
-    private Camera mainCam;
     private float _step;
+    private bool _isLookingLeft;
 
     void Start()
     {
-        _step = 360f / step;
-        mainCam = Camera.main;
+        _step = step > 0 ? 360f / step : 360f;
 
         if (headTransform == null)
         {
@@ -26,38 +24,38 @@ public class PlayerHeadRotate : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        RotateHead();
-    }
-
-    private void RotateHead()
+    public void RotateHead(Vector3 mouseWorldPos)
     {
         if (headTransform == null) return;
 
-        // 마우스 위치를 월드 좌표로 변환
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 mouseWorldPos = mainCam.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -mainCam.transform.position.z));
-
-        // 방향 및 각도 계산
+        // 머리 위치 기준으로 마우스 방향 계산
         Vector2 direction = (Vector2)mouseWorldPos - (Vector2)headTransform.position;
+        if (direction.sqrMagnitude < 0.0001f) return;
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // 각도 보정 
-        float absoluteParentScaleX = transform.lossyScale.x;
-        if (absoluteParentScaleX < 0)
-        {
-            // 왼쪽을 보고 있을 때는 각도를 180도 반전
-            if (angle > 0) angle = 180f - angle;
-            else angle = -180f - angle;
-        }
+        // 현재 바라보는 방향을 기준으로 각도 보정
+        float relativeAngle = Mathf.DeltaAngle(_isLookingLeft ? 180f : 0f, angle);
 
-        // 클램핑 및 스냅
-        angle = Mathf.Clamp(angle, minAngle, maxAngle);
-        float snappedAngle = Mathf.Round(angle / _step) * _step;
+        // 머리 회전 범위 제한
+        relativeAngle = Mathf.Clamp(relativeAngle, minAngle, maxAngle);
 
-        // 머리에만 회전 적용
+        // 스텝 단위로 각도 정리
+        float snappedAngle = Mathf.Round((relativeAngle + angleOffset) / _step) * _step;
+
+        // 최종 머리 회전 적용
         headTransform.localRotation = Quaternion.Euler(0, 0, snappedAngle);
+    }
+
+    public void FlipHead(bool isLookingLeft)
+    {
+        if (headTransform == null) return;
+
+        _isLookingLeft = isLookingLeft;
+
+        // 머리 스프라이트만 따로 뒤집기
+        Vector3 localScale = headTransform.localScale;
+        localScale.x = Mathf.Abs(localScale.x) * (_isLookingLeft ? -1f : 1f);
+        headTransform.localScale = localScale;
     }
 }
