@@ -23,4 +23,9 @@ public class CameraManager : MonoBehaviour
         curCam = cam;
         curCam.Priority = livePriority;
     }
+
+    public void SetBoundary(Collider2D boundary)
+    {
+        curCam.GetComponent<CinemachineConfiner2D>().BoundingShape2D = boundary;
+    }
 }

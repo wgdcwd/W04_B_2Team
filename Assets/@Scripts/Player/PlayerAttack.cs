@@ -239,10 +239,30 @@ public class PlayerAttack : MonoBehaviour
     }
 
     //컷씬용 메서드
-    public void CutsceneFire()
+    public void CutsceneFireRight()
     {
         SO_WeaponBase data = _shotgunData;
         Vector2 aimDir = Vector2.right;
+
+        // 총알 스폰
+        SpawnBullets(data, aimDir); // 총알은 정확한 마우스 방향으로
+
+        // 반동
+        Vector2 shootDir = SnapTo8Direction(aimDir); // 반동만 8방향 스냅
+
+        // X만 초기화, Y는 보존 (점프 중 샷건 쏴도 Y속도 안 날아감)
+        _rb.linearVelocity = new Vector2(0f, _rb.linearVelocity.y);
+        _rb.AddForce(-shootDir * data.recoilForce, ForceMode2D.Impulse);
+
+        _hapticManager?.PlayOneShot(data.lowFrequency, data.highFrequency, data.duration);
+
+        TriggerRecoilRoutines(shootDir);
+    }
+
+    public void CutsceneFireLeft()
+    {
+        SO_WeaponBase data = _shotgunData;
+        Vector2 aimDir = Vector2.left;
 
         // 총알 스폰
         SpawnBullets(data, aimDir); // 총알은 정확한 마우스 방향으로

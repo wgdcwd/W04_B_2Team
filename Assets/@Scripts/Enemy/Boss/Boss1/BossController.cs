@@ -215,8 +215,9 @@ public class BossController : MonoBehaviour
         Destroy(this);
     }
 
-    void StartBoss()
+    public void StartBoss()
     {
+        _isActive = true;
         StartCoroutine(PatternCycleRoutine());
         StartCoroutine(DeathCheckRoutine());
     }
@@ -224,5 +225,10 @@ public class BossController : MonoBehaviour
     public void CutsceneLaser()
     {
         eyes[2].BeginLaser(2.0f);
+    }
+
+    public void CutsceneLaserMiddle()
+    {
+        eyes[3].BeginLaser(2.0f);
     }
 }

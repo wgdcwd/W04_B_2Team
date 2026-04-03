@@ -15,6 +15,9 @@ public class Boss1Cutscene : MonoBehaviour
     [SerializeField] private float _sequencerDuration = 5f; // 인스펙터에서 조절
     [SerializeField] private Transform _player;
 
+    [Header("Boss")] 
+    [SerializeField] private BossController _controller;
+
     private Vector2 _startPos;
     private bool _triggered = false;
 
@@ -26,14 +29,14 @@ public class Boss1Cutscene : MonoBehaviour
         director.stopped += OnTimelineFinished;
     }
 
-    //void Update()
-    //{
-    //    if (_triggered) return; // 컷씬 시작 후 Update 중단
+    void Update()
+    {
+        if (_triggered) return; // 컷씬 시작 후 Update 중단
 
-    //    float dist = _player.position.x - _startPos.x;
-    //    float t = Mathf.Clamp01(dist / 40f);
-    //    _walkPathCam.Lens.OrthographicSize = Mathf.Lerp(5f, 15f, t);
-    //}
+        float dist = _player.position.x - _startPos.x;
+        float t = Mathf.Clamp01(dist / 40f);
+        _walkPathCam.Lens.OrthographicSize = Mathf.Lerp(2f, 8f, t);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,26 +51,26 @@ public class Boss1Cutscene : MonoBehaviour
 
     private void OnTimelineFinished(PlayableDirector pd)
     {
+        
+    }
+
+    public void StartSequencerCam()
+    {
         _walkPathCam.Priority = 0; // 워크 카메라 끄기
         _sequencerCam.Priority = 20; // 시퀀서 카메라 활성화
-        StartCoroutine(WaitForSequencer());
     }
 
-    private System.Collections.IEnumerator WaitForSequencer()
-    {
-        yield return new WaitForSeconds(_sequencerDuration);
-        OnCutsceneAllFinished();
-    }
 
-    private void OnCutsceneAllFinished()
+    public void OnCutsceneAllFinished()
     {
         ManagerRegistry.Get<InputManager>().EnablePlayerInput();
         // 여기에 게임 시작 코드 추가
         Debug.Log("컷씬 완료 - 게임 시작!");
+        _controller?.StartBoss();
+
     }
 
     void OnDestroy()
     {
-        director.stopped -= OnTimelineFinished;
     }
 }
