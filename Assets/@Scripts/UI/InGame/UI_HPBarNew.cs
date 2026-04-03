@@ -62,83 +62,83 @@ public class UI_HPBarNew : UI_Base
 
         _slotBar.SetValue(_playerHealth.CurrentHp, 0f);
     }
+}
 
-    private class SlotBar
+public class SlotBar
+{
+    private readonly UI_BarSlot[] _slots;
+
+    private int _currentValue;
+    private int _maxValue;
+
+    public SlotBar(UI_BarSlot[] slots)
     {
-        private readonly UI_BarSlot[] _slots;
+        _slots = slots;
+    }
 
-        private int _currentValue;
-        private int _maxValue;
+    public void Initialize(int currentValue, int maxValue)
+    {
+        _maxValue = Mathf.Max(0, maxValue);
+        _currentValue = Mathf.Clamp(currentValue, 0, _maxValue);
 
-        public SlotBar(UI_BarSlot[] slots)
+        RefreshImmediate();
+    }
+
+    public void SetValue(int newValue, float consumeEchoDuration)
+    {
+        int nextValue = Mathf.Clamp(newValue, 0, _maxValue);
+
+        if (nextValue < _currentValue)
+            PlayDecrease(nextValue, consumeEchoDuration);
+        else if (nextValue > _currentValue)
+            PlayIncrease(nextValue);
+
+        _currentValue = nextValue;
+    }
+
+    private void RefreshImmediate()
+    {
+        for (int i = 0; i < _slots.Length; i++)
         {
-            _slots = slots;
-        }
+            if (_slots[i] == null)
+                continue;
 
-        public void Initialize(int currentValue, int maxValue)
+            bool isActiveSlot = i < _maxValue;
+            bool isFilled = i < _currentValue;
+
+            _slots[i].gameObject.SetActive(isActiveSlot);
+
+            if (!isActiveSlot)
+                continue;
+
+            _slots[i].SetFilledImmediate(isFilled);
+        }
+    }
+
+    private void PlayDecrease(int nextValue, float consumeEchoDuration)
+    {
+        for (int i = _currentValue - 1; i >= nextValue; i--)
         {
-            _maxValue = Mathf.Max(0, maxValue);
-            _currentValue = Mathf.Clamp(currentValue, 0, _maxValue);
+            if (!IsValidIndex(i))
+                continue;
 
-            RefreshImmediate();
+            _slots[i].PlayConsumeEcho(consumeEchoDuration);
         }
+    }
 
-        public void SetValue(int newValue, float consumeEchoDuration)
+    private void PlayIncrease(int nextValue)
+    {
+        for (int i = _currentValue; i < nextValue; i++)
         {
-            int nextValue = Mathf.Clamp(newValue, 0, _maxValue);
+            if (!IsValidIndex(i))
+                continue;
 
-            if (nextValue < _currentValue)
-                PlayDecrease(nextValue, consumeEchoDuration);
-            else if (nextValue > _currentValue)
-                PlayIncrease(nextValue);
-
-            _currentValue = nextValue;
+            _slots[i].PlayRecover();
         }
+    }
 
-        private void RefreshImmediate()
-        {
-            for (int i = 0; i < _slots.Length; i++)
-            {
-                if (_slots[i] == null)
-                    continue;
-
-                bool isActiveSlot = i < _maxValue;
-                bool isFilled = i < _currentValue;
-
-                _slots[i].gameObject.SetActive(isActiveSlot);
-
-                if (!isActiveSlot)
-                    continue;
-
-                _slots[i].SetFilledImmediate(isFilled);
-            }
-        }
-
-        private void PlayDecrease(int nextValue, float consumeEchoDuration)
-        {
-            for (int i = _currentValue - 1; i >= nextValue; i--)
-            {
-                if (!IsValidIndex(i))
-                    continue;
-
-                _slots[i].PlayConsumeEcho(consumeEchoDuration);
-            }
-        }
-
-        private void PlayIncrease(int nextValue)
-        {
-            for (int i = _currentValue; i < nextValue; i++)
-            {
-                if (!IsValidIndex(i))
-                    continue;
-
-                _slots[i].PlayRecover();
-            }
-        }
-
-        private bool IsValidIndex(int index)
-        {
-            return _slots != null && index >= 0 && index < _slots.Length;
-        }
+    private bool IsValidIndex(int index)
+    {
+        return _slots != null && index >= 0 && index < _slots.Length;
     }
 }

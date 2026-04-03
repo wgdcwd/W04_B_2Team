@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6301887, g: 0.5060793, b: 0.24137412, a: 1}
+  m_Color: {r: 0.5622641, g: 0.4199567, b: 0.12200062, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 4522279053661751690}
   - component: {fileID: 1059338883856983055}
   - component: {fileID: 109539485048725175}
+  - component: {fileID: 3253709938523501898}
   m_Layer: 5
   m_Name: SmallAmmo
   m_TagString: Untagged
@@ -128,11 +129,11 @@ RectTransform:
   - {fileID: 202564878003889309}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1059338883856983055
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -171,3 +172,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3253709938523501898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5711446705507930028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50659f45a2db30d41887455cab1b7ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_BarSlot
+  _animatedRoot: {fileID: 4522279053661751690}
+  _fillImage: {fileID: 109539485048725175}
+  _echoImage: {fileID: 749781794310131660}
+  _blinkInterval: 0.1
+  _minEchoAlpha: 0.25
+  _healScale: 1.15
+  _healDuration: 0.2

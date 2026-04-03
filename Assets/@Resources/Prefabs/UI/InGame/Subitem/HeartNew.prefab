@@ -34,11 +34,11 @@ RectTransform:
   - {fileID: 7451039310451867292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5519608782309686791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -92,6 +92,10 @@ MonoBehaviour:
   _animatedRoot: {fileID: 7864059603804054704}
   _fillImage: {fileID: 8929600132187861803}
   _echoImage: {fileID: 4284232244595081195}
+  _blinkInterval: 0.1
+  _minEchoAlpha: 0.25
+  _healScale: 1.15
+  _healDuration: 0.5
 --- !u!1 &990372269093634232
 GameObject:
   m_ObjectHideFlags: 0
