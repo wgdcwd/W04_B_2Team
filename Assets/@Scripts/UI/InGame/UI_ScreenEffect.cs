@@ -26,10 +26,10 @@ public class UI_ScreenEffect : MonoBehaviour
 
         _sequence = DOTween.Sequence();
 
-        // 2. SetUpdate(true)를 추가하여 게임이 일시정지되어도 UI 애니메이션이 재생되도록 보장합니다.
+        // 2. SetUpdate(true)를 추가하여 게임이 일시정지되어도 UI 애니메이션이 재생되도록 보장
         _sequence.SetUpdate(true);
 
-        // 3. DOTween.To 대신 머티리얼 전용 확장 메서드 DOFloat 사용 (코드가 훨씬 깔끔해집니다!)
+        // 3. DOTween.To 대신 머티리얼 전용 확장 메서드 DOFloat 사용
         _sequence.Join(_distortionImage.material.DOFloat(1f, DistortionStrengthId, _duration));
         _sequence.Join(_dimOverlayCanvasgroup.DOFade(1f, _duration));
 
