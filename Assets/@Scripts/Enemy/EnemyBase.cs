@@ -18,6 +18,10 @@ public abstract class EnemyBase : EntityBase
     private bool _isMarked = false;
     private GameStateManager _gameStateManager;
 
+    // 인식, 킬마커 용 이벤트
+    public event Action<EnemyBase> OnDeath;
+    public event Action<EnemyBase> OnAlerted;
+
     private void Awake()
     {
         ManagerRegistry.TryGet(out _gameStateManager);
@@ -70,5 +74,21 @@ public abstract class EnemyBase : EntityBase
         return _gameStateManager != null
             && _gameStateManager.CurrentState == GameState.Playing;
         //return true; // 일단 모든 상태에서 행동 가능하도록 허용. 필요시 GameState 체크 로직 추가.
+    }
+
+    // 인식, 킬마커용 
+    protected void RaiseDeath()
+    {
+        OnDeath?.Invoke(this);
+    }
+
+    protected void RaiseDeathFinished()
+    {
+        OnDeathFinished?.Invoke(this);
+    }
+
+    protected void RaiseAlerted()
+    {
+        OnAlerted?.Invoke(this);
     }
 }
