@@ -64,6 +64,7 @@ public class UI_HPBarNew : UI_Base
     }
 }
 
+
 public class SlotBar
 {
     private readonly UI_BarSlot[] _slots;
@@ -78,18 +79,23 @@ public class SlotBar
 
     public void Initialize(int currentValue, int maxValue)
     {
-        _maxValue = Mathf.Max(0, maxValue);
+        _maxValue = Mathf.Clamp(maxValue, 0, _slots.Length);
         _currentValue = Mathf.Clamp(currentValue, 0, _maxValue);
 
         RefreshImmediate();
     }
 
-    public void SetValue(int newValue, float consumeEchoDuration)
+    public void SetValue(int newValue)
+    {
+        SetValue(newValue, 0f);
+    }
+
+    public void SetValue(int newValue, float decreaseEchoDuration)
     {
         int nextValue = Mathf.Clamp(newValue, 0, _maxValue);
 
         if (nextValue < _currentValue)
-            PlayDecrease(nextValue, consumeEchoDuration);
+            PlayDecrease(nextValue, decreaseEchoDuration);
         else if (nextValue > _currentValue)
             PlayIncrease(nextValue);
 
@@ -115,14 +121,17 @@ public class SlotBar
         }
     }
 
-    private void PlayDecrease(int nextValue, float consumeEchoDuration)
+    private void PlayDecrease(int nextValue, float decreaseEchoDuration)
     {
         for (int i = _currentValue - 1; i >= nextValue; i--)
         {
             if (!IsValidIndex(i))
                 continue;
 
-            _slots[i].PlayConsumeEcho(consumeEchoDuration);
+            if (decreaseEchoDuration > 0f)
+                _slots[i].PlayConsumeEcho(decreaseEchoDuration);
+            else
+                _slots[i].SetFilledImmediate(false);
         }
     }
 
