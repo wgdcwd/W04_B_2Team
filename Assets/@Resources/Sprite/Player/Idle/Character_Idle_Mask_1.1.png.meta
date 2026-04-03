@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: fa6f9532c90528f4fa1b27c9a8be3198
+guid: d43f9f160fd0ad44b93d50f9eb37f93c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3194062237956864361
-    second: Shotgunl_1.1_0
+      213: -2867920153361646302
+    second: Character_Idle_Mask_1.1_0
+  - first:
+      213: -3713297749392849942
+    second: Character_Idle_Mask_1.1_1
+  - first:
+      213: 4239754593058836975
+    second: Character_Idle_Mask_1.1_2
+  - first:
+      213: -3437136240149048705
+    second: Character_Idle_Mask_1.1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,11 +109,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shotgunl_1.1_0
+      name: Character_Idle_Mask_1.1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96978ebbea6935c20800000000000000
-      internalID: 3194062237956864361
+      spriteID: 22df1beb0d91338d0800000000000000
+      internalID: -2867920153361646302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Mask_1.1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae38e2eee57b77cc0800000000000000
+      internalID: -3713297749392849942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Mask_1.1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe15a16d652a6da30800000000000000
+      internalID: 4239754593058836975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Mask_1.1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f725b41ecc6dc40d0800000000000000
+      internalID: -3437136240149048705
       vertices: []
       indices: 
       edges: []
@@ -125,19 +200,22 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 95cad13e06b4eb14aa2685f4eed2f3cc
+    spriteID: 37d21f0840d43f145a61a5074ccb9da0
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 5f458c0ec226bda4787707b0d0611e56, type: 3}
-      name: _NormalMap
+    secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Shotgunl_1.1_0: 3194062237956864361
+      Character_Idle_Mask_1.1_0: -2867920153361646302
+      Character_Idle_Mask_1.1_1: -3713297749392849942
+      Character_Idle_Mask_1.1_2: 4239754593058836975
+      Character_Idle_Mask_1.1_3: -3437136240149048705
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

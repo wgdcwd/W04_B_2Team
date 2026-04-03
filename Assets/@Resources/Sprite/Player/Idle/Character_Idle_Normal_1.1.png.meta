@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 5aa322ed2c98aac4790754abd040b4ec
+guid: 0b645568f912c0e44a74dd847207d86e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1248344654725270510
-    second: Pistol_Normal_1.1_0
+      213: -3194105007442245930
+    second: Character_Idle_Normal_1.1_0
+  - first:
+      213: -190079973577524787
+    second: Character_Idle_Normal_1.1_1
+  - first:
+      213: -1758197341339275687
+    second: Character_Idle_Normal_1.1_2
+  - first:
+      213: 4488935814559760279
+    second: Character_Idle_Normal_1.1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pistol_Normal_1.1_0
+      name: Character_Idle_Normal_1.1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
+        x: 7
+        y: 0
+        width: 17
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eeb482679d2035110800000000000000
-      internalID: 1248344654725270510
+      spriteID: 6d6cb183b624ca3d0800000000000000
+      internalID: -3194105007442245930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Normal_1.1_1
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 0
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc9fef76543bc5df0800000000000000
+      internalID: -190079973577524787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Normal_1.1_2
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 0
+        width: 17
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95eaf6855d0a997e0800000000000000
+      internalID: -1758197341339275687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character_Idle_Normal_1.1_3
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 0
+        width: 17
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79ffc560757eb4e30800000000000000
+      internalID: 4488935814559760279
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 68f443051d27b7b41ae46d55277ec214
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Pistol_Normal_1.1_0: 1248344654725270510
+      Character_Idle_Normal_1.1_0: -3194105007442245930
+      Character_Idle_Normal_1.1_1: -190079973577524787
+      Character_Idle_Normal_1.1_2: -1758197341339275687
+      Character_Idle_Normal_1.1_3: 4488935814559760279
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
