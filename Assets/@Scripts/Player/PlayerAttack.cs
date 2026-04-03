@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -46,6 +47,9 @@ public class PlayerAttack : MonoBehaviour
 
     private PoolManager _poolManager;
     private HapticManager _hapticManager;
+
+    // 카메라 impulse
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
 
 
     // Temp: 둘 다 끝났는지 추적
@@ -120,16 +124,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void FireCurrentWeapon()
     {
-        if (_player.deadeyeSkill.IsDeadeyeActive)
-            return;
+        if (_player.deadeyeSkill.IsDeadeyeActive) return;
+        if (currentWeaponData == null) return;
+        if (!TryFireWeapon(_currentWeaponInstance, false)) return;
 
-        if (currentWeaponData == null)
-            return;
-
-        if (!TryFireWeapon(_currentWeaponInstance, false))
-            return;
-
-        //SoundManager.instance.HandlePistolSFX();
         Fire(currentWeaponData);
     }
 
@@ -148,6 +146,10 @@ public class PlayerAttack : MonoBehaviour
         _rb.AddForce(-shootDir * data.recoilForce, ForceMode2D.Impulse);
 
         _hapticManager?.PlayOneShot(data.lowFrequency, data.highFrequency, data.duration);
+
+        // 카메라 쉐이크 - 땅/공중 분기
+        float shakeForce = _player.IsGrounded ? data.groundCameraShakeForce : data.airCameraShakeForce;
+        _impulseSource.GenerateImpulse(-shootDir * shakeForce);
 
         TriggerRecoilRoutines(shootDir);
     }
@@ -326,4 +328,24 @@ public class PlayerAttack : MonoBehaviour
         _gravityDone = false;
         _dampingDone = false;
     }
+
+    public void AddAmmo()
+    {
+        _shotgunInstance.AddAmmo(1);
+        _currentWeaponInstance.AddAmmo(1);
+    }
+
+
+    #region Ryeol
+
+    // 폭탄 관련 로직
+    // 버려야할 코드.
+    public void ReceiveExplosionForce(Vector2 forceDir, float forceMagnitude)
+    {
+        _rb.linearVelocity = new Vector2(0f, _rb.linearVelocity.y);
+        _rb.AddForce(forceDir * forceMagnitude, ForceMode2D.Impulse);
+        TriggerRecoilRoutines(forceDir); // 기존 반동 루틴 재활용
+    }
+
+    #endregion
 }

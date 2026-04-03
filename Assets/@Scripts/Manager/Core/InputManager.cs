@@ -79,8 +79,6 @@ public class InputManager : MonoBehaviour, IInitializable
         //player.CheatOne.started += HandleCheatOne;
         player.Pause.started += HandlePause;
 
-        BossIntro.OnPlayerDisable += DisablePlayerInput;
-        BossIntro.OnEndIntro += EnablePlayerInput;
 
         //ui.Pause.started += HandlePause;
     }
@@ -256,8 +254,6 @@ public class InputManager : MonoBehaviour, IInitializable
         ui.Cancel.started -= HandleCancel;
         ui.Cancel.performed -= HandleCancel;
 
-        BossIntro.OnPlayerDisable -= DisablePlayerInput;
-        BossIntro.OnEndIntro -= EnablePlayerInput;
 
         _input.Player.Disable();
         _input.UI.Disable();

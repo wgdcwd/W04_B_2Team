@@ -36,13 +36,10 @@ public class BossController : MonoBehaviour
 
     private void OnEnable()
     {
-        CameraManager.OnBossOutro -= StartBoss; // 중복 방지
-        CameraManager.OnBossOutro += StartBoss;
     }
 
     private void OnDisable()
     {
-        CameraManager.OnBossOutro -= StartBoss;
     }
 
     void Start()

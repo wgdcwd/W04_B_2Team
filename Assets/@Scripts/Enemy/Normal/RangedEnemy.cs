@@ -34,6 +34,7 @@ public class RangedEnemy : NormalEnemyBase
 
         if (!TryFindPlayer())
         {
+            _wasDetecting = false;
             _rb.linearVelocity = Vector2.zero;
             Patrol();
             return;
@@ -43,6 +44,9 @@ public class RangedEnemy : NormalEnemyBase
 
         if (detecting)
         {
+            if (!_wasDetecting)
+                RaiseAlerted();
+
             _wasDetecting = true;
 
             float dist = Vector2.Distance(transform.position, _player.position);

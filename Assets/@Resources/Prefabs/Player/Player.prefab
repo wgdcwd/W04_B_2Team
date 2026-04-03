@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2116783419184232425}
   - component: {fileID: 2472330721019217646}
   - component: {fileID: 1907130635720233524}
+  - component: {fileID: 6967251111403854927}
   - component: {fileID: 3104665959337544455}
   - component: {fileID: 373962003657095638}
   - component: {fileID: 540872386422813845}
@@ -46,8 +47,6 @@ Transform:
   - {fileID: 2608154827606444628}
   - {fileID: 817894102700673229}
   - {fileID: 7932112920232330464}
-  - {fileID: 1822055913439553095}
-  - {fileID: 3411200620084693911}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2472330721019217646
@@ -123,6 +122,59 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &6967251111403854927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222992740227915879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 1
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!114 &3104665959337544455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +234,7 @@ MonoBehaviour:
   _shotgunMuzzle: {fileID: 5403593302148628043}
   _shotgunPivot: {fileID: 9036561667039738287}
   _shotgunIdleAngle: 270
+  _impulseSource: {fileID: 6967251111403854927}
 --- !u!114 &6637769796217830890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +288,16 @@ MonoBehaviour:
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 32768
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _vcam: {fileID: 0}
+  _aimOffsetStrength: 2
+  _smoothSpeed: 3
+  _lookaheadStrength: 2
+  _lookaheadSmooth: 3
+  _returnDelay: 1.5
+  _returnSmooth: 1.5
 --- !u!114 &6331054487131336594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92abb298b8a095d449fc6177613929b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  _maxHp: 10
+  _maxHp: 5
   _attackDamage: 1
   _invincibleDuration: 1.5
   _spriteRenderer: {fileID: 634643051373191999}
@@ -402,50 +465,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1250063871547235725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3342510527325607318
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3411200620084693911}
-  - component: {fileID: 4051592796991002394}
-  m_Layer: 0
-  m_Name: ZoneCam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3411200620084693911
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3342510527325607318}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2116783419184232425}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4051592796991002394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3342510527325607318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e9983e264d1db44b1f141e5c1eadf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraBoundsController
 --- !u!1 &3752932634440751796
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,37 +708,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1250063871547235725}
-  m_Father: {fileID: 2116783419184232425}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6669116133619394336
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1822055913439553095}
-  m_Layer: 0
-  m_Name: DefaultCam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1822055913439553095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6669116133619394336}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 2116783419184232425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &467834493476960526

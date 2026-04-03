@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,9 +13,16 @@ public class GameManager : PersistentMonoSingleton<GameManager>
     [SerializeField] private PauseController _pauseController;
     [SerializeField] private HapticManager _hapticManager;
     [SerializeField] private UIManager _uiManager;
+    [SerializeField] private CameraManager _cameraManager;
     // TODO: Add EnemyManager etc.
 
     [SerializeField] private bool _autoStartInEditor = true;
+
+    private Player _player;
+    private PlayerHealth _playerHealth;    // 게임 매니저는 플레이어의 체력을 감시
+
+    public Player CurrentPlayer => _player;
+    public event Action<Player> OnPlayerBound;
 
     #region Debugging
     [ContextMenu("Debug Die")]
@@ -36,9 +44,6 @@ public class GameManager : PersistentMonoSingleton<GameManager>
     }
     #endregion
 
-    private Player _player;
-    private PlayerHealth _playerHealth;    // 게임 매니저는 플레이어의 체력을 감시
-
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -47,18 +52,24 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         InitializeManagers();
 
         _sceneManager.OnStageReloadCompleted += HandleStageReloadCompleted;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         Debug.Log("GameManager Initialized");
 
         StartGame();
 
-//#if UNITY_EDITOR
-//        if (_autoStartInEditor)
-//        {
-//            StartGame();
-//        }
-//#endif
+        //#if UNITY_EDITOR
+        //        if (_autoStartInEditor)
+        //        {
+        //            StartGame();
+        //        }
+        //#endif
+    }
+
+    private void Start()
+    {
+        if (_playerHealth == null)
+            BindPlayerHealth();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -71,7 +82,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         if (_sceneManager != null)
             _sceneManager.OnStageReloadCompleted -= HandleStageReloadCompleted;
 
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         UnbindPlayerHealth();
     }
 
@@ -88,6 +99,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
             return;
 
         _playerHealth.OnDie += HandlePlayerDie;
+        OnPlayerBound?.Invoke(_player);
     }
 
     private void UnbindPlayerHealth()
@@ -174,6 +186,12 @@ public class GameManager : PersistentMonoSingleton<GameManager>
             return;
         }
 
+        if (_cameraManager == null)
+        {
+            Debug.LogError("CameraManager is not assigned!");
+            return;
+        }
+
         ManagerRegistry.Register<GameManager>(this);
         ManagerRegistry.Register<GameStateManager>(_gameStateManager);
         ManagerRegistry.Register<PoolManager>(_poolManager);
@@ -183,6 +201,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         ManagerRegistry.Register<PauseController>(_pauseController);
         ManagerRegistry.Register<HapticManager>(_hapticManager);
         ManagerRegistry.Register<UIManager>(_uiManager);
+        ManagerRegistry.Register<CameraManager>(_cameraManager);
     }
 
     // 매니저 초기화는 여기서 진행
@@ -196,11 +215,13 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         Initialize(_pauseController);
         Initialize(_hapticManager);
         Initialize(_uiManager);
+        Initialize(_cameraManager);
     }
 
     private void Initialize(IInitializable manager)
     {
-        if (manager == null) return;
+        if (manager == null)
+            return;
 
         if (!manager.IsInitialized)
             manager.Initialize();

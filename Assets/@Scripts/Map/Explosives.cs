@@ -9,6 +9,8 @@ public class Explosives : MonoBehaviour
     [Header("Effect")]
     [SerializeField] private GameObject _explosionParticlePrefab;
 
+    private TNTSpawner _spawner;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Bullet bullet = collision.GetComponent<Bullet>();
@@ -19,30 +21,24 @@ public class Explosives : MonoBehaviour
         }
     }
 
+    public void SetSpawner(TNTSpawner spawner)
+    {
+        _spawner = spawner;
+    }
+
     public void Explosion()
     {
+        _spawner?.OnTNTExploded(); // Destroy 전에 먼저 호출
         SpawnExplosionParticle();
 
         Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _interactionMask);
         foreach (Collider2D _hit in _hits)
         {
-            PlayerHealth playerHealth;
-            BreakableTile tile;
-            EnemyBase _enemy;
-            
-            if((tile = _hit.GetComponent<BreakableTile>()) != null)
+            // 버려야 할 코드.
+            if (_hit.TryGetComponent<PlayerAttack>(out var playerAttack))
             {
-                Destroy(tile.gameObject);
-            }else if((_enemy = _hit.GetComponent<EnemyBase>())!= null)
-            {
-                _enemy.TakeDamage(_explosionDamage *100);
-            }
-            else if ((playerHealth = _hit.gameObject.GetComponent<PlayerHealth>()) != null)
-            {
-                if (playerHealth != null)
-                {
-                    playerHealth.TakeDamage(_explosionDamage);
-                }
+                Vector2 dir = ((Vector2)(_hit.transform.position - transform.position)).normalized;
+                playerAttack.ReceiveExplosionForce(dir, _explosionDamage);
             }
         }
     }
