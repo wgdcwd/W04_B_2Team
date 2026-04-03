@@ -9,6 +9,8 @@ public class CameraZone : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         _zoneCam.Priority = 20;
+        
+        other.gameObject.GetComponent<PlayerAimer>().SetVCam(_zoneCam);
     }
 
     private void OnTriggerExit2D(Collider2D other)

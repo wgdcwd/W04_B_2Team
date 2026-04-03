@@ -165,4 +165,10 @@ public class PlayerAimer : MonoBehaviour
             Time.deltaTime * _smoothSpeed
         );
     }
+
+    public void SetVCam(CinemachineCamera newCam)
+    {
+        _vcam = newCam;
+        _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+    }
 }
