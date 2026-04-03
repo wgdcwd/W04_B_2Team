@@ -12,6 +12,7 @@ public class PlayerHealth : EntityBase
     private HapticManager _hapticManager;
 
     public bool IsInvincible => _isInvincible;
+    public float InvincibleDuration => _invincibleDuration;
 
     public event Action<int> OnHit; // Amount   
     public event Action<int> OnHeal;

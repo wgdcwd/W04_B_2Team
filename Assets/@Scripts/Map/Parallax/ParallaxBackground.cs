@@ -7,6 +7,7 @@ public class ParallaxBackground : MonoBehaviour
     [SerializeField] private List<ParallaxLayer> layers = new();
 
     private Vector3 _lastTargetPosition;
+    private float _startTargetY;
 
     private void Awake()
     {
@@ -26,14 +27,19 @@ public class ParallaxBackground : MonoBehaviour
         }
 
         _lastTargetPosition = target.position;
+        _startTargetY = target.position.y;
+
+        foreach (ParallaxLayer layer in layers)
+            layer.Initialize(_startTargetY);
     }
 
     private void LateUpdate()
     {
-        Vector3 delta = target.position - _lastTargetPosition;
+        float deltaX = target.position.x - _lastTargetPosition.x;
+        float targetY = target.position.y;
 
         foreach (ParallaxLayer layer in layers)
-            layer.Move(delta);
+            layer.Move(deltaX, targetY);
 
         _lastTargetPosition = target.position;
     }
