@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    [Header("보스 활성화")]
+    private bool _isActive = false;
+
     [Header("Eye 연결")]
     public BossEye[] eyes;
 
@@ -51,9 +54,11 @@ public class BossController : MonoBehaviour
         if (playerObj != null) _player = playerObj.transform;
     }
 
+
     void Update()
     {
         if (_isDead) return;
+        if (!_isActive) return;
         transform.Rotate(0f, 0f, -_currentRotationSpeed * Time.deltaTime);
     }
 
@@ -210,9 +215,20 @@ public class BossController : MonoBehaviour
         Destroy(this);
     }
 
-    void StartBoss()
+    public void StartBoss()
     {
+        _isActive = true;
         StartCoroutine(PatternCycleRoutine());
         StartCoroutine(DeathCheckRoutine());
+    }
+
+    public void CutsceneLaser()
+    {
+        eyes[2].BeginLaser(2.0f);
+    }
+
+    public void CutsceneLaserMiddle()
+    {
+        eyes[3].BeginLaser(2.0f);
     }
 }
