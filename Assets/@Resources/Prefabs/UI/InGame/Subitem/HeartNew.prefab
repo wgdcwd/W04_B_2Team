@@ -92,10 +92,12 @@ MonoBehaviour:
   _animatedRoot: {fileID: 7864059603804054704}
   _fillImage: {fileID: 8929600132187861803}
   _echoImage: {fileID: 4284232244595081195}
-  _blinkInterval: 0.1
+  _blinkInterval: 0.05
   _minEchoAlpha: 0.25
   _healScale: 1.15
   _healDuration: 0.5
+  _readyMinAlpha: 0.7
+  _readyPulseDuration: 0.6
 --- !u!1 &990372269093634232
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,3 +193,5 @@ MonoBehaviour:
   _minEchoAlpha: 0.25
   _healScale: 1.15
   _healDuration: 0.2
+  _readyMinAlpha: 0.7
+  _readyPulseDuration: 0.6

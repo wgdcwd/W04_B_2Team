@@ -95,6 +95,8 @@ MonoBehaviour:
   _minEchoAlpha: 0.25
   _healScale: 1.15
   _healDuration: 0.2
+  _readyMinAlpha: 0.7
+  _readyPulseDuration: 0.6
 --- !u!1 &5711446705507930028
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6368851, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.63529414, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -191,3 +193,5 @@ MonoBehaviour:
   _minEchoAlpha: 0.25
   _healScale: 1.15
   _healDuration: 0.2
+  _readyMinAlpha: 0.7
+  _readyPulseDuration: 0.6
