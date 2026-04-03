@@ -8,13 +8,12 @@ public class UI_WeaponAmmo : MonoBehaviour
     [SerializeField] private bool _isShotgun = true;
     [SerializeField] private RectTransform _bar;
 
-    [Header("»ö»ó")]
+    [Header("Color")]
     [SerializeField] private Color _filledColor = new Color(1f, 0.8f, 0f);
     [SerializeField] private Color _emptyColor = new Color(0.3f, 0.3f, 0.3f);
 
     private Image[] _slots;
     private WeaponInstance _weaponInstance;
-
 
     private void Start()
     {
@@ -62,6 +61,4 @@ public class UI_WeaponAmmo : MonoBehaviour
         for (int i = 0; i < _slots.Length; i++)
             _slots[i].color = i < currentAmmo ? _filledColor : _emptyColor;
     }
-
-
 }
