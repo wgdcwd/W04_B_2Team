@@ -8,6 +8,9 @@
         },
         {
             "m_Id": "259e13b69a1b483185ce45f7ecc6cc1a"
+        },
+        {
+            "m_Id": "7510b434fe2b43a7955ded073301a155"
         }
     ],
     "m_Keywords": [],
@@ -53,6 +56,9 @@
         },
         {
             "m_Id": "0e2b69320c4d44ea917e47879b988991"
+        },
+        {
+            "m_Id": "bddf272c2c6242079aa17c15cb9a0606"
         }
     ],
     "m_GroupDatas": [],
@@ -182,6 +188,20 @@
                     "m_Id": "0281a0e8739943218712afcd6ea765e8"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "bddf272c2c6242079aa17c15cb9a0606"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "9f83e74f57b84ecf8ae28fd3062ec790"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -556,8 +576,8 @@
         "m_Position": {
             "serializedVersion": "2",
             "x": -1354.39990234375,
-            "y": -32.80002212524414,
-            "width": 172.0,
+            "y": -32.799991607666019,
+            "width": 171.9998779296875,
             "height": 33.59999465942383
         }
     },
@@ -604,7 +624,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.5699999928474426,
+    "m_Value": 0.10000000149011612,
     "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -896,6 +916,9 @@
         },
         {
             "m_Id": "259e13b69a1b483185ce45f7ecc6cc1a"
+        },
+        {
+            "m_Id": "7510b434fe2b43a7955ded073301a155"
         }
     ]
 }
@@ -1002,6 +1025,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "7510b434fe2b43a7955ded073301a155",
+    "m_Guid": {
+        "m_GuidSerialized": "cb5d3585-3907-442f-8167-9f0b46e9ef79"
+    },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
+    "m_Name": "DistortionPatternTexture",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "DistortionPatternTexture",
+    "m_DefaultReferenceName": "_DistortionPatternTexture",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
+    "m_Value": {
+        "m_SerializedTexture": "",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "useTexelSize": true,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "764ab20b76df49f69f3554a289e38f38",
     "m_Id": 2,
@@ -1023,6 +1082,19 @@
         "w": 0.0
     },
     "m_LiteralMode": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "79e1f8ac1daa46b29d7acd66d0e64616",
+    "m_Id": 0,
+    "m_DisplayName": "DistortionPatternTexture",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {
@@ -1442,6 +1514,42 @@
     "m_DefaultValue": 0.0,
     "m_Labels": [],
     "m_LiteralMode": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "bddf272c2c6242079aa17c15cb9a0606",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -2051.2001953125,
+            "y": -164.80001831054688,
+            "width": 212.0,
+            "height": 33.600006103515628
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "79e1f8ac1daa46b29d7acd66d0e64616"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "7510b434fe2b43a7955ded073301a155"
+    }
 }
 
 {
