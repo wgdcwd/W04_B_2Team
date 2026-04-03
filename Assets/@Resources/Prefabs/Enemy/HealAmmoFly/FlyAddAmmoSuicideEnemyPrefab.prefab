@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 9166221463573044941}
   - component: {fileID: 9196642172139614284}
   m_Layer: 15
-  m_Name: FlySuicideEnemyPrefab
+  m_Name: FlyAddAmmoSuicideEnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   _detectionRange: 17.97
   _attackCooldown: 1.5
   _isFlying: 1
-  _isAmmoEnemy: 0
+  _isAmmoEnemy: 1
   _patrolRadius: 0
   _wallLayer:
     serializedVersion: 2

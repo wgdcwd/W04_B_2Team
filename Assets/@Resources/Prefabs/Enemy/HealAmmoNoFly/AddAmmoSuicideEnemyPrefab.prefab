@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,9 +103,9 @@ GameObject:
   - component: {fileID: 8156559328087893542}
   - component: {fileID: 7965816820322047130}
   - component: {fileID: 9166221463573044941}
-  - component: {fileID: 9196642172139614284}
+  - component: {fileID: -5584717973967424058}
   m_Layer: 15
-  m_Name: FlySuicideEnemyPrefab
+  m_Name: AddAmmoSuicideEnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,12 +121,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7869793108928513855}
-  - {fileID: 1388069733892701196}
-  - {fileID: 1701092634366582635}
+  - {fileID: 5700390859527290910}
+  - {fileID: 3868083254762227479}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8156559328087893542
@@ -144,7 +144,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -217,22 +217,22 @@ MonoBehaviour:
   _maxHp: 100
   _attackDamage: 1
   _markIndicator: {fileID: 0}
-  _moveSpeed: 5
-  _attackRange: 14.81
-  _detectionRange: 17.97
+  _moveSpeed: 8
+  _attackRange: 15
+  _detectionRange: 25
   _attackCooldown: 1.5
-  _isFlying: 1
-  _isAmmoEnemy: 0
+  _isFlying: 0
+  _isAmmoEnemy: 1
   _patrolRadius: 0
   _wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   _edgeCheckDistance: 0.5
   _edgeCheckDepth: 1
-  _hitParticle: {fileID: 1939157524240903771}
+  _hitParticle: {fileID: 4097161836622706215}
   _hitFlashCount: 3
   _hitFlashInterval: 0.08
   _hitFlashColor: {r: 0, g: 0, b: 0, a: 1}
@@ -241,7 +241,7 @@ MonoBehaviour:
   _explosionWindupTime: 5
   _explosionMoveSpeed: 10
   _explosionParticle: {fileID: 5298437731249275528, guid: 324f177e92e0f654cbb40be90ec0bc61, type: 3}
---- !u!114 &9196642172139614284
+--- !u!114 &-5584717973967424058
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DespawnController
   _mode: 2
---- !u!1001 &212696927980255464
+--- !u!1001 &2361831514445783188
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -311,17 +311,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52547b60837967943b3cb00138148c52, type: 3}
---- !u!4 &1701092634366582635 stripped
+--- !u!4 &3868083254762227479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1542720394205620099, guid: 52547b60837967943b3cb00138148c52, type: 3}
-  m_PrefabInstance: {fileID: 212696927980255464}
+  m_PrefabInstance: {fileID: 2361831514445783188}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1939157524240903771 stripped
+--- !u!198 &4097161836622706215 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1736951037911357107, guid: 52547b60837967943b3cb00138148c52, type: 3}
-  m_PrefabInstance: {fileID: 212696927980255464}
+  m_PrefabInstance: {fileID: 2361831514445783188}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7530539308764417009
+--- !u!1001 &3808190147202381795
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -382,8 +382,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
---- !u!4 &1388069733892701196 stripped
+--- !u!4 &5700390859527290910 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8917887625052944381, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
-  m_PrefabInstance: {fileID: 7530539308764417009}
+  m_PrefabInstance: {fileID: 3808190147202381795}
   m_PrefabAsset: {fileID: 0}
