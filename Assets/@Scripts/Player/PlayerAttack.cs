@@ -329,7 +329,7 @@ public class PlayerAttack : MonoBehaviour
     public void AddAmmo()
     {
         _shotgunInstance.AddAmmo(1);
-        _currentWeaponInstance.AddAmmo(1);
+        //_currentWeaponInstance.AddAmmo(1);
     }
 
 
