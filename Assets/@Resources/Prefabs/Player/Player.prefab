@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 6331054487131336594}
   - component: {fileID: 4474358315243513985}
   - component: {fileID: 4487828896594457828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -234,7 +234,6 @@ MonoBehaviour:
   _shotgunMuzzle: {fileID: 5403593302148628043}
   _shotgunPivot: {fileID: 9036561667039738287}
   _shotgunIdleAngle: 270
-  _impulseSource: {fileID: 6967251111403854927}
 --- !u!114 &6637769796217830890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b545845d9d7474ba4b374fed8dfb73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAimer
-  _cam: {fileID: 0}
   _gunPivot: {fileID: 4069578685439827307}
+  _cam: {fileID: 0}
   _aimAssistRadiusMouse: 2
   _aimAssistRadiusGamepad: 10
   _aimAssistAngleGamepad: 30
@@ -292,7 +291,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _vcam: {fileID: 0}
-  _aimOffsetStrength: 2
+  _aimOffsetStrength: 3.5
   _smoothSpeed: 3
   _lookaheadStrength: 2
   _lookaheadSmooth: 3
