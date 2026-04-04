@@ -19,7 +19,6 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private LayerMask _groundLayer;
 
-
     [Header("Camera Aim Offset")]
     [SerializeField] CinemachineCamera _vcam;
     [SerializeField] float _aimOffsetStrength = 2f;
@@ -27,6 +26,7 @@ public class PlayerAimer : MonoBehaviour
 
     CinemachinePositionComposer _composer;
     Vector3 _baseOffset = Vector3.zero;
+    Vector3 _defaultBaseOffset = Vector3.zero;
 
     [Header("Lookahead")]
     [SerializeField] float _lookaheadStrength = 2f;
@@ -37,8 +37,6 @@ public class PlayerAimer : MonoBehaviour
     Vector2 _lastMoveDir = Vector2.zero;
     Vector2 _lookaheadOffset = Vector2.zero;
     float _stopTimer = 0f;
-
-    
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
     public bool IsUsingGamepad { get; private set; }
@@ -55,7 +53,8 @@ public class PlayerAimer : MonoBehaviour
     void Start()
     {
         _composer = _vcam.GetComponent<CinemachinePositionComposer>();
-        _baseOffset = _composer.TargetOffset;
+        _defaultBaseOffset = _composer.TargetOffset;
+        _baseOffset = _defaultBaseOffset;
     }
 
     void Update()
@@ -70,6 +69,12 @@ public class PlayerAimer : MonoBehaviour
 
         _composer = composer;
         _baseOffset = composer.TargetOffset;
+    }
+
+    public void ResetComposer()
+    {
+        _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+        _baseOffset = _defaultBaseOffset;
     }
 
     public void HandleLook(InputAction.CallbackContext ctx)
@@ -115,6 +120,7 @@ public class PlayerAimer : MonoBehaviour
 
         Collider2D closest = null;
         float closestAngle = float.MaxValue;
+
         foreach (Collider2D hit in hits)
         {
             Vector2 toEnemy = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
@@ -147,6 +153,8 @@ public class PlayerAimer : MonoBehaviour
 
     void UpdateLookahead()
     {
+        if (_composer == null) return;
+
         Vector2 velocity = _rb.linearVelocity;
         bool moving = velocity.sqrMagnitude > 0.1f;
 
