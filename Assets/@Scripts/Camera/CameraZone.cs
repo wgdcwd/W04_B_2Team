@@ -22,7 +22,8 @@ public class CameraZone : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        _zoneCam.Target.TrackingTarget = other.transform;
+        if (_zoneCam.Target.TrackingTarget == null) _zoneCam.Target.TrackingTarget = other.transform;
+        
 
         _overlapCount++;
         if (_overlapCount == 1)
