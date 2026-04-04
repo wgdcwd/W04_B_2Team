@@ -24,7 +24,7 @@ public class NextScene : MonoBehaviour
 
     public void NextStage()
     {
-
+        _vcam = GetComponentInChildren<CinemachineCamera>();
         _vcam.Priority = 100;
         DOTween.To(
             () => _vcam.Lens.OrthographicSize,
