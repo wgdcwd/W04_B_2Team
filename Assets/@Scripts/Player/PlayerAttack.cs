@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,6 +45,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform _shotgunPivot;
     [SerializeField] private float _shotgunIdleAngle = 90f; // 평소 위로 든 각도
 
+    [Header("Screen Shake")]
+    [SerializeField] CinemachineImpulseSource _impulseSource;
+
     private PoolManager _poolManager;
     private HapticManager _hapticManager;
 
@@ -62,6 +66,11 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _pistolBaseScale;
     private Vector3 _shotgunBaseScale;
     private bool _lastLookingLeft;
+
+    // 몬스터가 총알 채워주는 경우 쿨타임
+    private bool _canAddAmmo = true;
+    private float _addAmmoCooldown = 0.1f;
+
 
     private void Awake()
     {
@@ -147,6 +156,10 @@ public class PlayerAttack : MonoBehaviour
         _rb.AddForce(-shootDir * data.recoilForce, ForceMode2D.Impulse);
 
         _hapticManager?.PlayOneShot(data.lowFrequency, data.highFrequency, data.duration);
+
+        // 땅/공중에 따라 흔들림 세기 결정
+        float shakeForce = _player.IsGrounded ? data.groundCameraShakeForce : data.airCameraShakeForce;
+        _impulseSource.GenerateImpulseWithVelocity(-shootDir * shakeForce);
 
         TriggerRecoilRoutines(shootDir);
     }
@@ -328,8 +341,18 @@ public class PlayerAttack : MonoBehaviour
 
     public void AddAmmo()
     {
+        if (!_canAddAmmo) return;
+        _canAddAmmo = false;
+        StartCoroutine(nameof(AddAmmoCooldown));
         _shotgunInstance.AddAmmo(1);
-        _currentWeaponInstance.AddAmmo(1);
+        //_currentWeaponInstance.AddAmmo(1);
+    }
+
+    IEnumerator AddAmmoCooldown()
+    {
+        yield return new WaitForSeconds(_addAmmoCooldown);
+        _canAddAmmo = true;
+
     }
 
 
