@@ -2,16 +2,25 @@ using UnityEngine;
 
 public class BossLaserImpactEffect : MonoBehaviour
 {
-    [SerializeField] private float _lifeTime = 0.25f;
+    private ParticleSystem[] _particleSystems;
+
+    void Awake()
+    {
+        _particleSystems = GetComponentsInChildren<ParticleSystem>(true);
+    }
 
     void OnEnable()
     {
-        CancelInvoke(nameof(DestroySelf));
-        Invoke(nameof(DestroySelf), _lifeTime);
+        PlayParticles();
     }
 
-    void DestroySelf()
+    void PlayParticles()
     {
-        Destroy(gameObject);
+        for (int i = 0; i < _particleSystems.Length; i++)
+        {
+            _particleSystems[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            _particleSystems[i].Play(true);
+        }
     }
+
 }
