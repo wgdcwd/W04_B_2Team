@@ -558,7 +558,7 @@ MonoBehaviour:
   _filmGrainService: {fileID: 8183815156272302278}
   _chromaticAberrationService: {fileID: 3775309162918020659}
   _lensDistortionSettings:
-    startIntensity: -0.6
+    startIntensity: -0.4
     endIntensity: 0
     xMultiplier: 0.5
     yMultiplier: 0.5
@@ -587,9 +587,9 @@ MonoBehaviour:
   _playerHealth: {fileID: 0}
   _vignetteService: {fileID: 1065410880442745171}
   _hitSettings:
-    startColor: {r: 0.7283019, g: 0, b: 0, a: 1}
+    startColor: {r: 0.6679245, g: 0, b: 0, a: 1}
     endColor: {r: 0, g: 0, b: 0, a: 1}
-    startIntensity: 0.3
+    startIntensity: 0.5
     endIntensity: 0.3
     duration: 0.5
   _heartbeatStages:
