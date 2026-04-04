@@ -42,7 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaThreshold: 0.08
-    - _BloomIntensity: 1.5
+    - _BloomIntensity: 2.5
     - _EdgeSoftness: 1.2
     - _EnableExternalAlpha: 0
     - _OutlineWidth: 2
