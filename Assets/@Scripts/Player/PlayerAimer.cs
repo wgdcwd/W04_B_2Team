@@ -1,10 +1,11 @@
-﻿using Unity.Cinemachine;
+﻿using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAimer : MonoBehaviour
 {
-    [SerializeField] private Transform _gunPivot; // 주무기(권총) 피봇
+    [SerializeField] private Transform _gunPivot;
     [SerializeField] private Camera _cam;
     [SerializeField] private Transform _muzzle;
 
@@ -24,10 +25,13 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] CinemachineCamera _vcam;
     [SerializeField] float _aimOffsetStrength = 2f;
     [SerializeField] float _smoothSpeed = 3f;
+    [SerializeField] float _downAimOffsetMultiplier = 0.2f;
 
     CinemachinePositionComposer _composer;
     Vector3 _baseOffset = Vector3.zero;
     Vector3 _defaultBaseOffset = Vector3.zero;
+
+    private Dictionary<CinemachinePositionComposer, Vector3> _originalOffsets = new();
 
     [Header("Lookahead")]
     [SerializeField] float _lookaheadStrength = 2f;
@@ -58,6 +62,9 @@ public class PlayerAimer : MonoBehaviour
         _composer = _vcam.GetComponent<CinemachinePositionComposer>();
         _defaultBaseOffset = _composer.TargetOffset;
         _baseOffset = _defaultBaseOffset;
+
+        // 기본 카메라 원본 등록
+        _originalOffsets[_composer] = _defaultBaseOffset;
     }
 
     void Update()
@@ -65,19 +72,38 @@ public class PlayerAimer : MonoBehaviour
         UpdateLookahead();
     }
 
+    private Vector3 GetOriginalOffset(CinemachinePositionComposer composer)
+    {
+        // 처음 접근할 때만 현재값을 원본으로 저장
+        // 이후엔 항상 저장된 원본 반환
+        if (!_originalOffsets.ContainsKey(composer))
+            _originalOffsets[composer] = composer.TargetOffset;
+
+        return _originalOffsets[composer];
+    }
+
     public void SetComposer(CinemachineCamera vcam)
     {
         var composer = vcam.GetComponent<CinemachinePositionComposer>();
         if (composer == null) return;
 
+        // 나가는 카메라 원상복구
+        if (_composer != null)
+            _composer.TargetOffset = _baseOffset;
+
         _composer = composer;
-        _baseOffset = composer.TargetOffset;
+        _baseOffset = GetOriginalOffset(composer); // 항상 원본값 기준
     }
 
     public void ResetComposer()
     {
+        // 나가는 카메라 원상복구
+        if (_composer != null)
+            _composer.TargetOffset = _baseOffset;
+
         _composer = _vcam.GetComponent<CinemachinePositionComposer>();
         _baseOffset = _defaultBaseOffset;
+        _composer.TargetOffset = _defaultBaseOffset;
     }
 
     public void HandleLook(InputAction.CallbackContext ctx)
@@ -115,10 +141,6 @@ public class PlayerAimer : MonoBehaviour
         float angle = Mathf.Atan2(AimDirection.y, AimDirection.x) * Mathf.Rad2Deg;
 
         IsLookingLeft = angle > 90f || angle < -90f;
-
-        // 왼쪽 오른쪽에 따른 보정
-
-
 
         if (angle > 90f)
             angle -= 180f;
@@ -186,7 +208,6 @@ public class PlayerAimer : MonoBehaviour
             _stopTimer = 0f;
 
             Vector2 targetLookahead = _lastMoveDir * _lookaheadStrength;
-            targetLookahead.y = -targetLookahead.y;
             _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, targetLookahead, Time.deltaTime * _lookaheadSmooth);
         }
         else
@@ -197,9 +218,13 @@ public class PlayerAimer : MonoBehaviour
                 _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, Vector2.zero, Time.deltaTime * _returnSmooth);
         }
 
-        Vector2 aimOffset = AimDirection * _aimOffsetStrength;
-        Vector2 totalOffset = aimOffset + _lookaheadOffset;
+        _lookaheadOffset = Vector2.ClampMagnitude(_lookaheadOffset, _lookaheadStrength);
 
+        Vector2 aimOffset = AimDirection * _aimOffsetStrength;
+
+        if (aimOffset.y < 0f)
+            aimOffset.y *= _downAimOffsetMultiplier;  // 아래 방향 감쇠
+        Vector2 totalOffset = aimOffset + _lookaheadOffset;
         Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y, 0f);
 
         _composer.TargetOffset = Vector3.Lerp(
@@ -208,6 +233,4 @@ public class PlayerAimer : MonoBehaviour
             Time.deltaTime * _smoothSpeed
         );
     }
-
-    
 }

@@ -94,8 +94,11 @@ MonoBehaviour:
   _echoImage: {fileID: 4023669545634932286}
   _blinkInterval: 0.1
   _minEchoAlpha: 0.25
-  _healScale: 1.15
-  _healDuration: 0.2
+  _healScale: 1.5
+  _healDuration: 0.3
+  _useFillHitFlash: 1
+  _fillHitColor: {r: 0.3664943, g: 1, b: 0, a: 1}
+  _fillHitDuration: 0.3
   _readyMinAlpha: 0.3
   _readyPulseDuration: 1
 --- !u!1 &1867625366060468177
