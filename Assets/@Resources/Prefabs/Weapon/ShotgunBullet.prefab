@@ -47,9 +47,9 @@ MonoBehaviour:
   m_ComponentVersion: 2
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.67
+  m_FalloffIntensity: 0.532
   m_Color: {r: 1, g: 0.34545404, b: 0.06132078, a: 1}
-  m_Intensity: 20
+  m_Intensity: 10
   m_LightVolumeIntensity: 0.001
   m_LightVolumeEnabled: 1
   m_ApplyToSortingLayers: ad46c16000000000291b928c4bb6f0bbdd791971b98d2642
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 11.1
+  m_PointLightOuterRadius: 5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -259,3 +259,4 @@ MonoBehaviour:
   _isPiercing: 0
   _giveGauge: 1
   _hitParticlePrefab: {fileID: 2353225969018668273, guid: 730cc48ae579ae74ebe919354581b709, type: 3}
+  _light: {fileID: 0}
