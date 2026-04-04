@@ -178,6 +178,7 @@ public class PlayerAimer : MonoBehaviour
             _stopTimer = 0f;
 
             Vector2 targetLookahead = _lastMoveDir * _lookaheadStrength;
+            targetLookahead.y = -targetLookahead.y;
             _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, targetLookahead, Time.deltaTime * _lookaheadSmooth);
         }
         else
@@ -199,4 +200,6 @@ public class PlayerAimer : MonoBehaviour
             Time.deltaTime * _smoothSpeed
         );
     }
+
+    
 }
