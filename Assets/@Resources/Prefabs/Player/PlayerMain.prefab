@@ -747,8 +747,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _vcam: {fileID: 0}
-  _aimOffsetStrength: 3.5
+  _aimOffsetStrength: 4
   _smoothSpeed: 3
+  _downAimOffsetMultiplier: 0.1
   _lookaheadStrength: 2
   _lookaheadSmooth: 3
   _returnDelay: 1.5
@@ -776,6 +777,7 @@ MonoBehaviour:
   _shotgunMuzzle: {fileID: 8353469296022719306}
   _shotgunPivot: {fileID: 7110093889820072949}
   _shotgunIdleAngle: 90
+  _impulseSource: {fileID: 7350310320541500944}
 --- !u!114 &2222345568415548478
 MonoBehaviour:
   m_ObjectHideFlags: 0
