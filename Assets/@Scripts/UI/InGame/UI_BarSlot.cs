@@ -17,6 +17,11 @@ public class UI_BarSlot : MonoBehaviour
     [SerializeField] private float _healScale = 1.15f;
     [SerializeField] private float _healDuration = 0.2f;
 
+    [Header("Fill Hit")]
+    [SerializeField] private bool _useFillHitFlash = false;
+    [SerializeField] private Color _fillHitColor = Color.white;
+    [SerializeField] private float _fillHitDuration = 0.12f;
+
     [Header("Ready")]
     [SerializeField] [Range(0f, 1f)] private float _readyMinAlpha = 0.7f;
     [SerializeField] private float _readyPulseDuration = 0.6f;
@@ -24,10 +29,12 @@ public class UI_BarSlot : MonoBehaviour
     private Sequence _effectSequence;
     private Sequence _readySequence;
     private RectTransform _targetRect;
+    private Color _baseFillColor;
 
     private void Awake()
     {
         CacheAnimatedRoot();
+        CacheBaseFillColor();
     }
 
     private void OnDestroy()
@@ -109,14 +116,24 @@ public class UI_BarSlot : MonoBehaviour
         if (_echoImage != null)
             _echoImage.enabled = false;
 
-        if (_targetRect == null || _healDuration <= 0f)
+        bool canPlayScale = _targetRect != null && _healDuration > 0f;
+        bool canPlayFlash = _useFillHitFlash && _fillImage != null && _fillHitDuration > 0f;
+
+        if (!canPlayScale && !canPlayFlash)
             return;
 
-        float halfDuration = _healDuration * 0.5f;
-
         _effectSequence = DOTween.Sequence();
-        _effectSequence.Append(_targetRect.DOScale(_healScale, halfDuration).SetEase(Ease.OutQuad));
-        _effectSequence.Append(_targetRect.DOScale(1f, halfDuration).SetEase(Ease.InQuad));
+
+        if (canPlayScale)
+        {
+            float halfDuration = _healDuration * 0.5f;
+            _effectSequence.Append(_targetRect.DOScale(_healScale, halfDuration).SetEase(Ease.OutQuad));
+            _effectSequence.Append(_targetRect.DOScale(1f, halfDuration).SetEase(Ease.InQuad));
+        }
+
+        if (canPlayFlash)
+            _effectSequence.Join(CreateFillHitFlashTween());
+
         _effectSequence.OnComplete(() => _effectSequence = null);
     }
 
@@ -126,6 +143,9 @@ public class UI_BarSlot : MonoBehaviour
             return;
 
         if (_readyPulseDuration <= 0f)
+            return;
+
+        if (_readySequence != null)
             return;
 
         KillReadyTween();
@@ -141,6 +161,9 @@ public class UI_BarSlot : MonoBehaviour
 
     public void StopReadyLoop()
     {
+        if (_readySequence == null)
+            return;
+
         KillReadyTween();
         SetAlpha(_fillImage, 1f);
     }
@@ -150,6 +173,14 @@ public class UI_BarSlot : MonoBehaviour
         _targetRect = _animatedRoot != null ? _animatedRoot : GetComponent<RectTransform>();
     }
 
+    private void CacheBaseFillColor()
+    {
+        if (_fillImage == null)
+            return;
+
+        _baseFillColor = _fillImage.color;
+    }
+
     private void ResetVisual()
     {
         KillEffectTween();
@@ -157,6 +188,7 @@ public class UI_BarSlot : MonoBehaviour
         if (_targetRect != null)
             _targetRect.localScale = Vector3.one;
 
+        ResetFillColor();
         SetAlpha(_fillImage, 1f);
         SetAlpha(_echoImage, 1f);
     }
@@ -202,5 +234,39 @@ public class UI_BarSlot : MonoBehaviour
         Color color = image.color;
         color.a = alpha;
         image.color = color;
+    }
+
+    private Tween CreateFillHitFlashTween()
+    {
+        if (_fillImage == null || _fillHitDuration <= 0f)
+            return DOVirtual.DelayedCall(0f, () => { });
+
+        float halfDuration = _fillHitDuration * 0.5f;
+
+        Sequence flashSequence = DOTween.Sequence();
+        flashSequence.Append(DOTween.To(() => 0f, value => SetFillColor(Color.Lerp(_baseFillColor, _fillHitColor, value)), 1f, halfDuration).SetEase(Ease.OutQuad));
+        flashSequence.Append(DOTween.To(() => 1f, value => SetFillColor(Color.Lerp(_baseFillColor, _fillHitColor, value)), 0f, halfDuration).SetEase(Ease.InQuad));
+        flashSequence.OnComplete(ResetFillColor);
+
+        return flashSequence;
+    }
+
+    private void ResetFillColor()
+    {
+        if (_fillImage == null)
+            return;
+
+        Color color = _baseFillColor;
+        color.a = _fillImage.color.a;
+        _fillImage.color = color;
+    }
+
+    private void SetFillColor(Color color)
+    {
+        if (_fillImage == null)
+            return;
+
+        color.a = _fillImage.color.a;
+        _fillImage.color = color;
     }
 }
