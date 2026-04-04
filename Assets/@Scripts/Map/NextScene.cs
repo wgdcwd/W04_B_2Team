@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class NextScene : MonoBehaviour
@@ -20,16 +22,28 @@ public class NextScene : MonoBehaviour
 
     public void NextStage()
     {
-        if (_sceneFlowManager == null)
-            return;
+        CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
+        CinemachineCamera _vcam = brain.ActiveVirtualCamera as CinemachineCamera;
 
-        if (_gameStateManager == null || _gameStateManager.CurrentState != GameState.Respawning)
+        DOTween.To(
+            () => _vcam.Lens.OrthographicSize,
+            x => _vcam.Lens.OrthographicSize = x,
+            1f,
+            2f
+        ).SetEase(Ease.OutCubic)
+        .OnComplete(() =>  // 줌인 끝난 후 씬 전환
         {
-            _checkpointManager?.ClearCheckpoint();
-        }
+            if (_sceneFlowManager == null)
+                return;
 
-        _sceneFlowManager.SetCurrentStage(_sceneName);
-        _sceneFlowManager.LoadStage();
+            if (_gameStateManager == null || _gameStateManager.CurrentState != GameState.Respawning)
+            {
+                _checkpointManager?.ClearCheckpoint();
+            }
+
+            _sceneFlowManager.SetCurrentStage(_sceneName);
+            _sceneFlowManager.LoadStage();
+        });
     }
 
 
