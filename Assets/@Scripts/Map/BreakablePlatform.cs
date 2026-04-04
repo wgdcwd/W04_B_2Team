@@ -46,22 +46,27 @@ public class BreakablePlatform : MonoBehaviour
         if (_isBroken) yield break;
         _isBroken = true;
 
-        // 점점 검게
+        // 점점 투명하게
         float elapsed = 0f;
         while (elapsed < _breakDelay)
         {
             elapsed += Time.deltaTime;
-            _renderer.color = Color.Lerp(_originalColor, Color.black, elapsed / _breakDelay);
+            Color c = _originalColor;
+            c.a = Mathf.Lerp(1f, 0f, elapsed / _breakDelay);
+            _renderer.color = c;
             yield return null;
         }
 
-        _renderer.enabled = false;
+        // 완전히 숨기기
         _collider.enabled = false;
-        _renderer.color = _originalColor; // 색상 미리 복구
+        _renderer.enabled = false;
+        _renderer.color = _originalColor; // 복구는 안보이는 상태에서
 
         yield return new WaitForSeconds(_respawnDelay);
 
+        // 다시 나타나기
         _renderer.enabled = true;
+        _collider.enabled = true;
         _isBroken = false;
     }
 }

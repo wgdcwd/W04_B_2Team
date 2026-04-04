@@ -63,7 +63,7 @@ public class Boss2Controller : EnemyBase
                 Debug.LogWarning($"{skill.name}은 ISkill을 구현하지 않았습니다.");
         }
 
-        StartBoss2();
+        //StartBoss2();
     }
 
     public override void Die() => Boss2Die();
