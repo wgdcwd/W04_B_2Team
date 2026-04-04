@@ -6,6 +6,7 @@ public class PlayerAimer : MonoBehaviour
 {
     [SerializeField] private Transform _gunPivot; // 주무기(권총) 피봇
     [SerializeField] private Camera _cam;
+    [SerializeField] private Transform _muzzle;
 
     Player _player;
     Rigidbody2D _rb;
@@ -125,6 +126,13 @@ public class PlayerAimer : MonoBehaviour
             angle += 180f;
 
         _gunPivot.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        // muzzle 위치 보정_ryeol
+        Vector3 muzzlePos = _muzzle.localPosition;
+        muzzlePos.x = Mathf.Abs(muzzlePos.x) * (IsLookingLeft ? -1f : 1f);
+        _muzzle.localPosition = muzzlePos;
+
+
     }
 
     Vector2 GetAimAssistDirection(Vector2 aimDir, Vector2 detectCenter, float radius, float maxAngle)
