@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 181f0a57d472b7b4a861b6c71412ad5f
+guid: 48bf3d0c0d7df2c489d78c585910e23d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2122046391404284247
-    second: Enemy-Head_0
+      213: 8452674554598471575
+    second: Enemy_Fly_Gun_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy-Head_0
+      name: Enemy_Fly_Gun_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 9
-        width: 18
-        height: 46
+        x: 0
+        y: 2
+        width: 64
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9a6b273dc0afc82e0800000000000000
-      internalID: -2122046391404284247
+      spriteID: 79733d429beed4570800000000000000
+      internalID: 8452674554598471575
       vertices: []
       indices: 
       edges: []
@@ -125,19 +125,19 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4bc70be2125253f47b058b2981fd86fc
-    internalID: 0
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures:
-    - texture: {fileID: 2800000, guid: 4e0ed86037b6b684d99d0ab4820ea9a5, type: 3}
+    - texture: {fileID: 2800000, guid: 54855b00798473a4187077711c9479ea, type: 3}
       name: _MaskTex
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Enemy-Head_0: -2122046391404284247
+      Enemy_Fly_Gun_0: 8452674554598471575
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
