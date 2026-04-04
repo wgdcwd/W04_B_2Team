@@ -9,6 +9,8 @@ public class NextScene : MonoBehaviour
 
     [SerializeField] bool _isBossStage = false;
 
+    [SerializeField] CinemachineCamera _vcam;
+
     private SceneFlowManager _sceneFlowManager;
     private CheckpointManager _checkpointManager;
     private GameStateManager _gameStateManager;
@@ -22,13 +24,12 @@ public class NextScene : MonoBehaviour
 
     public void NextStage()
     {
-        CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
-        CinemachineCamera _vcam = brain.ActiveVirtualCamera as CinemachineCamera;
 
+        _vcam.Priority = 100;
         DOTween.To(
             () => _vcam.Lens.OrthographicSize,
             x => _vcam.Lens.OrthographicSize = x,
-            1f,
+            0.1f,
             2f
         ).SetEase(Ease.OutCubic)
         .OnComplete(() =>  // 줌인 끝난 후 씬 전환
