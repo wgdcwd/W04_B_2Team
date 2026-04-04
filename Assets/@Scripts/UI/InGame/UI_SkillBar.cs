@@ -10,7 +10,6 @@ public class UI_SkillBar : MonoBehaviour
 
     [Header("Gauge")]
     [SerializeField] private float _maxGauge = 100f;
-    [SerializeField] private float _readyGauge = 50f;
 
     private DeadeyeSkill _skill;
     private UI_BarSlot[] _validSlots;
@@ -33,7 +32,6 @@ public class UI_SkillBar : MonoBehaviour
 
         _slotBar = new SlotBar(_validSlots);
         _slotBar.Initialize(GetFilledSlotCount(_skill.CurrentGauge), _validSlots.Length);
-        UpdateReadyEffect(_skill.CurrentGauge);
 
         _skill.OnGaugeChanged += HandleGaugeChanged;
     }
@@ -66,7 +64,6 @@ public class UI_SkillBar : MonoBehaviour
             return;
 
         _slotBar.SetValue(GetFilledSlotCount(currentGauge));
-        UpdateReadyEffect(currentGauge);
     }
 
     private int GetFilledSlotCount(float currentGauge)
@@ -78,47 +75,6 @@ public class UI_SkillBar : MonoBehaviour
             return _validSlots.Length;
 
         return Mathf.Clamp(filledSlotCount, 0, _validSlots.Length);
-    }
-
-    private void UpdateReadyEffect(float currentGauge)
-    {
-        if (_validSlots == null || _validSlots.Length == 0)
-            return;
-
-        int filledSlotCount = GetFilledSlotCount(currentGauge);
-        bool isReady = currentGauge >= _readyGauge;
-
-        if (!isReady)
-        {
-            StopReadyEffect();
-            return;
-        }
-
-        for (int i = 0; i < _validSlots.Length; i++)
-        {
-            if (_validSlots[i] == null)
-                continue;
-
-            if (i < filledSlotCount)
-                _validSlots[i].PlayReadyLoop();
-            else
-                _validSlots[i].StopReadyLoop();
-        }
-
-    }
-
-    private void StopReadyEffect()
-    {
-        if (_validSlots == null)
-            return;
-
-        for (int i = 0; i < _validSlots.Length; i++)
-        {
-            if (_validSlots[i] == null)
-                continue;
-
-            _validSlots[i].StopReadyLoop();
-        }
     }
 
     private UI_BarSlot[] GetValidSlots()

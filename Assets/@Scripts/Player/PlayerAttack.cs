@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -43,6 +44,9 @@ public class PlayerAttack : MonoBehaviour
     private Transform _pistolPivot;
     [SerializeField] private Transform _shotgunPivot;
     [SerializeField] private float _shotgunIdleAngle = 90f; // 평소 위로 든 각도
+
+    [Header("Screen Shake")]
+    [SerializeField] CinemachineImpulseSource _impulseSource;
 
     private PoolManager _poolManager;
     private HapticManager _hapticManager;
@@ -152,6 +156,10 @@ public class PlayerAttack : MonoBehaviour
         _rb.AddForce(-shootDir * data.recoilForce, ForceMode2D.Impulse);
 
         _hapticManager?.PlayOneShot(data.lowFrequency, data.highFrequency, data.duration);
+
+        // 땅/공중에 따라 흔들림 세기 결정
+        float shakeForce = _player.IsGrounded ? data.groundCameraShakeForce : data.airCameraShakeForce;
+        _impulseSource.GenerateImpulseWithVelocity(-shootDir * shakeForce);
 
         TriggerRecoilRoutines(shootDir);
     }
