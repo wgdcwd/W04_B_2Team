@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Explosives : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Explosives : MonoBehaviour
     [SerializeField] private GameObject _explosionParticlePrefab;
 
     private TNTSpawner _spawner;
+
+    HashSet<PlayerAttack> _alreadyHit = new HashSet<PlayerAttack>();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,9 +37,12 @@ public class Explosives : MonoBehaviour
         Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _interactionMask);
         foreach (Collider2D _hit in _hits)
         {
-            // 버려야 할 코드.
             if (_hit.TryGetComponent<PlayerAttack>(out var playerAttack))
             {
+
+                if (_alreadyHit.Contains(playerAttack)) continue; // 이미 처리했으면 스킵
+                _alreadyHit.Add(playerAttack);
+
                 Vector2 dir = ((Vector2)(_hit.transform.position - transform.position)).normalized;
                 playerAttack.ReceiveExplosionForce(dir, _explosionDamage);
             }
