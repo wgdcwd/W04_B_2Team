@@ -24,6 +24,7 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] CinemachineCamera _vcam;
     [SerializeField] float _aimOffsetStrength = 2f;
     [SerializeField] float _smoothSpeed = 3f;
+    [SerializeField] float _downAimOffsetMultiplier = 0.2f;
 
     CinemachinePositionComposer _composer;
     Vector3 _baseOffset = Vector3.zero;
@@ -212,9 +213,11 @@ public class PlayerAimer : MonoBehaviour
         _lookaheadOffset = Vector2.ClampMagnitude(_lookaheadOffset, _lookaheadStrength);
 
         Vector2 aimOffset = AimDirection * _aimOffsetStrength;
-        Vector2 totalOffset = aimOffset + _lookaheadOffset;
 
-        Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y / 2, 0f);
+        if (aimOffset.y < 0f)
+            aimOffset.y *= _downAimOffsetMultiplier;  // 아래 방향 감쇠
+        Vector2 totalOffset = aimOffset + _lookaheadOffset;
+        Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y, 0f);
 
         _composer.TargetOffset = Vector3.Lerp(
             _composer.TargetOffset,
