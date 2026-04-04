@@ -44,17 +44,32 @@ TagManager:
   - name: Background
     uniqueID: 1623279277
     locked: 0
+  - name: BackEffect
+    uniqueID: 2135483137
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Object
+  - name: Player
     uniqueID: 2358385449
     locked: 0
-  - name: Lava
+  - name: Enemy
+    uniqueID: 365992281
+    locked: 0
+  - name: Boss
+    uniqueID: 4013867329
+    locked: 0
+  - name: Effect
     uniqueID: 3153114699
+    locked: 0
+  - name: FrontObject
+    uniqueID: 1100037587
     locked: 0
   - name: Foreground
     uniqueID: 1897495005
+    locked: 0
+  - name: Distortion
+    uniqueID: 2911581143
     locked: 0
   - name: UI
     uniqueID: 1109822905
