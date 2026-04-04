@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 5893324327069856225}
   - component: {fileID: 209132582825181387}
   m_Layer: 0
-  m_Name: Global Volume
+  m_Name: Global Volume_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 6834809390302737369}
   - component: {fileID: 517477494166997201}
   - component: {fileID: 375507583562319916}
+  - component: {fileID: 1654747851022977055}
   m_Layer: 0
   m_Name: MetaUI
   m_TagString: Untagged
@@ -558,7 +559,7 @@ MonoBehaviour:
   _filmGrainService: {fileID: 8183815156272302278}
   _chromaticAberrationService: {fileID: 3775309162918020659}
   _lensDistortionSettings:
-    startIntensity: -0.35
+    startIntensity: -0.4
     endIntensity: 0
     xMultiplier: 0.5
     yMultiplier: 0.5
@@ -569,7 +570,7 @@ MonoBehaviour:
     response: 0.3
     duration: 0.4
   _chromaticAberrationSettings:
-    startIntensity: 0.5
+    startIntensity: 1
     endIntensity: 0
     duration: 0.4
 --- !u!114 &375507583562319916
@@ -587,11 +588,11 @@ MonoBehaviour:
   _playerHealth: {fileID: 0}
   _vignetteService: {fileID: 1065410880442745171}
   _hitSettings:
-    startColor: {r: 0.7283019, g: 0, b: 0, a: 1}
+    startColor: {r: 0.6679245, g: 0, b: 0, a: 1}
     endColor: {r: 0, g: 0, b: 0, a: 1}
-    startIntensity: 0.3
+    startIntensity: 0.5
     endIntensity: 0.3
-    duration: 0
+    duration: 0.5
   _heartbeatStages:
   - maxHpThreshold: 2
     firstBeatSettings:
@@ -599,15 +600,35 @@ MonoBehaviour:
       endColor: {r: 0.690566, g: 0, b: 0, a: 1}
       startIntensity: 0.4
       endIntensity: 0.4
-      duration: 0.5
+      duration: 0.6
     secondBeatSettings:
-      startColor: {r: 1, g: 0, b: 0, a: 1}
-      endColor: {r: 0.3962264, g: 0, b: 0.045340545, a: 1}
+      startColor: {r: 0.5471698, g: 0.03139934, b: 0, a: 1}
+      endColor: {r: 0.2528302, g: 0, b: 0.03070079, a: 1}
       startIntensity: 0.4
       endIntensity: 0.4
-      duration: 0.5
-    delayBetweenBeats: 0.1
-    delayBetweenCycles: 0.1
+      duration: 0.6
+    delayBetweenBeats: 0.6
+    delayBetweenCycles: 0.6
+--- !u!114 &1654747851022977055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554041078713320890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3efc41401d73df649a3b02389f2e7092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaUIJumpHoldBinder
+  _lensDistortionService: {fileID: 1258335092813829206}
+  _chromaticAberrationService: {fileID: 3775309162918020659}
+  _lensIntensity: -0.3
+  _lensXMultiplier: 0.9
+  _lensYMultiplier: 0.9
+  _lensSpeed: 3.5
+  _chromaticIntensity: 0.2
+  _chromaticSpeed: 3.5
 --- !u!1001 &6528807512272575027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -699,11 +720,11 @@ PrefabInstance:
       objectReference: {fileID: 209132582825181387}
     - target: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -76.29167
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.13658
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -755,7 +776,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4315738449749642402}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7424406008406786902, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3789917843853493999}
   m_SourcePrefab: {fileID: 100100000, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
 --- !u!114 &1065410880442745171 stripped
 MonoBehaviour:
@@ -779,6 +803,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f9110206b12fd4095491cfed30c9cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LensDistortionService
+--- !u!1 &1910463876320769367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7424406008406786902, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
+  m_PrefabInstance: {fileID: 9046497087449757185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3789917843853493999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910463876320769367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ec9232792f4f8fa4578175d3884e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaUIPlayerBinder
+  _chromaticAberrationBinder: {fileID: 6834809390302737369}
+  _dryFireBinder: {fileID: 517477494166997201}
+  _vignetteBinder: {fileID: 375507583562319916}
+  _jumpHoldBinder: {fileID: 1654747851022977055}
 --- !u!4 &3528288255470979787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}

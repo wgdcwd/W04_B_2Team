@@ -1,10 +1,11 @@
-﻿using Unity.Cinemachine;
+﻿using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAimer : MonoBehaviour
 {
-    [SerializeField] private Transform _gunPivot; // 주무기(권총) 피봇
+    [SerializeField] private Transform _gunPivot;
     [SerializeField] private Camera _cam;
 
     Player _player;
@@ -14,7 +15,7 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] private float _aimAssistRadiusMouse = 1.5f;
     [SerializeField] private float _aimAssistRadiusGamepad = 4f;
     [SerializeField] private float _aimAssistAngleGamepad = 30f;
-    [SerializeField] private float _aimAssistStrengthMouse = 0.15f; // 당기는 강도 (낮을수록 자연스러움)
+    [SerializeField] private float _aimAssistStrengthMouse = 0.15f;
     [SerializeField] private float _aimAssistStrengthGamepad = 0.3f;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private LayerMask _groundLayer;
@@ -23,14 +24,19 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] CinemachineCamera _vcam;
     [SerializeField] float _aimOffsetStrength = 2f;
     [SerializeField] float _smoothSpeed = 3f;
+    [SerializeField] float _downAimOffsetMultiplier = 0.2f;
 
     CinemachinePositionComposer _composer;
+    Vector3 _baseOffset = Vector3.zero;
+    Vector3 _defaultBaseOffset = Vector3.zero;
+
+    private Dictionary<CinemachinePositionComposer, Vector3> _originalOffsets = new();
 
     [Header("Lookahead")]
-    [SerializeField] float _lookaheadStrength = 2f;   // 미리 볼 거리
-    [SerializeField] float _lookaheadSmooth = 3f;      // 이동 시 따라가는 속도
-    [SerializeField] float _returnDelay = 1.5f;        // 멈추고 몇 초 후에 복귀할지 (0이면 안 돌아옴)
-    [SerializeField] float _returnSmooth = 1.5f;       // 복귀 속도
+    [SerializeField] float _lookaheadStrength = 2f;
+    [SerializeField] float _lookaheadSmooth = 3f;
+    [SerializeField] float _returnDelay = 1.5f;
+    [SerializeField] float _returnSmooth = 1.5f;
 
     Vector2 _lastMoveDir = Vector2.zero;
     Vector2 _lookaheadOffset = Vector2.zero;
@@ -53,11 +59,50 @@ public class PlayerAimer : MonoBehaviour
     void Start()
     {
         _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+        _defaultBaseOffset = _composer.TargetOffset;
+        _baseOffset = _defaultBaseOffset;
+
+        // 기본 카메라 원본 등록
+        _originalOffsets[_composer] = _defaultBaseOffset;
     }
 
     void Update()
     {
         UpdateLookahead();
+    }
+
+    private Vector3 GetOriginalOffset(CinemachinePositionComposer composer)
+    {
+        // 처음 접근할 때만 현재값을 원본으로 저장
+        // 이후엔 항상 저장된 원본 반환
+        if (!_originalOffsets.ContainsKey(composer))
+            _originalOffsets[composer] = composer.TargetOffset;
+
+        return _originalOffsets[composer];
+    }
+
+    public void SetComposer(CinemachineCamera vcam)
+    {
+        var composer = vcam.GetComponent<CinemachinePositionComposer>();
+        if (composer == null) return;
+
+        // 나가는 카메라 원상복구
+        if (_composer != null)
+            _composer.TargetOffset = _baseOffset;
+
+        _composer = composer;
+        _baseOffset = GetOriginalOffset(composer); // 항상 원본값 기준
+    }
+
+    public void ResetComposer()
+    {
+        // 나가는 카메라 원상복구
+        if (_composer != null)
+            _composer.TargetOffset = _baseOffset;
+
+        _composer = _vcam.GetComponent<CinemachinePositionComposer>();
+        _baseOffset = _defaultBaseOffset;
+        _composer.TargetOffset = _defaultBaseOffset;
     }
 
     public void HandleLook(InputAction.CallbackContext ctx)
@@ -72,7 +117,6 @@ public class PlayerAimer : MonoBehaviour
         Vector2 detectCenter = (Vector2)transform.position;
         AimDirection = GetAimAssistDirection(AimDirection, detectCenter, _aimAssistRadiusGamepad, _aimAssistAngleGamepad);
         ApplyRotation();
-
     }
 
     public void HandleLookMouse(InputAction.CallbackContext ctx)
@@ -97,10 +141,6 @@ public class PlayerAimer : MonoBehaviour
 
         IsLookingLeft = angle > 90f || angle < -90f;
 
-        // 왼쪽 오른쪽에 따른 보정
-
-
-
         if (angle > 90f)
             angle -= 180f;
         else if (angle < -90f)
@@ -116,22 +156,22 @@ public class PlayerAimer : MonoBehaviour
 
         Collider2D closest = null;
         float closestAngle = float.MaxValue;
+
         foreach (Collider2D hit in hits)
         {
             Vector2 toEnemy = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
             float angle = Vector2.Angle(aimDir, toEnemy);
 
-            if (angle > maxAngle) continue; // 각도 범위 밖이면 무시
+            if (angle > maxAngle) continue;
 
-            // 벽 체크 추가
             float dist = Vector2.Distance(transform.position, hit.transform.position);
             RaycastHit2D wallCheck = Physics2D.Raycast(
                 transform.position,
                 toEnemy,
                 dist,
-                _groundLayer  // 벽 레이어
+                _groundLayer
             );
-            if (wallCheck.collider != null) continue; // 벽 있으면 무시
+            if (wallCheck.collider != null) continue;
 
             if (angle < closestAngle)
             {
@@ -149,6 +189,8 @@ public class PlayerAimer : MonoBehaviour
 
     void UpdateLookahead()
     {
+        if (_composer == null) return;
+
         Vector2 velocity = _rb.linearVelocity;
         bool moving = velocity.sqrMagnitude > 0.1f;
 
@@ -168,13 +210,18 @@ public class PlayerAimer : MonoBehaviour
                 _lookaheadOffset = Vector2.Lerp(_lookaheadOffset, Vector2.zero, Time.deltaTime * _returnSmooth);
         }
 
-        // 에임 오프셋 + Lookahead 합산
+        _lookaheadOffset = Vector2.ClampMagnitude(_lookaheadOffset, _lookaheadStrength);
+
         Vector2 aimOffset = AimDirection * _aimOffsetStrength;
+
+        if (aimOffset.y < 0f)
+            aimOffset.y *= _downAimOffsetMultiplier;  // 아래 방향 감쇠
         Vector2 totalOffset = aimOffset + _lookaheadOffset;
+        Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y, 0f);
 
         _composer.TargetOffset = Vector3.Lerp(
             _composer.TargetOffset,
-            new Vector3(totalOffset.x, totalOffset.y, 0f),
+            targetOffset,
             Time.deltaTime * _smoothSpeed
         );
     }
