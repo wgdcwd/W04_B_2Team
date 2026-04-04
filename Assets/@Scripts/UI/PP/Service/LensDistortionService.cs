@@ -9,11 +9,21 @@ public class LensDistortionService : MonoBehaviour
 
     private LensDistortion _lensDistortion;
     private Tween _intensityTween;
+    private float _defaultIntensity;
+    private float _defaultXMultiplier;
+    private float _defaultYMultiplier;
+    private bool _hasDefaultState;
 
     private void Start()
     {
         if (_volume != null && _volume.profile.TryGet(out _lensDistortion))
+        {
+            _defaultIntensity = _lensDistortion.intensity.value;
+            _defaultXMultiplier = _lensDistortion.xMultiplier.value;
+            _defaultYMultiplier = _lensDistortion.yMultiplier.value;
+            _hasDefaultState = true;
             _lensDistortion.intensity.value = 0f;
+        }
     }
 
     private void OnDisable()
@@ -36,6 +46,35 @@ public class LensDistortionService : MonoBehaviour
             settings.endIntensity,
             settings.duration
         );
+    }
+
+    public void SetState(float intensity, float xMultiplier, float yMultiplier)
+    {
+        if (_lensDistortion == null)
+            return;
+
+        StopEffect();
+        _lensDistortion.intensity.value = intensity;
+        _lensDistortion.xMultiplier.value = xMultiplier;
+        _lensDistortion.yMultiplier.value = yMultiplier;
+    }
+
+    public void RestoreDefault()
+    {
+        if (_lensDistortion == null)
+            return;
+
+        StopEffect();
+
+        if (_hasDefaultState)
+        {
+            _lensDistortion.intensity.value = _defaultIntensity;
+            _lensDistortion.xMultiplier.value = _defaultXMultiplier;
+            _lensDistortion.yMultiplier.value = _defaultYMultiplier;
+            return;
+        }
+
+        _lensDistortion.intensity.value = 0f;
     }
 
     private void StopEffect()

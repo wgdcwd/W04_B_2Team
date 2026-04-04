@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 6834809390302737369}
   - component: {fileID: 517477494166997201}
   - component: {fileID: 375507583562319916}
+  - component: {fileID: 1654747851022977055}
   m_Layer: 0
   m_Name: MetaUI
   m_TagString: Untagged
@@ -608,6 +609,24 @@ MonoBehaviour:
       duration: 0.6
     delayBetweenBeats: 0.6
     delayBetweenCycles: 0.6
+--- !u!114 &1654747851022977055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554041078713320890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3efc41401d73df649a3b02389f2e7092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaUIJumpHoldBinder
+  _lensDistortionService: {fileID: 1258335092813829206}
+  _activeIntensity: -0.3
+  _xMultiplier: 0.9
+  _yMultiplier: 0.9
+  _enterSpeed: 3.5
+  _exitSpeed: 6
 --- !u!1001 &6528807512272575027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -802,6 +821,7 @@ MonoBehaviour:
   _chromaticAberrationBinder: {fileID: 6834809390302737369}
   _dryFireBinder: {fileID: 517477494166997201}
   _vignetteBinder: {fileID: 375507583562319916}
+  _jumpHoldBinder: {fileID: 1654747851022977055}
 --- !u!4 &3528288255470979787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5583727218066701514, guid: 1505c9355ac7c68478bbbd556949e7f3, type: 3}
