@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TNTSpawner
   _tntPrefab: {fileID: 2961116773577654796, guid: 02fadedba430c8940acef9e4456a3e9b, type: 3}
-  _respawnDelay: 3
+  _respawnDelay: 2.5
