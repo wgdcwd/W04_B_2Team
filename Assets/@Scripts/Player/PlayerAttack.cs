@@ -63,6 +63,11 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _shotgunBaseScale;
     private bool _lastLookingLeft;
 
+    // 몬스터가 총알 채워주는 경우 쿨타임
+    private bool _canAddAmmo = true;
+    private float _addAmmoCooldown = 0.1f;
+
+
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -328,8 +333,18 @@ public class PlayerAttack : MonoBehaviour
 
     public void AddAmmo()
     {
+        if (!_canAddAmmo) return;
+        _canAddAmmo = false;
+        StartCoroutine(nameof(AddAmmoCooldown));
         _shotgunInstance.AddAmmo(1);
         //_currentWeaponInstance.AddAmmo(1);
+    }
+
+    IEnumerator AddAmmoCooldown()
+    {
+        yield return new WaitForSeconds(_addAmmoCooldown);
+        _canAddAmmo = true;
+
     }
 
 
