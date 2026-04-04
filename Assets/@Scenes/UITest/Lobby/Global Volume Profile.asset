@@ -44,6 +44,73 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-2837006756063410899
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06437c1ff663d574d9447842ba0a72e4, type: 3}
+  m_Name: ScreenSpaceLensFlare
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ScreenSpaceLensFlare
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 3
+  tintColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  bloomMip:
+    m_OverrideState: 0
+    m_Value: 1
+  firstFlareIntensity:
+    m_OverrideState: 1
+    m_Value: 0.4
+  secondaryFlareIntensity:
+    m_OverrideState: 1
+    m_Value: 0.4
+  warpedFlareIntensity:
+    m_OverrideState: 1
+    m_Value: 0.4
+  warpedFlareScale:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1}
+  samples:
+    m_OverrideState: 0
+    m_Value: 1
+  sampleDimmer:
+    m_OverrideState: 0
+    m_Value: 0.5
+  vignetteEffect:
+    m_OverrideState: 0
+    m_Value: 1
+  startingPosition:
+    m_OverrideState: 0
+    m_Value: 1.25
+  scale:
+    m_OverrideState: 1
+    m_Value: 1.8
+  streaksIntensity:
+    m_OverrideState: 0
+    m_Value: 1.25
+  streaksLength:
+    m_OverrideState: 0
+    m_Value: 0.5
+  streaksOrientation:
+    m_OverrideState: 0
+    m_Value: 0
+  streaksThreshold:
+    m_OverrideState: 0
+    m_Value: 0.25
+  resolution:
+    m_OverrideState: 0
+    m_Value: 4
+  chromaticAbberationIntensity:
+    m_OverrideState: 0
+    m_Value: 0.5
 --- !u!114 &-2632911503918498075
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -62,10 +129,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 0.95
   intensity:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 3
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -74,7 +141,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.7075472, g: 0.8577257, b: 1, a: 1}
+    m_Value: {r: 0.11617658, g: 0.3442176, b: 0.554717, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -141,6 +208,7 @@ MonoBehaviour:
   - {fileID: -2301685374939394313}
   - {fileID: 5944290133094666664}
   - {fileID: -2632911503918498075}
+  - {fileID: -2837006756063410899}
 --- !u!114 &5364339028752391621
 MonoBehaviour:
   m_ObjectHideFlags: 3

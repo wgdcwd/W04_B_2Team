@@ -65,6 +65,10 @@ public class Player : MonoBehaviour
     public bool IsGrounded => CurrentLocomotion == LocomotionState.Idle || CurrentLocomotion == LocomotionState.Land;
     public bool IsRecoiling => CurrentRecoil == RecoilState.Recoiling;
 
+    // metaUI 추가
+    public bool IsSlowAirborne => !IsGrounded && CurrentSkill == SkillState.Slow;
+    public bool IsMetaLensActive => IsSlowAirborne || CurrentSkill == SkillState.Deadeye;
+
     public PlayerAttack playerAttack{ get; private set; }
     public PlayerMove playerMove{ get; private set; }
     public PlayerAimer playerAimer { get; private set; }
