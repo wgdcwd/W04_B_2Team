@@ -69,9 +69,10 @@ public class EnemyProjectile : MonoBehaviour
             return;
         }
 
-        if (col.CompareTag("Ground"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             ReturnToPool();
+            return;
         }
     }
 
