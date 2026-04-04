@@ -339,7 +339,6 @@ public class PlayerAttack : MonoBehaviour
     // 버려야할 코드.
     public void ReceiveExplosionForce(Vector2 forceDir, float forceMagnitude)
     {
-        _rb.linearVelocity = new Vector2(0f, _rb.linearVelocity.y);
         _rb.AddForce(forceDir * forceMagnitude, ForceMode2D.Impulse);
         TriggerRecoilRoutines(forceDir); // 기존 반동 루틴 재활용
     }
