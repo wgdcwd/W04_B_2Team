@@ -243,8 +243,8 @@ MonoBehaviour:
   _interactionMask:
     serializedVersion: 2
     m_Bits: 36928
-  _explosionRadius: 8
-  _explosionDamage: 2
+  _explosionRadius: 10
+  _explosionDamage: 200
   _explosionParticlePrefab: {fileID: 2928770859821860488, guid: fed185261fd82414abf1f41048bd58cd, type: 3}
 --- !u!61 &-2058252248034863634
 BoxCollider2D:

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Explosives : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class Explosives : MonoBehaviour
 
     [Header("Effect")]
     [SerializeField] private GameObject _explosionParticlePrefab;
+
+    private TNTSpawner _spawner;
+
+    HashSet<PlayerAttack> _alreadyHit = new HashSet<PlayerAttack>();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,20 +24,27 @@ public class Explosives : MonoBehaviour
         }
     }
 
+    public void SetSpawner(TNTSpawner spawner)
+    {
+        _spawner = spawner;
+    }
+
     public void Explosion()
     {
+        _spawner?.OnTNTExploded(); // Destroy 전에 먼저 호출
         SpawnExplosionParticle();
 
         Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _interactionMask);
         foreach (Collider2D _hit in _hits)
         {
-            Rigidbody2D playerRb;
-            if ((playerRb = _hit.gameObject.GetComponent<Rigidbody2D>()) != null)
+            if (_hit.TryGetComponent<PlayerAttack>(out var playerAttack))
             {
-                if (playerRb != null)
-                {
-                    playerRb.AddForce((playerRb.transform.position - transform.position).normalized * _explosionDamage, ForceMode2D.Impulse);
-                }
+
+                if (_alreadyHit.Contains(playerAttack)) continue; // 이미 처리했으면 스킵
+                _alreadyHit.Add(playerAttack);
+
+                Vector2 dir = ((Vector2)(_hit.transform.position - transform.position)).normalized;
+                playerAttack.ReceiveExplosionForce(dir, _explosionDamage);
             }
         }
     }
