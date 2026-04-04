@@ -3,15 +3,23 @@ using UnityEngine;
 public class MetaUIJumpHoldBinder : MonoBehaviour
 {
     [SerializeField] private LensDistortionService _lensDistortionService;
-    [SerializeField] private float _activeIntensity = -0.35f;
-    [SerializeField] private float _xMultiplier = 1f;
-    [SerializeField] private float _yMultiplier = 1f;
-    [SerializeField] private float _enterSpeed = 3.5f;
-    [SerializeField] private float _exitSpeed = 6f;
+    [SerializeField] private ChromaticAberrationService _chromaticAberrationService;
+
+    [Header("Lens")]
+    [SerializeField] private float _lensIntensity = -0.35f;
+    [SerializeField] private float _lensXMultiplier = 1f;
+    [SerializeField] private float _lensYMultiplier = 1f;
+    [SerializeField] private float _lensSpeed = 3.5f;
+
+    [Header("Chromatic")]
+    [SerializeField] private float _chromaticIntensity = 0.35f;
+    [SerializeField] private float _chromaticSpeed = 3.5f;
 
     private Player _player;
     private bool _isActive;
-    private float _currentIntensity;
+    private bool _wasActive;
+    private float _currentLens;
+    private float _currentChromatic;
 
     public void Bind(Player player)
     {
@@ -26,41 +34,35 @@ public class MetaUIJumpHoldBinder : MonoBehaviour
 
         if (_player == null)
         {
-            _isActive = false;
-            _currentIntensity = 0f;
-            _lensDistortionService?.SetState(0f, _xMultiplier, _yMultiplier);
+            ClearEffects();
             return;
         }
 
         _player.OnLocomotionChanged += HandleLocomotionChanged;
         _player.OnSkillStateChanged += HandleSkillStateChanged;
 
-        _currentIntensity = 0f;
         RefreshState();
     }
 
     private void Update()
     {
-        if (_lensDistortionService == null)
+        if (_isActive)
+        {
+            UpdateEffects();
+            _wasActive = true;
             return;
+        }
 
-        float targetIntensity = _isActive ? _activeIntensity : 0f;
-        float speed = _isActive ? _enterSpeed : _exitSpeed;
-
-        _currentIntensity = Mathf.MoveTowards(
-            _currentIntensity,
-            targetIntensity,
-            speed * Time.unscaledDeltaTime
-        );
-
-        _lensDistortionService.SetState(_currentIntensity, _xMultiplier, _yMultiplier);
+        if (_wasActive)
+        {
+            ClearEffects();
+            _wasActive = false;
+        }
     }
 
     private void OnDisable()
     {
-        _currentIntensity = 0f;
-        _isActive = false;
-        _lensDistortionService?.RestoreDefault();
+        ClearEffects();
     }
 
     private void OnDestroy()
@@ -80,7 +82,35 @@ public class MetaUIJumpHoldBinder : MonoBehaviour
 
     private void RefreshState()
     {
-        _isActive = _player != null && _player.IsSlowAirborne;
+        _isActive = _player != null && _player.IsMetaLensActive;
+    }
+
+    private void UpdateEffects()
+    {
+        _currentLens = Mathf.MoveTowards(
+            _currentLens,
+            _lensIntensity,
+            _lensSpeed * Time.unscaledDeltaTime
+        );
+
+        _currentChromatic = Mathf.MoveTowards(
+            _currentChromatic,
+            _chromaticIntensity,
+            _chromaticSpeed * Time.unscaledDeltaTime
+        );
+
+        _lensDistortionService?.SetState(_currentLens, _lensXMultiplier, _lensYMultiplier);
+        _chromaticAberrationService?.SetState(_currentChromatic);
+    }
+
+    private void ClearEffects()
+    {
+        _isActive = false;
+        _currentLens = 0f;
+        _currentChromatic = 0f;
+
+        _lensDistortionService?.RestoreDefault();
+        _chromaticAberrationService?.RestoreDefault();
     }
 
     private void Unbind()

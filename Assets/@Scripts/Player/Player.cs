@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
 
     // metaUI 추가
     public bool IsSlowAirborne => !IsGrounded && CurrentSkill == SkillState.Slow;
+    public bool IsMetaLensActive => IsSlowAirborne || CurrentSkill == SkillState.Deadeye;
 
     public PlayerAttack playerAttack{ get; private set; }
     public PlayerMove playerMove{ get; private set; }

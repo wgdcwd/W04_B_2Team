@@ -9,11 +9,17 @@ public class ChromaticAberrationService : MonoBehaviour
 
     private ChromaticAberration _chromaticAberration;
     private Tween _intensityTween;
+    private float _defaultIntensity;
+    private bool _hasDefaultState;
 
     private void Start()
     {
         if (_volume != null && _volume.profile.TryGet(out _chromaticAberration))
+        {
+            _defaultIntensity = _chromaticAberration.intensity.value;
+            _hasDefaultState = true;
             _chromaticAberration.intensity.value = 0f;
+        }
     }
 
     private void OnDisable()
@@ -34,6 +40,31 @@ public class ChromaticAberrationService : MonoBehaviour
             settings.endIntensity,
             settings.duration
         );
+    }
+
+    public void SetState(float intensity)
+    {
+        if (_chromaticAberration == null)
+            return;
+
+        StopEffect();
+        _chromaticAberration.intensity.value = intensity;
+    }
+
+    public void RestoreDefault()
+    {
+        if (_chromaticAberration == null)
+            return;
+
+        StopEffect();
+
+        if (_hasDefaultState)
+        {
+            _chromaticAberration.intensity.value = _defaultIntensity;
+            return;
+        }
+
+        _chromaticAberration.intensity.value = 0f;
     }
 
     private void StopEffect()

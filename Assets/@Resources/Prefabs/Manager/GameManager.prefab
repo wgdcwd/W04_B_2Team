@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 5893324327069856225}
   - component: {fileID: 209132582825181387}
   m_Layer: 0
-  m_Name: Global Volume
+  m_Name: Global Volume_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,11 +622,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaUIJumpHoldBinder
   _lensDistortionService: {fileID: 1258335092813829206}
-  _activeIntensity: -0.3
-  _xMultiplier: 0.9
-  _yMultiplier: 0.9
-  _enterSpeed: 3.5
-  _exitSpeed: 6
+  _chromaticAberrationService: {fileID: 3775309162918020659}
+  _lensIntensity: -0.3
+  _lensXMultiplier: 0.9
+  _lensYMultiplier: 0.9
+  _lensSpeed: 3.5
+  _chromaticIntensity: 0.2
+  _chromaticSpeed: 3.5
 --- !u!1001 &6528807512272575027
 PrefabInstance:
   m_ObjectHideFlags: 0
