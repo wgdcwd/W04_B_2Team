@@ -49,6 +49,7 @@ public class BossController : MonoBehaviour
 
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null) _player = playerObj.transform;
+        StartBoss();
     }
 
     void Update()
