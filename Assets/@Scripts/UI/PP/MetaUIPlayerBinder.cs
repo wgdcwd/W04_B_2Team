@@ -5,6 +5,7 @@ public class MetaUIPlayerBinder : MonoBehaviour
     [SerializeField] private MetaUIChromaticAberrationBinder _chromaticAberrationBinder;
     [SerializeField] private MetaUIDryFireBinder _dryFireBinder;
     [SerializeField] private MetaUIVignetteBinder _vignetteBinder;
+    [SerializeField] private MetaUIJumpHoldBinder _jumpHoldBinder;
 
     private void OnEnable()
     {
@@ -33,5 +34,6 @@ public class MetaUIPlayerBinder : MonoBehaviour
         _chromaticAberrationBinder?.Bind(player.playerHealth);
         _vignetteBinder?.Bind(player.playerHealth);
         _dryFireBinder?.Bind(player.playerAttack);
+        _jumpHoldBinder?.Bind(player);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Bullet : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Bullet : MonoBehaviour
 
     // Hit 효과
     [SerializeField] private GameObject _hitParticlePrefab;
+    [SerializeField] private Light2D _light;
 
     private Coroutine _lifeRoutine;
     private Rigidbody2D _rb;
@@ -52,6 +54,7 @@ public class Bullet : MonoBehaviour
 
         if (pool != null)
             pool.Return(gameObject);
+
         else
             Destroy(gameObject);
     }
