@@ -1,24 +1,31 @@
 ﻿using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Explosives : MonoBehaviour
 {
     [SerializeField] LayerMask _interactionMask;
     [SerializeField] float _explosionRadius;
-    [SerializeField] int _explosionDamage;
+    [Tooltip("실제 반동의 힘")][SerializeField] private float _explosionForce;
+    [Tooltip("카메라 흔들림 정도")][SerializeField] private float _explosionImpulseForce; // 카메라 흔들림 세기
 
     [Header("Effect")]
     [SerializeField] private GameObject _explosionParticlePrefab;
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
 
     private TNTSpawner _spawner;
 
-    HashSet<PlayerAttack> _alreadyHit = new HashSet<PlayerAttack>();
+    private bool _exploded = false;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_exploded) return; // 이미 터졌으면 스킵
+
         Bullet bullet = collision.GetComponent<Bullet>();
         if (bullet != null)
         {
+            _exploded = true;
             Explosion();
             Destroy(gameObject);
         }
@@ -34,7 +41,10 @@ public class Explosives : MonoBehaviour
         _spawner?.OnTNTExploded(); // Destroy 전에 먼저 호출
         SpawnExplosionParticle();
 
+        HashSet<PlayerAttack> _alreadyHit = new HashSet<PlayerAttack>();
+        
         Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _interactionMask);
+
         foreach (Collider2D _hit in _hits)
         {
             if (_hit.TryGetComponent<PlayerAttack>(out var playerAttack))
@@ -44,7 +54,8 @@ public class Explosives : MonoBehaviour
                 _alreadyHit.Add(playerAttack);
 
                 Vector2 dir = ((Vector2)(_hit.transform.position - transform.position)).normalized;
-                playerAttack.ReceiveExplosionForce(dir, _explosionDamage);
+                playerAttack.ReceiveExplosionForce(dir, _explosionForce);
+                _impulseSource?.GenerateImpulse(dir * _explosionImpulseForce);
             }
         }
     }
