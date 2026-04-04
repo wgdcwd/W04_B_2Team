@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class NextScene : MonoBehaviour
@@ -6,6 +8,8 @@ public class NextScene : MonoBehaviour
     [SerializeField] private string _sceneName;
 
     [SerializeField] bool _isBossStage = false;
+
+    [SerializeField] CinemachineCamera _vcam;
 
     private SceneFlowManager _sceneFlowManager;
     private CheckpointManager _checkpointManager;
@@ -20,16 +24,27 @@ public class NextScene : MonoBehaviour
 
     public void NextStage()
     {
-        if (_sceneFlowManager == null)
-            return;
-
-        if (_gameStateManager == null || _gameStateManager.CurrentState != GameState.Respawning)
+        _vcam = GetComponentInChildren<CinemachineCamera>();
+        _vcam.Priority = 100;
+        DOTween.To(
+            () => _vcam.Lens.OrthographicSize,
+            x => _vcam.Lens.OrthographicSize = x,
+            0.1f,
+            2f
+        ).SetEase(Ease.OutCubic)
+        .OnComplete(() =>  // 줌인 끝난 후 씬 전환
         {
-            _checkpointManager?.ClearCheckpoint();
-        }
+            if (_sceneFlowManager == null)
+                return;
 
-        _sceneFlowManager.SetCurrentStage(_sceneName);
-        _sceneFlowManager.LoadStage();
+            if (_gameStateManager == null || _gameStateManager.CurrentState != GameState.Respawning)
+            {
+                _checkpointManager?.ClearCheckpoint();
+            }
+
+            _sceneFlowManager.SetCurrentStage(_sceneName);
+            _sceneFlowManager.LoadStage();
+        });
     }
 
 
