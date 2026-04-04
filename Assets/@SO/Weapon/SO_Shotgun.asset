@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Shotgun
   recoilForce: 120
   bulletPrefab: {fileID: 2428623537106414745, guid: bace8953f40798940bc3bcfe85d036f3, type: 3}
-  bulletSpeed: 70
+  bulletSpeed: 80
   pelletCount: 8
   spreadAngle: 15
   maxAmmo: 3
