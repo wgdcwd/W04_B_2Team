@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerAimer : MonoBehaviour
 {
-    [SerializeField] private Camera _cam;
     [SerializeField] private Transform _gunPivot; // 주무기(권총) 피봇
+    [SerializeField] private Camera _cam;
 
     Player _player;
     Rigidbody2D _rb;
@@ -37,7 +37,8 @@ public class PlayerAimer : MonoBehaviour
     float _stopTimer = 0f;
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
-
+    public Transform GunPivot => _gunPivot;
+    public bool IsLookingLeft { get; private set; }
     public bool IsUsingGamepad { get; private set; }
 
     private void Awake()
@@ -93,6 +94,18 @@ public class PlayerAimer : MonoBehaviour
     private void ApplyRotation()
     {
         float angle = Mathf.Atan2(AimDirection.y, AimDirection.x) * Mathf.Rad2Deg;
+
+        IsLookingLeft = angle > 90f || angle < -90f;
+
+        // 왼쪽 오른쪽에 따른 보정
+
+
+
+        if (angle > 90f)
+            angle -= 180f;
+        else if (angle < -90f)
+            angle += 180f;
+
         _gunPivot.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 

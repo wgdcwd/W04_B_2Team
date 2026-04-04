@@ -47,6 +47,7 @@ public class RushEnemy : NormalEnemyBase
         // Jaein 추가
         if (!TryFindPlayer())
         {
+            _wasDetecting = false;
             _rb.linearVelocity = Vector2.zero;
             Patrol();
             return;
@@ -56,6 +57,9 @@ public class RushEnemy : NormalEnemyBase
 
         if (detecting)
         {
+            if (!_wasDetecting)
+                RaiseAlerted();
+
             _wasDetecting = true;
 
             if (!_isRushing)

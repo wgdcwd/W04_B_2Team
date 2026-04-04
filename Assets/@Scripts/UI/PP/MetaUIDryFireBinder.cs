@@ -10,14 +10,32 @@ public class MetaUIDryFireBinder : MonoBehaviour
     [SerializeField] private FilmGrainEffectSettings _filmGrainSettings;
     [SerializeField] private ChromaticAberrationEffectSettings _chromaticAberrationSettings;
 
-    private void Start()
+    public void Bind(PlayerAttack playerAttack)
     {
+        if (_playerAttack == playerAttack)
+            return;
+
+        Unbind();
+        _playerAttack = playerAttack;
+
+        if (_playerAttack == null)
+            return;
+
         _playerAttack.OnDryFire += HandleFire;
     }
 
     private void OnDestroy()
     {
+        Unbind();
+    }
+
+    private void Unbind()
+    {
+        if (_playerAttack == null)
+            return;
+
         _playerAttack.OnDryFire -= HandleFire;
+        _playerAttack = null;
     }
 
     private void HandleFire(DryFireContext context)
