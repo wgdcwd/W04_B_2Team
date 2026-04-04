@@ -225,7 +225,7 @@ public class PlayerAimer : MonoBehaviour
         if (aimOffset.y < 0f)
             aimOffset.y *= _downAimOffsetMultiplier;  // 아래 방향 감쇠
         Vector2 totalOffset = aimOffset + _lookaheadOffset;
-        Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y, 0f);
+        Vector3 targetOffset = _baseOffset + new Vector3(totalOffset.x, totalOffset.y + 2f, 0f);
 
         _composer.TargetOffset = Vector3.Lerp(
             _composer.TargetOffset,
