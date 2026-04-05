@@ -1,7 +1,8 @@
+ï»¿using System.Collections;
+using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections;
-using System.Collections.Generic;
 
 [System.Serializable]
 public class PathSegment
@@ -12,36 +13,46 @@ public class PathSegment
 
 public class CollapseWave : MonoBehaviour
 {
-    [Header("°æ·Î")]
+    [Header("ê²½ë¡œ")]
     public PathSegment[] segments;
 
-    [Header("ºØ±«")]
-    public Tilemap tilemap;          // ºØ±«½ÃÅ³ Å¸ÀÏ¸Ê
+    [Header("ë¶•ê´´")]
+    public Tilemap tilemap;          // ë¶•ê´´ì‹œí‚¬ íƒ€ì¼ë§µ
     public float collapseRadius = 3f;
     public float startDelay = 1f;
-    public float queryInterval = 0.5f; // Å¸ÀÏ °Ë»ç ÁÖ±â (ÃÊ´ç 2È¸)
+    public float queryInterval = 0.5f; // íƒ€ì¼ ê²€ì‚¬ ì£¼ê¸° (ì´ˆë‹¹ 2íšŒ)
 
-    [Header("¿¬Ãâ")]
+    [Header("ì—°ì¶œ")]
     public ParticleSystem[] dustParticles;
     public int burstCount = 5;
 
-    [Header("ÇÃ·¹ÀÌ¾î ÃßÀû")]
-    public Transform player;
-    public float minDistance = 3f;  // ÀÌ °Å¸® ÀÌÇÏ¸é ÃÖÀú ¼Óµµ
-    public float maxDistance = 10f; // ÀÌ °Å¸® ÀÌ»óÀÌ¸é ÃÖ°í ¼Óµµ
-    public float minSpeedMult = 0.3f; // ÃÖÀú ¼Óµµ ¹èÀ² (seg.speed * 0.3)
-    public float maxSpeedMult = 2f;   // ÃÖ°í ¼Óµµ ¹èÀ² (seg.speed * 2.0)
+    [Header("ì¹´ë©”ë¼ í”ë“¤ë¦¼")]
+    public CinemachineCamera virtualCamera;
+    public float shakeDuration = 0.1f;
+    public float shakeAmplitude = 0.5f;
+    public float shakeFrequency = 1f;
 
-    [Header("µ¥¹ÌÁö")]
+    [Header("í”Œë ˆì´ì–´ ì¶”ì ")]
+    public Transform player;
+    public float minDistance = 3f;  // ì´ ê±°ë¦¬ ì´í•˜ë©´ ìµœì € ì†ë„
+    public float maxDistance = 10f; // ì´ ê±°ë¦¬ ì´ìƒì´ë©´ ìµœê³  ì†ë„
+    public float minSpeedMult = 0.3f; // ìµœì € ì†ë„ ë°°ìœ¨ (seg.speed * 0.3)
+    public float maxSpeedMult = 2f;   // ìµœê³  ì†ë„ ë°°ìœ¨ (seg.speed * 2.0)
+
+    [Header("ë°ë¯¸ì§€")]
     public int collapseDamage = 1;
     PlayerHealth _playerHealth;
+
+    // í™”ë©´ í”ë“¤ë¦¼
+    CinemachineBasicMultiChannelPerlin _perlin;
+    Coroutine _shakeCoroutine;
 
     int _segIndex = 0;
     int _wpIndex = 0;
     bool _active = false;
     float _queryTimer = 0f;
 
-    // ÀÌ¹Ì Áö¿î ¼¿ ÃßÀû ¡æ Áßº¹ Ã³¸® ¹æÁö
+    // ì´ë¯¸ ì§€ìš´ ì…€ ì¶”ì  â†’ ì¤‘ë³µ ì²˜ë¦¬ ë°©ì§€
     HashSet<Vector3Int> _removed = new HashSet<Vector3Int>();
 
     void Start()
@@ -49,6 +60,9 @@ public class CollapseWave : MonoBehaviour
 
         if (player != null)
             _playerHealth = player.GetComponent<PlayerHealth>();
+
+        if (virtualCamera != null)
+            _perlin = virtualCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
 
         if (segments?.Length > 0 && segments[0].waypoints?.Length > 0)
             transform.position = segments[0].waypoints[0].position;
@@ -65,12 +79,13 @@ public class CollapseWave : MonoBehaviour
 
         MoveAlongPath();
 
-        // ¸Å ÇÁ·¹ÀÓ ¸»°í ÀÏÁ¤ °£°İÀ¸·Î¸¸ Å¸ÀÏ °Ë»ç
+        // ë§¤ í”„ë ˆì„ ë§ê³  ì¼ì • ê°„ê²©ìœ¼ë¡œë§Œ íƒ€ì¼ ê²€ì‚¬
         _queryTimer += Time.deltaTime;
         if (_queryTimer >= queryInterval)
         {
             CollapseNearbyTiles();
             TryDamagePlayer();
+            Shake();
             _queryTimer = 0f;
         }
     }
@@ -80,13 +95,13 @@ public class CollapseWave : MonoBehaviour
         var seg = segments[_segIndex];
         var target = seg.waypoints[_wpIndex].position;
 
-        // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®·Î ¼Óµµ ¹èÀ² °è»ê
+        // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬ë¡œ ì†ë„ ë°°ìœ¨ ê³„ì‚°
         float speed = seg.speed;
         if (player != null)
         {
             float dist = Vector3.Distance(transform.position, player.position);
 
-            // dist°¡ minDistance~maxDistance »çÀÌ¿¡¼­ ¹èÀ²À» ¼±Çü º¸°£
+            // distê°€ minDistance~maxDistance ì‚¬ì´ì—ì„œ ë°°ìœ¨ì„ ì„ í˜• ë³´ê°„
             float t = Mathf.InverseLerp(minDistance, maxDistance, dist);
             float mult = Mathf.Lerp(minSpeedMult, maxSpeedMult, t);
             speed *= mult;
@@ -111,7 +126,6 @@ public class CollapseWave : MonoBehaviour
     {
         Vector3Int center = tilemap.WorldToCell(transform.position);
         int radiusInCells = Mathf.CeilToInt(collapseRadius);
-        bool anyRemoved = false;  // ÀÌ¹ø °Ë»ç¿¡¼­ Å¸ÀÏÀ» Áö¿ü´ÂÁö Ã¼Å©
 
         for (int x = -radiusInCells; x <= radiusInCells; x++)
         {
@@ -126,7 +140,6 @@ public class CollapseWave : MonoBehaviour
                 if (Vector3.Distance(transform.position, worldPos) > collapseRadius) continue;
 
                 RemoveTile(cell, worldPos);
-                anyRemoved = true;
             }
         }
 
@@ -161,11 +174,43 @@ public class CollapseWave : MonoBehaviour
             emitParams.position = spawnPos;
             emitParams.applyShapeToPosition = true;
 
-            // ¸ğµç ÆÄÆ¼Å¬ ½Ã½ºÅÛ¿¡ µ¿ÀÏÇÑ À§Ä¡·Î emit
+            // ëª¨ë“  íŒŒí‹°í´ ì‹œìŠ¤í…œì— ë™ì¼í•œ ìœ„ì¹˜ë¡œ emit
             foreach (var ps in dustParticles)
                 if (ps != null) ps.Emit(emitParams, 1);
         }
     }
+
+    void Shake()
+    {
+        if (_perlin == null) return;
+
+        if (_shakeCoroutine != null) StopCoroutine(_shakeCoroutine);
+        _shakeCoroutine = StartCoroutine(ShakeRoutine());
+    }
+
+    IEnumerator ShakeRoutine()
+    {
+        // ê°€ê¹Œìš¸ìˆ˜ë¡ ê°•í•˜ê²Œ
+        float dist = player != null
+            ? Vector3.Distance(transform.position, player.position)
+            : maxDistance;
+        float t = Mathf.InverseLerp(minDistance, maxDistance, dist);
+        float amplitude = Mathf.Lerp(shakeAmplitude, shakeAmplitude * 0.2f, t);
+
+        _perlin.FrequencyGain = shakeFrequency;
+
+        float elapsed = 0f;
+        while (elapsed < shakeDuration)
+        {
+            _perlin.AmplitudeGain = Mathf.Lerp(amplitude, 0f, elapsed / shakeDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _perlin.AmplitudeGain = 0f;
+        _perlin.FrequencyGain = 0f;
+    }
+
 
     void OnDrawGizmos()
     {
@@ -186,7 +231,7 @@ public class CollapseWave : MonoBehaviour
                 if (wps[i] && wps[i + 1]) Gizmos.DrawLine(wps[i].position, wps[i + 1].position);
         }
 
-        // ºØ±« ¹İ°æ
+        // ë¶•ê´´ ë°˜ê²½
         Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.2f);
         Gizmos.DrawSphere(transform.position, collapseRadius);
         Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.9f);
@@ -194,23 +239,23 @@ public class CollapseWave : MonoBehaviour
 
         if (player == null) return;
 
-        // minDistance ¿ø (ÃÊ·Ï ¡æ ÀÌ ¾È¿¡ µé¾î¿À¸é ´À·ÁÁü)
+        // minDistance ì› (ì´ˆë¡ â†’ ì´ ì•ˆì— ë“¤ì–´ì˜¤ë©´ ëŠë ¤ì§)
         Gizmos.color = new Color(0f, 1f, 0f, 0.1f);
         Gizmos.DrawSphere(transform.position, minDistance);
         Gizmos.color = new Color(0f, 1f, 0f, 0.8f);
         Gizmos.DrawWireSphere(transform.position, minDistance);
 
-        // maxDistance ¿ø (»¡°­ ¡æ ÀÌ ¹ÛÀ¸·Î ³ª°¡¸é ÃÖ°í¼Ó)
+        // maxDistance ì› (ë¹¨ê°• â†’ ì´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ ìµœê³ ì†)
         Gizmos.color = new Color(1f, 0f, 0f, 0.05f);
         Gizmos.DrawSphere(transform.position, maxDistance);
         Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
         Gizmos.DrawWireSphere(transform.position, maxDistance);
 
-        // ¿şÀÌºê ¡æ ÇÃ·¹ÀÌ¾î °Å¸® ¼±
+        // ì›¨ì´ë¸Œ â†’ í”Œë ˆì´ì–´ ê±°ë¦¬ ì„ 
         float dist = Vector3.Distance(transform.position, player.position);
         float t = Mathf.InverseLerp(minDistance, maxDistance, dist);
 
-        // °Å¸®¿¡ µû¶ó ¼± »ö»ó º¯È­ (ÃÊ·Ï ¡æ »¡°­)
+        // ê±°ë¦¬ì— ë”°ë¼ ì„  ìƒ‰ìƒ ë³€í™” (ì´ˆë¡ â†’ ë¹¨ê°•)
         Gizmos.color = Color.Lerp(Color.green, Color.red, t);
         Gizmos.DrawLine(transform.position, player.position);
     }
