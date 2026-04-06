@@ -101,7 +101,7 @@ public abstract class NormalEnemyBase : EnemyBase
     {
         if (_player != null) return true;
 
-        GameObject playerObj = GameObject.FindWithTag("Player");
+        GameObject playerObj = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerMuzzle>().gameObject;
         if (playerObj == null) return false;
 
         _player = playerObj.transform;
