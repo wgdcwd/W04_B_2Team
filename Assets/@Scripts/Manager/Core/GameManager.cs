@@ -23,6 +23,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
     public Player CurrentPlayer => _player;
     public event Action<Player> OnPlayerBound;
+    public event Action OnSceneChanged;
     public bool isClear = false;
 
     #region Debugging
@@ -76,6 +77,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        OnSceneChanged?.Invoke();
         BindPlayerHealth();
     }
 
