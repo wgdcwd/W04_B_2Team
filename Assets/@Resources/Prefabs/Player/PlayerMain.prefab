@@ -10821,7 +10821,8 @@ MonoBehaviour:
   _maxHp: 5
   _attackDamage: 1
   _invincibleDuration: 1.5
-  _spriteRenderer: {fileID: 980509891218287757}
+  _headSpriteRenderer: {fileID: 3173409010567716036}
+  _bodySpriteRenderer: {fileID: 980509891218287757}
   _hitColor: {r: 1, g: 0, b: 0, a: 1}
   _hitFlashDuration: 0.1
   _blinkInterval: 0.1
