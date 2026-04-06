@@ -93,6 +93,11 @@ public class UIManager : MonoBehaviour, IInitializable
     {
         switch (state)
         {
+            case GameState.Playing:
+                HideAll();
+                Cursor.visible = false;
+                break;
+
             case GameState.Paused:
                 ShowPause();
                 Cursor.visible = true;
@@ -103,9 +108,9 @@ public class UIManager : MonoBehaviour, IInitializable
                 Cursor.visible = true;
                 break;
 
-            default:
+            default: // None, Loading, Respawning, Clear
                 HideAll();
-                Cursor.visible = false;
+                Cursor.visible = true;
                 break;
         }
     }

@@ -245,7 +245,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         _inputManager.EnablePlayerInput();
         //_inputManager.EnableUIInput();
 
-        _gameStateManager.ChangeState(GameState.Playing);
+        //_gameStateManager.ChangeState(GameState.Playing);
 
         Scene activeScene = SceneManager.GetActiveScene();
         _sceneManager.SetCurrentStage(activeScene.name);
@@ -311,6 +311,5 @@ public class GameManager : PersistentMonoSingleton<GameManager>
     public void GameClear()
     {
         isClear = true;
-        Cursor.visible = true;
     }
 }
