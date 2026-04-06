@@ -14,6 +14,7 @@ public class Laser : MonoBehaviour
     Player _player;
     Camera _cam;
     GameStateManager _gameStateManager;
+    private bool _hiddenForCutscene;
 
     void Start()
     {
@@ -43,6 +44,20 @@ public class Laser : MonoBehaviour
 
     void Update()
     {
+        if (_hiddenForCutscene)
+        {
+            if (_laser != null)
+                _laser.enabled = false;
+
+            if (_cursorDot != null)
+                _cursorDot.gameObject.SetActive(false);
+
+            return;
+        }
+
+        if (_laser != null && !_laser.enabled)
+            _laser.enabled = true;
+
         Vector2 aimDir = _player.playerAimer.AimDirection;
         _laser.SetPosition(0, _muzzle.position);
 
@@ -72,5 +87,19 @@ public class Laser : MonoBehaviour
     void OnApplicationFocus(bool hasFocus)
     {
         Cursor.visible = !hasFocus;
+    }
+
+    public void SetCutsceneHidden(bool hidden)
+    {
+        _hiddenForCutscene = hidden;
+
+        if (_laser != null)
+            _laser.enabled = !hidden;
+
+        if (_cursorDot != null)
+            _cursorDot.gameObject.SetActive(!hidden);
+
+        if (hidden)
+            Cursor.visible = false;
     }
 }

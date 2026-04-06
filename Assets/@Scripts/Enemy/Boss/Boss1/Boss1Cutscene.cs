@@ -30,10 +30,16 @@ public class Boss1Cutscene : MonoBehaviour
 
     private Vector2 _startPos;
     private bool _triggered = false;
+    private PlayerAimer _playerAimer;
+    private PlayerHeadRotate _playerHeadRotate;
+    private Laser[] _playerLasers;
 
     void Start()
     {
         _startPos = _player.position;
+        _playerAimer = _player != null ? _player.GetComponent<PlayerAimer>() : null;
+        _playerHeadRotate = _player != null ? _player.GetComponent<PlayerHeadRotate>() : null;
+        _playerLasers = _player != null ? _player.GetComponentsInChildren<Laser>(true) : new Laser[0];
         //_sequencerCam.Priority = 0; // 시작엔 비활성
 
         director.stopped += OnTimelineFinished;
@@ -55,6 +61,8 @@ public class Boss1Cutscene : MonoBehaviour
         {
             ManagerRegistry.Get<InputManager>().DisablePlayerInput();
             other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // 플레이어 이동 멈춤
+            SetCutscenePointerVisible(false);
+            SetPlayerLookRightUp();
             StartCoroutine(FadeOutIn(1.0f)); // 페이드 효과 시작
             _triggered = true;
             _wall.SetActive(true);
@@ -68,6 +76,7 @@ public class Boss1Cutscene : MonoBehaviour
 
     public void StartSequencerCam()
     {
+        SetPlayerLookRightUp();
         _walkPathCam.Priority = 0; // 워크 카메라 끄기
         _sequencerCam.Priority = 20; // 시퀀서 카메라 활성화
     }
@@ -75,11 +84,29 @@ public class Boss1Cutscene : MonoBehaviour
 
     public void OnCutsceneAllFinished()
     {
+        ReleasePlayerLookLock();
+        SetCutscenePointerVisible(true);
         ManagerRegistry.Get<InputManager>().EnablePlayerInput();
         // 여기에 게임 시작 코드 추가
         Debug.Log("컷씬 완료 - 게임 시작!");
         _controller?.StartBoss();
 
+    }
+
+    public void SetPlayerLookRightUp()
+    {
+        ApplyCutsceneLook(false);
+    }
+
+    public void SetPlayerLookLeftUp()
+    {
+        ApplyCutsceneLook(true);
+    }
+
+    public void ReleasePlayerLookLock()
+    {
+        _playerAimer?.UnlockCutsceneAim();
+        _playerHeadRotate?.UnlockHeadRotation();
     }
 
     void OnDestroy()
@@ -95,6 +122,34 @@ public class Boss1Cutscene : MonoBehaviour
         _fadeIamge.gameObject.SetActive(false);
 
         director.Play();
+    }
+
+    void ApplyCutsceneLook(bool isLookingLeft)
+    {
+        bool shouldLookLeft = isLookingLeft;
+        Vector2 aimDirection = Vector2.up;
+        if (_player != null && _controller != null)
+        {
+            Vector2 toBoss = (Vector2)_controller.transform.position - (Vector2)_player.position;
+            if (toBoss.sqrMagnitude > 0.001f)
+            {
+                aimDirection = toBoss.normalized;
+                shouldLookLeft = toBoss.x < 0f;
+            }
+        }
+
+        _playerAimer?.LockCutsceneAim(aimDirection, shouldLookLeft);
+        _playerHeadRotate?.FlipHead(shouldLookLeft);
+        _playerHeadRotate?.LockHeadToTarget(_controller != null ? _controller.transform : null);
+    }
+
+    void SetCutscenePointerVisible(bool visible)
+    {
+        if (_playerLasers == null)
+            return;
+
+        for (int i = 0; i < _playerLasers.Length; i++)
+            _playerLasers[i]?.SetCutsceneHidden(!visible);
     }
 
 }

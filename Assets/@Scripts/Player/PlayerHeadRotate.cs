@@ -13,6 +13,9 @@ public class PlayerHeadRotate : MonoBehaviour
 
     private float _step;
     private bool _isLookingLeft;
+    private bool _isRotationLocked;
+    private float _lockedAngle;
+    private Transform _lockedTarget;
 
     void Start()
     {
@@ -27,6 +30,25 @@ public class PlayerHeadRotate : MonoBehaviour
     public void RotateHead(Vector3 mouseWorldPos)
     {
         if (headTransform == null) return;
+        if (_isRotationLocked)
+        {
+            if (_lockedTarget != null)
+            {
+                Vector2 targetDirection = (Vector2)_lockedTarget.position - (Vector2)headTransform.position;
+                if (targetDirection.sqrMagnitude > 0.0001f)
+                {
+                    float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+                    float targetRelativeAngle = Mathf.DeltaAngle(_isLookingLeft ? 180f : 0f, targetAngle);
+                    targetRelativeAngle = Mathf.Clamp(targetRelativeAngle, minAngle, maxAngle);
+                    float targetSnappedAngle = Mathf.Round((targetRelativeAngle + angleOffset) / _step) * _step;
+                    headTransform.localRotation = Quaternion.Euler(0f, 0f, targetSnappedAngle);
+                    return;
+                }
+            }
+
+            headTransform.localRotation = Quaternion.Euler(0f, 0f, _lockedAngle);
+            return;
+        }
 
         // 머리 위치 기준으로 마우스 방향 계산
         Vector2 direction = (Vector2)mouseWorldPos - (Vector2)headTransform.position;
@@ -57,5 +79,29 @@ public class PlayerHeadRotate : MonoBehaviour
         Vector3 localScale = headTransform.localScale;
         localScale.x = Mathf.Abs(localScale.x) * (_isLookingLeft ? -1f : 1f);
         headTransform.localScale = localScale;
+    }
+
+    public void LockHeadRotation(float localZAngle = 0f)
+    {
+        if (headTransform == null) return;
+
+        _isRotationLocked = true;
+        _lockedTarget = null;
+        _lockedAngle = localZAngle;
+        headTransform.localRotation = Quaternion.Euler(0f, 0f, _lockedAngle);
+    }
+
+    public void LockHeadToTarget(Transform target)
+    {
+        if (headTransform == null) return;
+
+        _isRotationLocked = true;
+        _lockedTarget = target;
+    }
+
+    public void UnlockHeadRotation()
+    {
+        _isRotationLocked = false;
+        _lockedTarget = null;
     }
 }

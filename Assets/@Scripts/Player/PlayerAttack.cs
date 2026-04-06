@@ -388,6 +388,9 @@ public class PlayerAttack : MonoBehaviour
         SO_WeaponBase data = _shotgunData;
         Vector2 aimDir = Vector2.left;
 
+        if (_bulletShellParticle != null)
+            _bulletShellParticle.Emit(1);
+
         // 총알 스폰
         SpawnBullets(data, aimDir); // 총알은 정확한 마우스 방향으로
 

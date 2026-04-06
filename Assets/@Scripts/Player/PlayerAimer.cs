@@ -52,6 +52,9 @@ public class PlayerAimer : MonoBehaviour
     public bool IsLookingLeft { get; private set; }
     public bool IsUsingGamepad { get; private set; }
 
+    private bool _isCutsceneAimLocked;
+    private bool? _forcedLookLeft;
+
     private void Awake()
     {
         if (_cam == null)
@@ -114,6 +117,7 @@ public class PlayerAimer : MonoBehaviour
 
     public void HandleLook(InputAction.CallbackContext ctx)
     {
+        if (_isCutsceneAimLocked) return;
         if (ctx.canceled) return;
         Vector2 input = ctx.ReadValue<Vector2>();
         if (input.sqrMagnitude < 0.01f) return;
@@ -128,6 +132,7 @@ public class PlayerAimer : MonoBehaviour
 
     public void HandleLookMouse(InputAction.CallbackContext ctx)
     {
+        if (_isCutsceneAimLocked) return;
         if (ctx.canceled) return;
         IsUsingGamepad = false;
 
@@ -146,7 +151,7 @@ public class PlayerAimer : MonoBehaviour
     {
         float angle = Mathf.Atan2(AimDirection.y, AimDirection.x) * Mathf.Rad2Deg;
 
-        IsLookingLeft = angle > 90f || angle < -90f;
+        IsLookingLeft = _forcedLookLeft ?? (angle > 90f || angle < -90f);
         
         // 플레이어 탄피 소환 방향 생성
         float _pistolParticleXRotation = IsLookingLeft ? -55 : -130;
@@ -166,6 +171,23 @@ public class PlayerAimer : MonoBehaviour
         _muzzle.localPosition = muzzlePos;
 
 
+    }
+
+    public void LockCutsceneAim(Vector2 aimDirection, bool isLookingLeft)
+    {
+        _isCutsceneAimLocked = true;
+        _forcedLookLeft = isLookingLeft;
+
+        if (aimDirection.sqrMagnitude > 0.001f)
+            AimDirection = aimDirection.normalized;
+
+        ApplyRotation();
+    }
+
+    public void UnlockCutsceneAim()
+    {
+        _isCutsceneAimLocked = false;
+        _forcedLookLeft = null;
     }
 
     Vector2 GetAimAssistDirection(Vector2 aimDir, Vector2 detectCenter, float radius, float maxAngle)
