@@ -90,7 +90,7 @@ public class Boss1Cutscene : MonoBehaviour
     {
         _fadeIamge.gameObject.SetActive(true);
         yield return _fadeIamge.DOFade(1f, 0.1f).WaitForCompletion();
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
         yield return _fadeIamge.DOFade(0f, duration).WaitForCompletion();
         _fadeIamge.gameObject.SetActive(false);
 
