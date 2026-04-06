@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class BossEye : EnemyBase
@@ -42,6 +43,7 @@ public class BossEye : EnemyBase
     private bool _isBlinking;
     private Coroutine _transitionCoroutine;
     private Vector3 _fireLaserOriginalScale;
+    private Tween _laserExpandTween;
 
     // =====================
     // 초기화
@@ -54,6 +56,7 @@ public class BossEye : EnemyBase
 
         _warningLaser.SetActive(false);
         _fireLaser.SetActive(false);
+        _fireLaser.transform.DOKill();
         _fireLaserOriginalScale = _fireLaser.transform.localScale;
     }
 
@@ -131,28 +134,28 @@ public class BossEye : EnemyBase
 
         // 2단계 : 레이저 펼치기
         _warningLaser.SetActive(false);
+        _fireLaser.transform.DOKill();
         _fireLaser.transform.localScale = new Vector3(0f, _fireLaserOriginalScale.y, _fireLaserOriginalScale.z);
         _fireLaser.SetActive(true);
 
-        elapsed = 0f;
-        while (elapsed < laserExpandTime)
+        _laserExpandTween = _fireLaser.transform
+            .DOScaleX(_fireLaserOriginalScale.x, laserExpandTime)
+            .SetEase(Ease.Linear);
+
+        while (_laserExpandTween != null && _laserExpandTween.IsActive() && !_laserExpandTween.IsComplete())
         {
             if (IsDead)
             {
+                _fireLaser.transform.DOKill();
+                _laserExpandTween = null;
                 _fireLaser.SetActive(false);
                 _fireLaser.transform.localScale = _fireLaserOriginalScale;
                 IsLaserFinished = true;
                 yield break;
             }
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / laserExpandTime);
-            _fireLaser.transform.localScale = new Vector3(
-                Mathf.Lerp(0f, _fireLaserOriginalScale.x, t),
-                _fireLaserOriginalScale.y,
-                _fireLaserOriginalScale.z
-            );
             yield return null;
         }
+        _laserExpandTween = null;
         _fireLaser.transform.localScale = _fireLaserOriginalScale;
 
         // 3단계 : 레이저 지속
@@ -161,6 +164,8 @@ public class BossEye : EnemyBase
         {
             if (IsDead)
             {
+                _fireLaser.transform.DOKill();
+                _laserExpandTween = null;
                 _fireLaser.SetActive(false);
                 _fireLaser.transform.localScale = _fireLaserOriginalScale;
                 IsLaserFinished = true;
@@ -200,6 +205,8 @@ public class BossEye : EnemyBase
         StopAllCoroutines();
 
         _warningLaser.SetActive(false);
+        _fireLaser.transform.DOKill();
+        _laserExpandTween = null;
         _fireLaser.SetActive(false);
         _fireLaser.transform.localScale = _fireLaserOriginalScale;
         GetComponent<Collider2D>().enabled = false;

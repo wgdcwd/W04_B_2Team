@@ -62,8 +62,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<BreakablePlatform>() != null) return;
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        int otherLayer = other.gameObject.layer;
+
+        if (otherLayer == LayerMask.NameToLayer("Ground") || otherLayer == LayerMask.NameToLayer("Obstacle"))
         {
             if (_isPiercing) return; // 관통이면 무시
             SpawnHitParticle();
@@ -71,7 +72,7 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.CompareTag("Enemy")) //보스 에임 보정 관련때문에 CompareTag 추가
+        if (otherLayer == LayerMask.NameToLayer("Enemy") || other.CompareTag("Enemy")) //보스 에임 보정 관련때문에 CompareTag 추가
         {
             if (other.TryGetComponent<EnemyBase>(out var damageable))
                 damageable.TakeDamage(_damage, _giveGauge);
