@@ -18,13 +18,16 @@ public class PlayerHealth : EntityBase
     public event Action<int> OnHeal;
     public event Action OnDie;
 
-    private Color _originalColor;
+    private Color _originalHeadColor;
+    private Color _originalBodyColor;
 
     private void Awake()
     {
         if (!ManagerRegistry.TryGet<HapticManager>(out _hapticManager))
             _hapticManager = null;
-        _originalColor = _spriteRenderer.color; // 원래 색깔 저장
+
+        _originalHeadColor = _headSpriteRenderer.color;
+        _originalBodyColor = _bodySpriteRenderer.color;
     }
 
     public void SetInvincible(bool value)
@@ -95,7 +98,8 @@ public class PlayerHealth : EntityBase
 
     #region Visual
     [Header("Visual")]
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _headSpriteRenderer;
+    [SerializeField] private SpriteRenderer _bodySpriteRenderer;
     [SerializeField] private Color _hitColor = Color.red;
     [SerializeField] private float _hitFlashDuration = 0.1f;
     [SerializeField] private float _blinkInterval = 0.1f;
@@ -107,9 +111,12 @@ public class PlayerHealth : EntityBase
         if (_visualRoutine != null)
         {
             StopCoroutine(_visualRoutine);
-            _spriteRenderer.DOKill();
-            _spriteRenderer.color = _originalColor;
-            _spriteRenderer.enabled = true;
+            _headSpriteRenderer.DOKill();
+            _bodySpriteRenderer.DOKill();
+            _headSpriteRenderer.color = _originalHeadColor;
+            _bodySpriteRenderer.color = _originalBodyColor;
+            _headSpriteRenderer.enabled = true;
+            _bodySpriteRenderer.enabled = true;
         }
         _visualRoutine = StartCoroutine(RunVisual());
         yield return null;
@@ -118,23 +125,29 @@ public class PlayerHealth : EntityBase
     private IEnumerator RunVisual()
     {
         // 빨간 번쩍 후 흰색으로 복귀
-        _spriteRenderer.DOColor(_hitColor, 0f);
-        _spriteRenderer.DOColor(_originalColor, _hitFlashDuration);
+        _headSpriteRenderer.DOColor(_hitColor, 0f);
+        _bodySpriteRenderer.DOColor(_hitColor, 0f);
+        _headSpriteRenderer.DOColor(_originalHeadColor, _hitFlashDuration);
+        _bodySpriteRenderer.DOColor(_originalBodyColor, _hitFlashDuration);
 
         yield return new WaitForSeconds(_hitFlashDuration);
 
         // 깜빡임
         while (_isInvincible)
         {
-            _spriteRenderer.DOFade(0f, _blinkInterval);
+            _headSpriteRenderer.DOFade(0f, _blinkInterval);
+            _bodySpriteRenderer.DOFade(0f, _blinkInterval);
             yield return new WaitForSeconds(_blinkInterval);
-            _spriteRenderer.DOFade(1f, _blinkInterval);
+            _headSpriteRenderer.DOFade(1f, _blinkInterval);
+            _bodySpriteRenderer.DOFade(1f, _blinkInterval);
             yield return new WaitForSeconds(_blinkInterval);
         }
 
         // 원래 상태로 복귀
-        _spriteRenderer.DOFade(1f, 0f);
-        _spriteRenderer.DOColor(_originalColor, 0f);
+        _headSpriteRenderer.DOFade(1f, 0f);
+        _bodySpriteRenderer.DOFade(1f, 0f);
+        _headSpriteRenderer.DOColor(_originalHeadColor, 0f);
+        _bodySpriteRenderer.DOColor(_originalBodyColor, 0f);
         _visualRoutine = null;
     }
 
@@ -145,9 +158,13 @@ public class PlayerHealth : EntityBase
             StopCoroutine(_visualRoutine);
             _visualRoutine = null;
         }
-        _spriteRenderer.DOKill();
-        _spriteRenderer.color = _originalColor;
-        _spriteRenderer.enabled = true;
+
+        _headSpriteRenderer.DOKill();
+        _bodySpriteRenderer.DOKill();
+        _headSpriteRenderer.color = _originalHeadColor;
+        _bodySpriteRenderer.color = _originalBodyColor;
+        _headSpriteRenderer.enabled = true;
+        _bodySpriteRenderer.enabled = true;
     }
     #endregion
 
