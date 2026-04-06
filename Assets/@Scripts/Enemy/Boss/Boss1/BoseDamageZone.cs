@@ -17,6 +17,13 @@ public class BoseDamageZone : MonoBehaviour
             other.GetComponent<IDamageable>()?.TakeDamage(damage);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            collision.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage);
+
+    }
+
     public void SetDamageEnabled(bool isEnabled)
     {
         if (_damageCollider != null)

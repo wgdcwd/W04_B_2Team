@@ -7,6 +7,7 @@ public class Boss2Cutscene : MonoBehaviour
 {
     [SerializeField] private CinemachineSequencerCamera _sequencerCam;
     [SerializeField] private Boss2Controller _boss2Controller;
+    [SerializeField] private BreakablePlatform _breakablePlatform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +24,8 @@ public class Boss2Cutscene : MonoBehaviour
 
     IEnumerator cutScene()
     {
-        yield return new WaitForSeconds(20f); // 컷씬 지속 시간
+        yield return new WaitForSeconds(9f); // 컷씬 지속 시간
+        _breakablePlatform._breakDelay = 4;
         ManagerRegistry.Get<InputManager>().EnablePlayerInput();
         _boss2Controller.StartBoss2();
 

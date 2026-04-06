@@ -526,7 +526,7 @@ public class BossController : MonoBehaviour
         SetBodyContactDamageEnabled(false);
     }
 
-    void StartBoss()
+    public void StartBoss()
     {
         _isActive = true;
         SetBodyContactDamageEnabled(true);

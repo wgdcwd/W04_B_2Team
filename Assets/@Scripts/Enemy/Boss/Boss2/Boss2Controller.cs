@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Boss2Controller : EnemyBase
 {
+    [Header("보스 스테이지")]
+    [SerializeField] private GameObject _bossStage;
+
+
     [Header("스킬")]
     public MonoBehaviour[] skills;
 
@@ -21,7 +25,7 @@ public class Boss2Controller : EnemyBase
 
     [Header("소환 설정")]
     [SerializeField] private GameObject[] _minionPrefabs;
-    [SerializeField] private Transform _spawnPointY;
+    [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _spawnCountPerCycle = 2; // 스킬 사이마다 소환할 수
     private PoolManager _pool;
 
@@ -113,7 +117,16 @@ public class Boss2Controller : EnemyBase
 
         _nextStageDoor.SetActive(true);
         Debug.Log("보스2 사망");
+
+        // 씬의 모든 NormalEnemyBase (상속 포함) Die 호출
+        foreach (var enemy in FindObjectsByType<NormalEnemyBase>(FindObjectsSortMode.None))
+        {
+            enemy.Die();
+        }
+
+
         gameObject.SetActive(false);
+        _bossStage.SetActive(false);
     }
 
     // =====================
@@ -177,12 +190,11 @@ public class Boss2Controller : EnemyBase
     {
         if (_minionPrefabs == null || _minionPrefabs.Length == 0) return;
 
-        float spawnY = _spawnPointY != null ? _spawnPointY.position.y : transform.position.y;
 
         for (int i = 0; i < _spawnCountPerCycle; i++)
         {
             GameObject prefab = _minionPrefabs[Random.Range(0, _minionPrefabs.Length)];
-            Vector3 spawnPos = new Vector3(transform.position.x + Random.Range(-10f, 10f), spawnY, 0f);
+            Vector3 spawnPos = new Vector3(_spawnPoint.transform.position.x + Random.Range(-25f, 25f), _spawnPoint.position.y + Random.Range(-5f, 5f), 0f);
 
             if (_pool != null)
                 _pool.Get(prefab, spawnPos, Quaternion.identity);
