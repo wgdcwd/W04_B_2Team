@@ -8,6 +8,7 @@ public class BossLaserImpactMarker : MonoBehaviour
     [SerializeField] private Vector3 _positionOffset;
     [SerializeField] private bool _alignToNormal = true;
     [SerializeField] private bool _alignToLaserPerpendicular = true;
+    [SerializeField] private float _impactRotationOffset = 90f;
     [SerializeField] private float _rayStartOffset = 0.05f;
     [SerializeField] private float _laserThickness = 0.5f;
     [SerializeField] private float _laserBaseLength = 20f;
@@ -149,6 +150,8 @@ public class BossLaserImpactMarker : MonoBehaviour
             Vector2 perpendicular = Vector2.Perpendicular(GetRayDirection());
             if (perpendicular.sqrMagnitude > 0f)
                 _impactInstance.transform.up = perpendicular.normalized;
+
+            ApplyImpactRotationOffset();
             return;
         }
 
@@ -157,6 +160,13 @@ public class BossLaserImpactMarker : MonoBehaviour
             Vector2 up = hit.normal.sqrMagnitude > 0f ? hit.normal : Vector2.up;
             _impactInstance.transform.up = up;
         }
+
+        ApplyImpactRotationOffset();
+    }
+
+    void ApplyImpactRotationOffset()
+    {
+        _impactInstance.transform.Rotate(0f, 0f, _impactRotationOffset, Space.Self);
     }
 
     void HideImpactMarker()
