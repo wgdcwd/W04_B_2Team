@@ -8,6 +8,7 @@ public class NextScene : MonoBehaviour
     [SerializeField] private string _sceneName;
 
     [SerializeField] bool _isBossStage = false;
+    [SerializeField] bool _isLastStage = false;
 
     [SerializeField] CinemachineCamera _vcam;
 
@@ -42,6 +43,10 @@ public class NextScene : MonoBehaviour
                 _checkpointManager?.ClearCheckpoint();
             }
 
+            if (_isBossStage)
+            {
+                GameManager.Instance.GameClear();
+            }
             _sceneFlowManager.SetCurrentStage(_sceneName);
             _sceneFlowManager.LoadStage();
         });
