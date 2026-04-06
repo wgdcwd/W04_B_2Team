@@ -42,6 +42,7 @@ public abstract class NormalEnemyBase : EnemyBase
 
     protected SpriteRenderer _spriteRenderer;
     protected Color _originalColor;
+    private SpriteRenderer[] _spriteRenderers;
     private Coroutine _flashCoroutine;
 
     // =====================
@@ -58,6 +59,7 @@ public abstract class NormalEnemyBase : EnemyBase
 
         _originalPos = transform.position;
         _patrolTarget = GetRandomPatrolTarget();
+        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
     }
 
     protected virtual void OnEnable()
@@ -313,9 +315,19 @@ public abstract class NormalEnemyBase : EnemyBase
     {
         for (int i = 0; i < _hitFlashCount; i++)
         {
-            _spriteRenderer.color = _hitFlashColor;
+            foreach (var sr in _spriteRenderers)
+            {
+                Color c = sr.color;
+                c.a = 0f;
+                sr.color = c;
+            }
             yield return new WaitForSeconds(_hitFlashInterval);
-            _spriteRenderer.color = _originalColor;
+            foreach (var sr in _spriteRenderers)
+            {
+                Color c = sr.color;
+                c.a = 1f;
+                sr.color = c;
+            }
             yield return new WaitForSeconds(_hitFlashInterval);
         }
     }
