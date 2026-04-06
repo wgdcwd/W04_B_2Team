@@ -62,6 +62,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.GetComponent<BreakablePlatform>() != null) return;
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             if (_isPiercing) return; // 관통이면 무시

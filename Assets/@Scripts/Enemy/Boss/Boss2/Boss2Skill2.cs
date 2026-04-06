@@ -32,7 +32,7 @@ public class Boss2Skill2 : MonoBehaviour, ISkill
         if (warningSpace != null)
             warningSpace.SetActive(true);
 
-        yield return new WaitForSeconds(1f); // 경고 1초 대기
+        yield return new WaitForSeconds(2f); // 경고 1초 대기
 
         _isMoving = true;
         Coroutine moveCoroutine = StartCoroutine(MoveRoutine());
