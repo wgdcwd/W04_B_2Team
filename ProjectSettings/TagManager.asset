@@ -65,11 +65,14 @@ TagManager:
   - name: Effect
     uniqueID: 3153114699
     locked: 0
+  - name: Ground
+    uniqueID: 1897495005
+    locked: 0
   - name: FrontObject
     uniqueID: 1100037587
     locked: 0
-  - name: Foreground
-    uniqueID: 1897495005
+  - name: FrontEffect
+    uniqueID: 1774096679
     locked: 0
   - name: Distortion
     uniqueID: 2911581143
