@@ -11,6 +11,7 @@ public class BreakablePlatform : MonoBehaviour
     Transform _playerTransform;
     Color _originalColor;
     bool _isBroken = false;
+    [SerializeField] bool _isBreakable = true;
 
     void Awake()
     {
@@ -37,7 +38,7 @@ public class BreakablePlatform : MonoBehaviour
         if (col.gameObject.GetComponent<Player>() == null) return;
 
         float normalY = col.contacts[0].normal.y;
-        if (normalY < -0.5f)
+        if (normalY < -0.5f && _isBreakable)
             StartCoroutine(BreakRoutine());
     }
 
