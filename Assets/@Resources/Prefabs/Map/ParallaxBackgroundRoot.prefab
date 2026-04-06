@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ead21d85b2df5458de6b4ebc24a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
-  multiplier: {x: 0.2, y: 0.95}
+  multiplier: {x: 0.2, y: 0.7}
   minYOffset: -200
   maxYOffset: 200
 --- !u!1 &5443824878963553828
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ead21d85b2df5458de6b4ebc24a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
-  multiplier: {x: 0.3, y: 0.97}
+  multiplier: {x: 0.3, y: 0.8}
   minYOffset: -200
   maxYOffset: 200
 --- !u!1 &8455152158696207396
@@ -1055,7 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ead21d85b2df5458de6b4ebc24a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
-  multiplier: {x: 0.4, y: 0.99}
+  multiplier: {x: 0.4, y: 0.9}
   minYOffset: -200
   maxYOffset: 200
 --- !u!1 &8757644394315583495
