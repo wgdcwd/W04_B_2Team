@@ -50,6 +50,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BossAttack
+    uniqueID: 1872648561
+    locked: 0
+  - name: Ground
+    uniqueID: 1897495005
+    locked: 0
   - name: Player
     uniqueID: 2358385449
     locked: 0
@@ -59,14 +65,8 @@ TagManager:
   - name: Boss
     uniqueID: 4013867329
     locked: 0
-  - name: BossEye
-    uniqueID: 2052925579
-    locked: 0
   - name: Effect
     uniqueID: 3153114699
-    locked: 0
-  - name: Ground
-    uniqueID: 1897495005
     locked: 0
   - name: FrontObject
     uniqueID: 1100037587
