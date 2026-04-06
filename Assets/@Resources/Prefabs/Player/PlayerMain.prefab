@@ -910,7 +910,7 @@ MonoBehaviour:
   _groundCheck: {fileID: 5183568773124200577}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 5120
   _groundCheckRadius: 0.15
   _recoilMoveInfluence: 15
   _airRecoilMoveInfluence: 10
