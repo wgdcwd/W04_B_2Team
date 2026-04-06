@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BreakablePlatform : MonoBehaviour
 {
-    [SerializeField] float _breakDelay = 1f;
+    [SerializeField]  public float _breakDelay = 1f;
     [SerializeField] float _respawnDelay = 3f;
 
     SpriteRenderer _renderer;
