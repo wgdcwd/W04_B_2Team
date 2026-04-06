@@ -1,6 +1,10 @@
-﻿using Unity.Cinemachine;
+﻿using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class Boss1Cutscene : MonoBehaviour
 {
@@ -20,6 +24,9 @@ public class Boss1Cutscene : MonoBehaviour
 
     [Header("Wall")]
     [SerializeField] private GameObject _wall;
+
+    [Header("FadeImage")]
+    [SerializeField] private Image _fadeIamge;
 
     private Vector2 _startPos;
     private bool _triggered = false;
@@ -46,11 +53,11 @@ public class Boss1Cutscene : MonoBehaviour
         if (_triggered) return;
         if (other.CompareTag("Player"))
         {
+            ManagerRegistry.Get<InputManager>().DisablePlayerInput();
             other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // 플레이어 이동 멈춤
+            StartCoroutine(FadeOutIn(1.0f)); // 페이드 효과 시작
             _triggered = true;
             _wall.SetActive(true);
-            ManagerRegistry.Get<InputManager>().DisablePlayerInput();
-            director.Play();
         }
     }
 
@@ -78,4 +85,14 @@ public class Boss1Cutscene : MonoBehaviour
     void OnDestroy()
     {
     }
+
+    public IEnumerator FadeOutIn(float duration = 0.5f)
+    {
+        yield return _fadeIamge.DOFade(1f, 0.2f).WaitForCompletion();
+        yield return new WaitForSeconds(1f);
+        yield return _fadeIamge.DOFade(0f, duration).WaitForCompletion();
+
+        director.Play();
+    }
+
 }
