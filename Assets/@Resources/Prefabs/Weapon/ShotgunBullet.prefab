@@ -258,5 +258,6 @@ MonoBehaviour:
   _lifetime: 0.115
   _isPiercing: 0
   _giveGauge: 1
+  _canExplode: 1
   _hitParticlePrefab: {fileID: 2353225969018668273, guid: 730cc48ae579ae74ebe919354581b709, type: 3}
   _light: {fileID: 0}

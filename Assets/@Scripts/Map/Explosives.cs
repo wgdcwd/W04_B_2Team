@@ -23,7 +23,7 @@ public class Explosives : MonoBehaviour
         if (_exploded) return; // 이미 터졌으면 스킵
 
         Bullet bullet = collision.GetComponent<Bullet>();
-        if (bullet != null)
+        if (bullet != null && bullet.CanExplode)
         {
             _exploded = true;
             Explosion();
