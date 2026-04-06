@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/@Scenes/NewMaps/Stage00.unity
     guid: f1e3a446698fdb848be93486e19e2332
   - enabled: 1
-    path: Assets/@Scenes/NewMaps/Stage01.unity
+    path: Assets/@Scenes/Maps/Stage999.unity
     guid: 5070673da9f3a4a4b9ea6d809e42044e
   - enabled: 1
     path: Assets/@Scenes/NewMaps/Stage02.unity
