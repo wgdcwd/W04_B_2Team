@@ -6,25 +6,26 @@ public class ParallaxLayer : MonoBehaviour
     [SerializeField] private float minYOffset = -0.5f;
     [SerializeField] private float maxYOffset = 1.5f;
 
-    private float _startY;
-    private float _startTargetY;
+    private Vector3 _startLocalPosition;
+    private Vector3 _startTargetPosition;
 
-    public void Initialize(float startTargetY)
+    public void Initialize(Vector3 startTargetPosition)
     {
-        _startY = transform.position.y;
-        _startTargetY = startTargetY;
+        _startLocalPosition = transform.localPosition;
+        _startTargetPosition = startTargetPosition;
     }
 
-    public void Move(float deltaX, float targetY)
+    public void Move(Vector3 targetPosition)
     {
-        Vector3 position = transform.position;
+        Vector3 localPosition = _startLocalPosition;
+        Vector3 targetDelta = targetPosition - _startTargetPosition;
 
-        position.x += deltaX * multiplier.x;
+        localPosition.x += targetDelta.x * multiplier.x;
 
-        float yOffset = (targetY - _startTargetY) * multiplier.y;
+        float yOffset = targetDelta.y * multiplier.y;
         yOffset = Mathf.Clamp(yOffset, minYOffset, maxYOffset);
-        position.y = _startY + yOffset;
+        localPosition.y += yOffset;
 
-        transform.position = position;
+        transform.localPosition = localPosition;
     }
 }

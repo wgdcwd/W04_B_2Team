@@ -910,7 +910,7 @@ MonoBehaviour:
   _groundCheck: {fileID: 5183568773124200577}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 5120
   _groundCheckRadius: 0.15
   _recoilMoveInfluence: 15
   _airRecoilMoveInfluence: 10
@@ -1311,7 +1311,9 @@ MonoBehaviour:
   _blockLayer:
     serializedVersion: 2
     m_Bits: 33792
-  _laserRange: 80
+  _laserRange: 60
+  _cursorDot: {fileID: 0}
+  _cursorVisibleRange: 7
 --- !u!1 &7689232750111442943
 GameObject:
   m_ObjectHideFlags: 0

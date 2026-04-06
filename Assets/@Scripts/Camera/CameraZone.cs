@@ -1,20 +1,20 @@
-using Unity.Cinemachine;
+ï»¿using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraZone : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera _zoneCam;
 
-    // ÁßÃ¸ Á¸ ÁøÀÔ Ä«¿îÅÍ - µ¿ÀÏ Á¸¿¡ ¿©·¯ Äİ¶óÀÌ´õ°¡ ÀÖ°Å³ª
-    // µÎ Á¸ °æ°è¿¡ °ÉÃÄÀÖÀ» ¶§ Àß¸øµÈ Reset ¹æÁö
+    // ì¤‘ì²© ì¡´ ì§„ì… ì¹´ìš´í„° - ë™ì¼ ì¡´ì— ì—¬ëŸ¬ ì½œë¼ì´ë”ê°€ ìˆê±°ë‚˜
+    // ë‘ ì¡´ ê²½ê³„ì— ê±¸ì³ìˆì„ ë•Œ ì˜ëª»ëœ Reset ë°©ì§€
     int _overlapCount = 0;
 
     PlayerAimer _aimer;
 
     private void Awake()
     {
-        // ZoneÀÌ Player ÀÚ½ÄÀÌ ¾Æ´Ï¹Ç·Î ÅÂ±×·Î °Ë»öÇÏ´Â °Íº¸´Ù
-        // PlayerAimer°¡ ¾À¿¡ ÇÏ³ª»ÓÀÓÀ» º¸ÀåÇÒ ¼ö ÀÖÀ¸¸é ÀÌ ¹æ½ÄÀÌ °¡Àå ¾ÈÀü
+        // Zoneì´ Player ìì‹ì´ ì•„ë‹ˆë¯€ë¡œ íƒœê·¸ë¡œ ê²€ìƒ‰í•˜ëŠ” ê²ƒë³´ë‹¤
+        // PlayerAimerê°€ ì”¬ì— í•˜ë‚˜ë¿ì„ì„ ë³´ì¥í•  ìˆ˜ ìˆìœ¼ë©´ ì´ ë°©ì‹ì´ ê°€ì¥ ì•ˆì „
         _aimer = FindFirstObjectByType<PlayerAimer>();
     }
 

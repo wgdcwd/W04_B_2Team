@@ -295,7 +295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5072771435625165325
 RectTransform:
   m_ObjectHideFlags: 0
@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 4068386011485982416}
   - component: {fileID: 3722297067905791742}
   - component: {fileID: 2819076056967686209}
+  - component: {fileID: 2529276777764317932}
   m_Layer: 5
   m_Name: MainMenuButtton
   m_TagString: Untagged
@@ -397,9 +398,9 @@ RectTransform:
   - {fileID: 4807806628651853457}
   m_Father: {fileID: 8301919532401927848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 425, y: -457.89337}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4068386011485982416
@@ -459,7 +460,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.45882356, g: 0.8980393, b: 0.9607844, a: 1}
@@ -484,6 +485,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2529276777764317932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938650234030331493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc8faf9aac58294bac692a39e3dc377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonHover
+  _button: {fileID: 2819076056967686209}
+  _target: {fileID: 7034548105000483638}
+  _hoverScale: 1.05
+  _duration: 0.15
 --- !u!1 &3101961502099215700
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +686,7 @@ GameObject:
   - component: {fileID: 5189013552554373171}
   - component: {fileID: 3042262263092751355}
   - component: {fileID: 3551416192182875463}
+  - component: {fileID: 4962908979151653280}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -691,9 +709,9 @@ RectTransform:
   - {fileID: 6385286807188489628}
   m_Father: {fileID: 8301919532401927848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 425, y: -271.4467}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5189013552554373171
@@ -753,7 +771,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.45882356, g: 0.8980393, b: 0.9607844, a: 1}
@@ -778,6 +796,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4962908979151653280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313167007708096702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc8faf9aac58294bac692a39e3dc377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonHover
+  _button: {fileID: 3551416192182875463}
+  _target: {fileID: 202334617211796712}
+  _hoverScale: 1.05
+  _duration: 0.15
 --- !u!1 &4811350045442698488
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +961,7 @@ GameObject:
   - component: {fileID: 8580343525210954254}
   - component: {fileID: 8555757355945270263}
   - component: {fileID: 5364565023516845533}
+  - component: {fileID: 2932191893943984952}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -949,9 +984,9 @@ RectTransform:
   - {fileID: 6848498093330975882}
   m_Father: {fileID: 8301919532401927848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 425, y: -85}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8580343525210954254
@@ -1011,7 +1046,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.46751517, g: 0.8989987, b: 0.9622642, a: 1}
@@ -1048,6 +1083,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2932191893943984952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5623686762137662175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc8faf9aac58294bac692a39e3dc377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonHover
+  _button: {fileID: 5364565023516845533}
+  _target: {fileID: 9054094286333056008}
+  _hoverScale: 1.05
+  _duration: 0.15
 --- !u!1 &5629687278025556688
 GameObject:
   m_ObjectHideFlags: 0

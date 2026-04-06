@@ -11,32 +11,66 @@ public class ParallaxLoop : MonoBehaviour
 
     private void Awake()
     {
-        if (target == null && Camera.main != null)
-            target = Camera.main.transform;
-
         if (transform.parent != null)
-            pieceCount = Mathf.Max(2, transform.parent.childCount);
+        {
+            int siblingLoopCount = 0;
 
-        _loopWidth = spriteWidth * pieceCount;
-        _halfLoopWidth = _loopWidth * 0.5f;
+            foreach (Transform child in transform.parent)
+            {
+                if (child.GetComponent<ParallaxLoop>() != null)
+                    siblingLoopCount++;
+            }
+
+            pieceCount = Mathf.Max(2, siblingLoopCount);
+        }
+
+        RecalculateLoopMetrics();
     }
 
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (!TryResolveTarget() || _loopWidth <= 0f)
+            return;
 
         float distance = target.position.x - transform.position.x;
 
-        if (distance > _halfLoopWidth)
+        while (distance > _halfLoopWidth)
+        {
             transform.position += Vector3.right * _loopWidth;
+            distance = target.position.x - transform.position.x;
+        }
 
-        else if (distance < -_halfLoopWidth)
+        while (distance < -_halfLoopWidth)
+        {
             transform.position += Vector3.left * _loopWidth;
+            distance = target.position.x - transform.position.x;
+        }
     }
 
     private void OnValidate()
     {
         if (pieceCount < 2)
             pieceCount = 2;
+
+        RecalculateLoopMetrics();
+    }
+
+    private void RecalculateLoopMetrics()
+    {
+        _loopWidth = spriteWidth * pieceCount;
+        _halfLoopWidth = _loopWidth * 0.5f;
+    }
+
+    private bool TryResolveTarget()
+    {
+        if (target != null)
+            return true;
+
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+            return false;
+
+        target = mainCamera.transform;
+        return true;
     }
 }
