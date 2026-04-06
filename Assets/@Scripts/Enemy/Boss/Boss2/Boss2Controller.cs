@@ -27,6 +27,8 @@ public class Boss2Controller : EnemyBase
     [SerializeField] private GameObject[] _minionPrefabs;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _spawnCountPerCycle = 2; // 스킬 사이마다 소환할 수
+    [SerializeField] private Boss2Effector _boss2Effector;
+
     private PoolManager _pool;
 
     private bool _isActive = false;
@@ -67,7 +69,21 @@ public class Boss2Controller : EnemyBase
                 Debug.LogWarning($"{skill.name}은 ISkill을 구현하지 않았습니다.");
         }
 
+        if (_boss2Effector == null)
+        {
+            Debug.LogWarning("[Boss2Controller] : BossEffector is missing");
+            return;
+        }
+
         //StartBoss2();
+    }
+
+    void Update()
+    {
+        if (_boss2Effector != null)
+        {
+            _boss2Effector.PlaySmokeOnHP();
+        }
     }
 
     public override void Die() => Boss2Die();

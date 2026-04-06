@@ -101,6 +101,8 @@ public class ChargeBeam : MonoBehaviour
         yield return StartCoroutine(WarningPhase());
         yield return StartCoroutine(ExpandPhase());
         IsFiring = true;
+        
+        fireLaser.transform.localScale = new Vector3();
         // 여기서 멈춤 — StopBeam() 호출까지 유지
     }
 
