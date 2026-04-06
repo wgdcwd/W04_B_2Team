@@ -1,4 +1,4 @@
-using Unity.Cinemachine;
+ï»¿using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -12,7 +12,7 @@ public class Boss1Cutscene : MonoBehaviour
     [SerializeField] private CinemachineSequencerCamera _sequencerCam;
 
     [Header("Settings")]
-    [SerializeField] private float _sequencerDuration = 5f; // ÀÎ½ºÆåÅÍ¿¡¼­ Á¶Àı
+    [SerializeField] private float _sequencerDuration = 5f; // ì¸ìŠ¤í™í„°ì—ì„œ ì¡°ì ˆ
     [SerializeField] private Transform _player;
 
     [Header("Boss")]
@@ -27,14 +27,14 @@ public class Boss1Cutscene : MonoBehaviour
     void Start()
     {
         _startPos = _player.position;
-        //_sequencerCam.Priority = 0; // ½ÃÀÛ¿£ ºñÈ°¼º
+        //_sequencerCam.Priority = 0; // ì‹œì‘ì—” ë¹„í™œì„±
 
         director.stopped += OnTimelineFinished;
     }
 
     void Update()
     {
-        if (_triggered) return; // ÄÆ¾À ½ÃÀÛ ÈÄ Update Áß´Ü
+        if (_triggered) return; // ì»·ì”¬ ì‹œì‘ í›„ Update ì¤‘ë‹¨
 
         float dist = _player.position.x - _startPos.x;
         float t = Mathf.Clamp01(dist / 40f);
@@ -46,7 +46,7 @@ public class Boss1Cutscene : MonoBehaviour
         if (_triggered) return;
         if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¸ØÃã
+            other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // í”Œë ˆì´ì–´ ì´ë™ ë©ˆì¶¤
             _triggered = true;
             _wall.SetActive(true);
             ManagerRegistry.Get<InputManager>().DisablePlayerInput();
@@ -61,16 +61,16 @@ public class Boss1Cutscene : MonoBehaviour
 
     public void StartSequencerCam()
     {
-        _walkPathCam.Priority = 0; // ¿öÅ© Ä«¸Ş¶ó ²ô±â
-        _sequencerCam.Priority = 20; // ½ÃÄö¼­ Ä«¸Ş¶ó È°¼ºÈ­
+        _walkPathCam.Priority = 0; // ì›Œí¬ ì¹´ë©”ë¼ ë„ê¸°
+        _sequencerCam.Priority = 20; // ì‹œí€€ì„œ ì¹´ë©”ë¼ í™œì„±í™”
     }
 
 
     public void OnCutsceneAllFinished()
     {
         ManagerRegistry.Get<InputManager>().EnablePlayerInput();
-        // ¿©±â¿¡ °ÔÀÓ ½ÃÀÛ ÄÚµå Ãß°¡
-        Debug.Log("ÄÆ¾À ¿Ï·á - °ÔÀÓ ½ÃÀÛ!");
+        // ì—¬ê¸°ì— ê²Œì„ ì‹œì‘ ì½”ë“œ ì¶”ê°€
+        Debug.Log("ì»·ì”¬ ì™„ë£Œ - ê²Œì„ ì‹œì‘!");
         _controller?.StartBoss();
 
     }
