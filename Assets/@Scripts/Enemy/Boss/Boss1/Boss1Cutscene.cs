@@ -86,11 +86,13 @@ public class Boss1Cutscene : MonoBehaviour
     {
     }
 
-    public IEnumerator FadeOutIn(float duration = 0.5f)
+    public IEnumerator FadeOutIn(float duration = 0.4f)
     {
-        yield return _fadeIamge.DOFade(1f, 0.2f).WaitForCompletion();
-        yield return new WaitForSeconds(1f);
+        _fadeIamge.gameObject.SetActive(true);
+        yield return _fadeIamge.DOFade(1f, 0.1f).WaitForCompletion();
+        yield return new WaitForSeconds(0.4f);
         yield return _fadeIamge.DOFade(0f, duration).WaitForCompletion();
+        _fadeIamge.gameObject.SetActive(false);
 
         director.Play();
     }
