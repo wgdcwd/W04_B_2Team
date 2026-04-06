@@ -25,13 +25,6 @@ public class BreakablePlatform : MonoBehaviour
         _playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
-    void FixedUpdate()
-    {
-        if (_isBroken) return;
-
-        bool playerBelow = _playerTransform.position.y < transform.position.y;
-        _collider.enabled = !playerBelow;
-    }
 
     void OnCollisionEnter2D(Collision2D col)
     {

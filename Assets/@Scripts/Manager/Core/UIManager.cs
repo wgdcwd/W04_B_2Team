@@ -95,14 +95,17 @@ public class UIManager : MonoBehaviour, IInitializable
         {
             case GameState.Paused:
                 ShowPause();
+                Cursor.visible = true;
                 break;
 
             case GameState.GameOver:
                 ShowGameOver();
+                Cursor.visible = true;
                 break;
 
             default:
                 HideAll();
+                Cursor.visible = false;
                 break;
         }
     }
