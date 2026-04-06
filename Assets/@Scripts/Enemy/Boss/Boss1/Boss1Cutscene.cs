@@ -18,6 +18,9 @@ public class Boss1Cutscene : MonoBehaviour
     [Header("Boss")]
     [SerializeField] private BossController _controller;
 
+    [Header("Wall")]
+    [SerializeField] private GameObject _wall;
+
     private Vector2 _startPos;
     private bool _triggered = false;
 
@@ -43,7 +46,9 @@ public class Boss1Cutscene : MonoBehaviour
         if (_triggered) return;
         if (other.CompareTag("Player"))
         {
+            other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // «√∑π¿ÃæÓ ¿Ãµø ∏ÿ√„
             _triggered = true;
+            _wall.SetActive(true);
             ManagerRegistry.Get<InputManager>().DisablePlayerInput();
             director.Play();
         }
