@@ -52,9 +52,9 @@ public class RangedEnemy : NormalEnemyBase
             float dist = Vector2.Distance(transform.position, _player.position);
 
             // 총구 방향 (발사 중 고정)
-            if (_gunPivot != null && !_isBursting)
+            if (_gunPivot != null)
             {
-                Vector2 aimDir = ((Vector2)_player.position - (Vector2)transform.position).normalized;
+                Vector2 aimDir = ((Vector2)_player.GetComponentInChildren<PlayerMuzzle>().transform.position - (Vector2)transform.position).normalized;
                 _gunPivot.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg);
             }
 
@@ -121,11 +121,12 @@ public class RangedEnemy : NormalEnemyBase
         _isBursting = true;
         _rb.linearVelocity = Vector2.zero;
 
-        Vector2 dir = ((Vector2)_player.position - (Vector2)transform.position).normalized;
-        Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        
 
         for (int i = 0; i < _burstCount; i++)
         {
+            Vector2 dir = ((Vector2)_player.GetComponentInChildren<PlayerMuzzle>().transform.position - (Vector2)transform.position).normalized;
+            Quaternion rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
             GameObject projectile = _pool != null
                 ? _pool.Get(_projectilePrefab, transform.position, rotation)
                 : Instantiate(_projectilePrefab, transform.position, rotation);

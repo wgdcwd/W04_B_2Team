@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 7881436614604909025}
   - component: {fileID: 6869165484365970032}
   - component: {fileID: 8784757623712437054}
-  - component: {fileID: 2381900144338831780}
   m_Layer: 0
   m_Name: SceneStartCamera
   m_TagString: Untagged
@@ -140,16 +139,3 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
---- !u!114 &2381900144338831780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2527406333772685654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c7895c9205f864ea566a222f483853, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StageStartAction
-  ZoomOutDuration: 3
