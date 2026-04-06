@@ -5,7 +5,7 @@ public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] private float _lifetime = 5f;
 
-    private float _speed;
+    [SerializeField] private float _speed = 12f;
     private int _damage;
 
     private Coroutine _lifeRoutine;
@@ -18,7 +18,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public void Initialize(float speed, int damage)
     {
-        _speed = speed;
+        //_speed = speed;
         _damage = damage;
     }
 

@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class BossLaserImpactMarker : MonoBehaviour
 {
+    [Header("Laser Collision")]
     [SerializeField] private GameObject _impactPrefab;
     [SerializeField] private float _rayDistance = 30f;
     [SerializeField] private LayerMask _groundLayerMask = ~0;
+
+    [Header("Laser Visual")]
     [SerializeField] private Vector3 _positionOffset;
     [SerializeField] private bool _alignToNormal = true;
     [SerializeField] private bool _alignToLaserPerpendicular = true;

@@ -23,6 +23,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
     public Player CurrentPlayer => _player;
     public event Action<Player> OnPlayerBound;
+    public bool isClear = false;
 
     #region Debugging
     [ContextMenu("Debug Die")]
@@ -53,6 +54,7 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
         _sceneManager.OnStageReloadCompleted += HandleStageReloadCompleted;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        isClear = false;
 
         Debug.Log("GameManager Initialized");
 
@@ -302,5 +304,10 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
         _inputManager.EnablePlayerInput();
         _gameStateManager.ChangeState(GameState.Playing);
+    }
+    
+    public void GameClear()
+    {
+        isClear = true;
     }
 }

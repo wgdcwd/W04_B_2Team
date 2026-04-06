@@ -15,6 +15,13 @@ public class BossController : MonoBehaviour
         Dash
     }
 
+    enum DebugPatternMode
+    {
+        Random,
+        Laser,
+        Dash
+    }
+
     [Header("Eye 연결")]
     public BossEye[] eyes;
 
@@ -25,6 +32,14 @@ public class BossController : MonoBehaviour
     [Header("레이저 페이즈 설정")]
     public float laserDuration = 5f;
     public float idleDuration = 5f;
+    public float patternRecoveryDuration = 0.2f;
+
+    [Header("레이저 선딜")]
+    public float laserTelegraphDuration = 0.25f;
+    public float laserTelegraphRotateAngle = 180f;
+    [Range(2, 6)] public int laserTelegraphTickCount = 3;
+    public float laserTelegraphClockwiseKickAngle = 15f;
+    public Ease laserTelegraphEase = Ease.OutQuad;
 
     [Header("돌진 설정")]
     public float dashBackDistance = 1.5f;
@@ -43,6 +58,10 @@ public class BossController : MonoBehaviour
     [Header("보스 인트로")]
     [SerializeField] float _bossIntro = 5f;
 
+    [Header("Debug")]
+    [SerializeField] private bool _startFromPhase2;
+    [SerializeField] private DebugPatternMode _debugPatternMode = DebugPatternMode.Random;
+
     public float TotalHp => CalculateTotalHp();
 
     private float _currentRotationSpeed;
@@ -51,24 +70,35 @@ public class BossController : MonoBehaviour
     private Transform _player;
     private Vector3 _originPos;
     private Tween _moveTween;
+    private Tween _laserTelegraphTween;
+    private BoseDamageZone[] _damageZones;
     private BossPattern _lastPattern;
     private int _samePatternStreak;
 
     void OnDisable()
     {
         KillMoveTween();
+        KillLaserTelegraphTween();
     }
 
     void Start()
     {
         _originPos = transform.position;
         _currentRotationSpeed = rotationSpeedMin;
+        _damageZones = GetComponentsInChildren<BoseDamageZone>(true);
+        SetBodyContactDamageEnabled(false);
 
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
             _player = playerObj.transform;
 
-        StartBoss();
+        if (_startFromPhase2)
+        {
+            StartPhase2Debug();
+            return;
+        }
+
+        StartCoroutine(BeginAfterIntro());
     }
 
     void Update()
@@ -114,9 +144,13 @@ public class BossController : MonoBehaviour
         List<BossEye> targets = PickRandom(readyEyes, laserShotCount);
 
         foreach (BossEye eye in targets)
-            eye.BeginLaser(laserDuration);
+            eye.BeginLaser(laserDuration, laserTelegraphDuration);
+
+        yield return StartCoroutine(WaitForLaserTelegraphReady(targets));
+        yield return StartCoroutine(PlayLaserTelegraph());
 
         yield return StartCoroutine(WaitForLaserTargets(targets));
+        yield return StartCoroutine(WaitForPatternRecovery());
     }
 
     IEnumerator ExecuteDashPattern()
@@ -138,7 +172,10 @@ public class BossController : MonoBehaviour
         yield return StartCoroutine(ApplyDashOvershoot(dashTarget, dashDirection));
 
         yield return new WaitForSeconds(dashCooldown);
+        SetBodyContactDamageEnabled(false);
         yield return StartCoroutine(MoveToTarget(_originPos, returnSpeed, returnEase));
+        SetBodyContactDamageEnabled(true);
+        yield return StartCoroutine(WaitForPatternRecovery());
 
         _currentRotationSpeed = savedRotationSpeed;
     }
@@ -200,6 +237,40 @@ public class BossController : MonoBehaviour
         }
     }
 
+    IEnumerator WaitForLaserTelegraphReady(List<BossEye> targets)
+    {
+        while (true)
+        {
+            bool allReady = true;
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                BossEye eye = targets[i];
+                if (eye == null || eye.IsDead)
+                    continue;
+
+                if (eye.EyeCurrentState != BossEye.EyeState.Laser)
+                {
+                    allReady = false;
+                    break;
+                }
+            }
+
+            if (allReady)
+                yield break;
+
+            yield return null;
+        }
+    }
+
+    IEnumerator WaitForPatternRecovery()
+    {
+        if (patternRecoveryDuration <= 0f)
+            yield break;
+
+        yield return new WaitForSeconds(patternRecoveryDuration);
+    }
+
     void KillMoveTween()
     {
         if (_moveTween == null || !_moveTween.IsActive())
@@ -207,6 +278,75 @@ public class BossController : MonoBehaviour
 
         _moveTween.Kill();
         _moveTween = null;
+    }
+
+    IEnumerator PlayLaserTelegraph()
+    {
+        if (laserTelegraphDuration <= 0f || Mathf.Abs(laserTelegraphRotateAngle) <= Mathf.Epsilon)
+            yield break;
+
+        KillLaserTelegraphTween();
+        _laserTelegraphTween = BuildLaserTelegraphSequence();
+
+        yield return _laserTelegraphTween.WaitForCompletion();
+        _laserTelegraphTween = null;
+    }
+
+    Tween BuildLaserTelegraphSequence()
+    {
+        Sequence sequence = DOTween.Sequence();
+
+        int tickCount = Mathf.Max(1, laserTelegraphTickCount);
+        float tickDuration = laserTelegraphDuration / (tickCount * 2f);
+        float currentZ = transform.localEulerAngles.z;
+        float stepAngle = laserTelegraphRotateAngle / tickCount;
+
+        for (int i = 0; i < tickCount; i++)
+        {
+            bool shouldKickClockwise = Random.value > 0.5f;
+            float kickTarget = shouldKickClockwise
+                ? currentZ - laserTelegraphClockwiseKickAngle
+                : currentZ;
+            float settleTarget = currentZ + stepAngle;
+
+            sequence.Append(
+                transform.DOLocalRotate(
+                    new Vector3(0f, 0f, kickTarget),
+                    tickDuration,
+                    RotateMode.Fast));
+
+            sequence.Append(
+                transform.DOLocalRotate(
+                    new Vector3(0f, 0f, settleTarget),
+                    tickDuration,
+                    RotateMode.FastBeyond360)
+                .SetEase(laserTelegraphEase));
+
+            currentZ = settleTarget;
+        }
+
+        return sequence;
+    }
+
+    void KillLaserTelegraphTween()
+    {
+        if (_laserTelegraphTween == null || !_laserTelegraphTween.IsActive())
+            return;
+
+        _laserTelegraphTween.Kill();
+        _laserTelegraphTween = null;
+    }
+
+    void SetBodyContactDamageEnabled(bool isEnabled)
+    {
+        if (_damageZones == null)
+            return;
+
+        for (int i = 0; i < _damageZones.Length; i++)
+        {
+            if (_damageZones[i] != null)
+                _damageZones[i].SetDamageEnabled(isEnabled);
+        }
     }
 
     float CalculateTotalHp()
@@ -247,6 +387,12 @@ public class BossController : MonoBehaviour
 
     BossPattern ChooseNextPattern()
     {
+        if (_debugPatternMode == DebugPatternMode.Laser)
+            return BossPattern.Laser;
+
+        if (_debugPatternMode == DebugPatternMode.Dash)
+            return BossPattern.Dash;
+
         bool canUseLaser = CanUseLaserPattern();
         bool canUseDash = CanUseDashPattern();
 
@@ -339,33 +485,85 @@ public class BossController : MonoBehaviour
             return;
 
         _isDead = true;
-        KillMoveTween();
-        StopAllCoroutines();
+        CleanupPhase1State();
 
         foreach (BossEye eye in eyes)
         {
             if (eye != null)
+            {
+                eye.ForceStopPattern();
                 Destroy(eye.gameObject);
+            }
         }
 
         GetComponent<BossPhase2>().SetPhase2();
         Destroy(this);
     }
 
-    public void StartBoss()
+    void StartPhase2Debug()
+    {
+        _isDead = true;
+        CleanupPhase1State();
+
+        foreach (BossEye eye in eyes)
+        {
+            if (eye != null)
+            {
+                eye.ForceStopPattern();
+                Destroy(eye.gameObject);
+            }
+        }
+
+        GetComponent<BossPhase2>().SetPhase2();
+        Destroy(this);
+    }
+
+    void CleanupPhase1State()
+    {
+        KillMoveTween();
+        KillLaserTelegraphTween();
+        StopAllCoroutines();
+        SetBodyContactDamageEnabled(false);
+    }
+
+    void StartBoss()
     {
         _isActive = true;
+        SetBodyContactDamageEnabled(true);
         StartCoroutine(PatternCycleRoutine());
         StartCoroutine(DeathCheckRoutine());
     }
 
+    IEnumerator BeginAfterIntro()
+    {
+        if (_bossIntro > 0f)
+            yield return new WaitForSeconds(_bossIntro);
+
+        if (_isDead)
+            yield break;
+
+        StartBoss();
+    }
+
     public void CutsceneLaser()
     {
-        eyes[2].BeginLaser(2.0f);
+        BeginCutsceneLaser(2);
     }
 
     public void CutsceneLaserMiddle()
     {
-        eyes[3].BeginLaser(2.0f);
+        BeginCutsceneLaser(3);
+    }
+
+    void BeginCutsceneLaser(int eyeIndex)
+    {
+        if (eyes == null || eyeIndex < 0 || eyeIndex >= eyes.Length)
+            return;
+
+        BossEye eye = eyes[eyeIndex];
+        if (eye == null || eye.IsDead)
+            return;
+
+        eye.BeginLaser(2.0f);
     }
 }
