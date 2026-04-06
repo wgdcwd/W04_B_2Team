@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
@@ -22,6 +23,12 @@ public class BossController : MonoBehaviour
     public float dashDistance = 8f;
     public float returnSpeed = 5f;
     public float dashCooldown = 1f;
+    [Range(0f, 0.2f)] public float dashOvershootRatio = 0.08f;
+    public float dashOvershootReturnSpeed = 18f;
+    public Ease dashBackEase = Ease.OutSine;
+    public Ease dashEase = Ease.InExpo;
+    public Ease dashOvershootEase = Ease.OutQuad;
+    public Ease returnEase = Ease.OutQuad;
 
     [Header("보스 인트로")]
     [SerializeField] float _bossIntro = 5;
@@ -33,6 +40,7 @@ public class BossController : MonoBehaviour
     private int _prevDeadCount = 0;
     private Transform _player;
     private Vector3 _originPos;
+    private Tween _moveTween;
 
     private void OnEnable()
     {
@@ -40,6 +48,7 @@ public class BossController : MonoBehaviour
 
     private void OnDisable()
     {
+        KillMoveTween();
     }
 
     void Start()
@@ -115,26 +124,56 @@ public class BossController : MonoBehaviour
         Vector3 toPlayer = (_player.position - transform.position).normalized;
 
         Vector3 backTarget = startPos + (-toPlayer * dashBackDistance);
-        yield return StartCoroutine(MoveToPosition(backTarget, dashBackSpeed));
+        yield return StartCoroutine(MoveToPositionTween(backTarget, dashBackSpeed, dashBackEase));
 
         Vector3 dashTarget = startPos + (toPlayer * dashDistance);
-        yield return StartCoroutine(MoveToPosition(dashTarget, dashSpeed));
+        yield return StartCoroutine(MoveToPositionTween(dashTarget, dashSpeed, dashEase));
+        yield return StartCoroutine(ApplyDashOvershoot(dashTarget, toPlayer));
 
         yield return new WaitForSeconds(dashCooldown);
 
-        yield return StartCoroutine(MoveToPosition(_originPos, returnSpeed));
+        yield return StartCoroutine(MoveToPositionTween(_originPos, returnSpeed, returnEase));
 
         _currentRotationSpeed = savedRotSpeed;
     }
 
-    IEnumerator MoveToPosition(Vector3 target, float speed)
+    IEnumerator MoveToPositionTween(Vector3 target, float speed, Ease ease)
     {
-        while (Vector3.Distance(transform.position, target) > 0.05f)
+        float distance = Vector3.Distance(transform.position, target);
+        if (distance <= 0.05f || speed <= Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            yield return null;
+            transform.position = target;
+            yield break;
         }
+
+        float duration = distance / speed;
+        KillMoveTween();
+        _moveTween = transform.DOMove(target, duration).SetEase(ease);
+
+        yield return _moveTween.WaitForCompletion();
+
         transform.position = target;
+        _moveTween = null;
+    }
+
+    IEnumerator ApplyDashOvershoot(Vector3 dashTarget, Vector3 dashDirection)
+    {
+        float overshootDistance = dashDistance * dashOvershootRatio;
+        if (overshootDistance <= 0f)
+            yield break;
+
+        Vector3 overshootTarget = dashTarget + (dashDirection.normalized * overshootDistance);
+        yield return StartCoroutine(MoveToPositionTween(overshootTarget, dashOvershootReturnSpeed, dashOvershootEase));
+        yield return StartCoroutine(MoveToPositionTween(dashTarget, dashOvershootReturnSpeed, dashOvershootEase));
+    }
+
+    void KillMoveTween()
+    {
+        if (_moveTween == null || !_moveTween.IsActive())
+            return;
+
+        _moveTween.Kill();
+        _moveTween = null;
     }
 
     // =====================
@@ -212,6 +251,7 @@ public class BossController : MonoBehaviour
     {
         if (_isDead) return;
         _isDead = true;
+        KillMoveTween();
         StopAllCoroutines();
 
         foreach (var eye in eyes)

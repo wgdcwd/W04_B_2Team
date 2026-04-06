@@ -65,6 +65,9 @@ TagManager:
   - name: Boss
     uniqueID: 4013867329
     locked: 0
+  - name: BossEye
+    uniqueID: 359083069
+    locked: 0
   - name: Effect
     uniqueID: 3153114699
     locked: 0
