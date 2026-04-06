@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class Boss2Effector : MonoBehaviour
@@ -12,6 +11,7 @@ public class Boss2Effector : MonoBehaviour
     
     [Header("파티클 공격 레퍼런스")]
     [SerializeField] ParticleSystem _sparkPS;
+    [SerializeField] private int _sparkBurstCount = 12;
 
     [Header("파티클 죽음 레퍼런스")]
     //[SerializeField] ParticleSystem _deathPS;
@@ -29,9 +29,7 @@ public class Boss2Effector : MonoBehaviour
 
     void Start()
     {
-        _smokePS1.Stop();
-        _smokePS2.Stop();
-        _smokePS3.Stop();
+        StopSmokeParticles();
         //_deathPS.Stop();
         if (_boss2Controller == null)
         {
@@ -47,9 +45,7 @@ public class Boss2Effector : MonoBehaviour
 
     void OnDestroy()
     {
-        _smokePS1.Stop();
-        _smokePS2.Stop();
-        _smokePS3.Stop();
+        StopSmokeParticles();
     }
 
     public void PlaySmokeOnHP()
@@ -95,6 +91,17 @@ public class Boss2Effector : MonoBehaviour
 
     public void PlaySparkOnRay()
     {
-        
+        if (_sparkPS == null)
+            return;
+
+        _sparkPS.Play();
+        _sparkPS.Emit(_sparkBurstCount);
+    }
+
+    void StopSmokeParticles()
+    {
+        _smokePS1?.Stop();
+        _smokePS2?.Stop();
+        _smokePS3?.Stop();
     }
 }

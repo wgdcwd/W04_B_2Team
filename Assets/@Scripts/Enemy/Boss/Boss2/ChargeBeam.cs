@@ -25,16 +25,24 @@ public class ChargeBeam : MonoBehaviour
     private LineRenderer[] _lines;
     private Vector3 _circleOriginalScale;
     private Vector3 _fireLaserOriginalScale;
+    private Vector3 _warningLaserOriginalScale;
+    private Vector3 _warningLaserOriginalLocalPosition;
+    private Vector3 _fireLaserOriginalLocalPosition;
     private Coroutine _beamCoroutine;
 
     void Awake()
     {
         _circleOriginalScale = chargingCircle.transform.localScale;
+        _warningLaserOriginalScale = warningLaser.transform.localScale;
         _fireLaserOriginalScale = fireLaser.transform.localScale;
+        _warningLaserOriginalLocalPosition = warningLaser.transform.localPosition;
+        _fireLaserOriginalLocalPosition = fireLaser.transform.localPosition;
 
         chargingCircle.SetActive(false);
         warningLaser.SetActive(false);
         fireLaser.SetActive(false);
+
+        RestoreLaserTransforms();
 
         SetupLines();
     }
@@ -101,8 +109,6 @@ public class ChargeBeam : MonoBehaviour
         yield return StartCoroutine(WarningPhase());
         yield return StartCoroutine(ExpandPhase());
         IsFiring = true;
-        
-        fireLaser.transform.localScale = new Vector3();
         // 여기서 멈춤 — StopBeam() 호출까지 유지
     }
 
@@ -165,6 +171,8 @@ public class ChargeBeam : MonoBehaviour
     // =====================
     IEnumerator WarningPhase()
     {
+        warningLaser.transform.localScale = _warningLaserOriginalScale;
+        warningLaser.transform.localPosition = GetAnchoredLocalPosition(_warningLaserOriginalScale, _warningLaserOriginalLocalPosition);
         warningLaser.SetActive(true);
         yield return new WaitForSeconds(warningDuration);
         warningLaser.SetActive(false);
@@ -176,6 +184,7 @@ public class ChargeBeam : MonoBehaviour
     IEnumerator ExpandPhase()
     {
         fireLaser.transform.localScale = new Vector3(0f, _fireLaserOriginalScale.y, _fireLaserOriginalScale.z);
+        fireLaser.transform.localPosition = GetAnchoredLocalPosition(fireLaser.transform.localScale, _fireLaserOriginalLocalPosition);
         fireLaser.SetActive(true);
 
         float elapsed = 0f;
@@ -188,9 +197,11 @@ public class ChargeBeam : MonoBehaviour
                 _fireLaserOriginalScale.y,
                 _fireLaserOriginalScale.z
             );
+            fireLaser.transform.localPosition = GetAnchoredLocalPosition(fireLaser.transform.localScale, _fireLaserOriginalLocalPosition);
             yield return null;
         }
         fireLaser.transform.localScale = _fireLaserOriginalScale;
+        fireLaser.transform.localPosition = GetAnchoredLocalPosition(_fireLaserOriginalScale, _fireLaserOriginalLocalPosition);
     }
 
     // =====================
@@ -210,11 +221,13 @@ public class ChargeBeam : MonoBehaviour
                 _fireLaserOriginalScale.y,
                 _fireLaserOriginalScale.z
             );
+            fireLaser.transform.localPosition = GetAnchoredLocalPosition(fireLaser.transform.localScale, _fireLaserOriginalLocalPosition);
             yield return null;
         }
 
         fireLaser.SetActive(false);
         fireLaser.transform.localScale = _fireLaserOriginalScale;
+        fireLaser.transform.localPosition = GetAnchoredLocalPosition(_fireLaserOriginalScale, _fireLaserOriginalLocalPosition);
     }
 
     void CleanUp()
@@ -222,7 +235,25 @@ public class ChargeBeam : MonoBehaviour
         chargingCircle.SetActive(false);
         warningLaser.SetActive(false);
         fireLaser.SetActive(false);
-        fireLaser.transform.localScale = _fireLaserOriginalScale;
+        RestoreLaserTransforms();
         chargingCircle.transform.localScale = _circleOriginalScale;
+    }
+
+    void RestoreLaserTransforms()
+    {
+        warningLaser.transform.localScale = _warningLaserOriginalScale;
+        fireLaser.transform.localScale = _fireLaserOriginalScale;
+        warningLaser.transform.localPosition = GetAnchoredLocalPosition(_warningLaserOriginalScale, _warningLaserOriginalLocalPosition);
+        fireLaser.transform.localPosition = GetAnchoredLocalPosition(_fireLaserOriginalScale, _fireLaserOriginalLocalPosition);
+    }
+
+    Vector3 GetAnchoredLocalPosition(Vector3 currentScale, Vector3 originalLocalPosition)
+    {
+        Vector3 direction = originalLocalPosition.sqrMagnitude > Mathf.Epsilon
+            ? originalLocalPosition.normalized
+            : Vector3.down;
+
+        float halfLength = Mathf.Abs(currentScale.y) * 0.5f;
+        return direction * halfLength;
     }
 }

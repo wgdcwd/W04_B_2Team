@@ -33,10 +33,13 @@ public class Boss2Controller : EnemyBase
 
     private bool _isActive = false;
     private List<ISkill> _skills = new List<ISkill>();
+    private List<ISkill> _remainingSkills = new List<ISkill>();
     private Vector3 _originalPos;
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
     private Coroutine _blinkCoroutine;
+    private ISkill _lastSkill;
+    private DeadeyeSkill _playerDeadeyeSkill;
 
     private void OnEnable()
     {
@@ -58,6 +61,10 @@ public class Boss2Controller : EnemyBase
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (_spriteRenderer != null)
             _originalColor = _spriteRenderer.color;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            _playerDeadeyeSkill = player.GetComponent<DeadeyeSkill>();
 
         ManagerRegistry.TryGet(out _pool);
 
@@ -92,28 +99,24 @@ public class Boss2Controller : EnemyBase
     {
         if (!_isActive) return;
         if (!gameObject.activeInHierarchy) return;
-        _currentHp -= damage;
-
-        if (_blinkCoroutine != null) StopCoroutine(_blinkCoroutine);
-        _blinkCoroutine = StartCoroutine(HitBlinkRoutine());
-        GameObject.FindGameObjectWithTag("Player").GetComponent<DeadeyeSkill>().AddGauge(1);
-
-        if (_currentHp <= 0)
-        {
-            _currentHp = 0;
-            Boss2Die();
-        }
+        ApplyDamage(damage);
     }
 
     public override void TakeDamage(int damage, bool isAddGauge = false)
     {
         if (!_isActive) return;
         if (!gameObject.activeInHierarchy) return;
+        ApplyDamage(damage);
+    }
+
+    void ApplyDamage(int damage)
+    {
         _currentHp -= damage;
 
         if (_blinkCoroutine != null) StopCoroutine(_blinkCoroutine);
         _blinkCoroutine = StartCoroutine(HitBlinkRoutine());
-        GameObject.FindGameObjectWithTag("Player").GetComponent<DeadeyeSkill>().AddGauge(1);
+        _playerDeadeyeSkill?.AddGauge(1);
+        _boss2Effector?.PlaySparkOnRay();
 
         if (_currentHp <= 0)
         {
@@ -236,6 +239,46 @@ public class Boss2Controller : EnemyBase
     ISkill PickRandomSkill()
     {
         if (_skills.Count == 0) return null;
-        return _skills[Random.Range(0, _skills.Count)];
+        RefillSkillPoolIfNeeded();
+
+        int selectedIndex = 0;
+        if (_remainingSkills.Count > 1 && _lastSkill != null && _remainingSkills[0] == _lastSkill)
+        {
+            selectedIndex = FindNextDifferentSkillIndex();
+        }
+
+        ISkill selectedSkill = _remainingSkills[selectedIndex];
+        _remainingSkills.RemoveAt(selectedIndex);
+        _lastSkill = selectedSkill;
+        return selectedSkill;
+    }
+
+    void RefillSkillPoolIfNeeded()
+    {
+        if (_remainingSkills.Count > 0)
+            return;
+
+        _remainingSkills = new List<ISkill>(_skills);
+        ShuffleSkills(_remainingSkills);
+    }
+
+    int FindNextDifferentSkillIndex()
+    {
+        for (int i = 1; i < _remainingSkills.Count; i++)
+        {
+            if (_remainingSkills[i] != _lastSkill)
+                return i;
+        }
+
+        return 0;
+    }
+
+    void ShuffleSkills(List<ISkill> skillPool)
+    {
+        for (int i = skillPool.Count - 1; i > 0; i--)
+        {
+            int swapIndex = Random.Range(0, i + 1);
+            (skillPool[i], skillPool[swapIndex]) = (skillPool[swapIndex], skillPool[i]);
+        }
     }
 }

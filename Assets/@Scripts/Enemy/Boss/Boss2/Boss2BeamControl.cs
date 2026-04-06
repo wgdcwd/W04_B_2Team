@@ -16,14 +16,30 @@ public class Boss2BeanControl : MonoBehaviour
     [SerializeField] private float _rayStartOffset = 0.05f;
     [SerializeField] private float _laserThickness = 0.5f;
     [SerializeField] private float _laserBaseLength = 20f;
-    [SerializeField] private Vector3 _laserBaseLocalPosition = new Vector3(0f, 10f, -1f);
+    [SerializeField] private float _laserVisualOffset = 0.5f;
 
     private GameObject _impactInstance;
     private Collider2D _selfCollider;
+    private Vector3 _baseLocalPosition;
 
     void Awake()
     {
         _selfCollider = GetComponent<Collider2D>();
+        _baseLocalPosition = transform.localPosition;
+
+        float initialThickness = Mathf.Abs(transform.localScale.x);
+        float initialLength = Mathf.Abs(transform.localScale.y);
+
+        if (initialThickness > Mathf.Epsilon)
+            _laserThickness = initialThickness;
+
+        if (initialLength > Mathf.Epsilon)
+            _laserBaseLength = initialLength;
+
+        Vector3 localDirection = _baseLocalPosition.sqrMagnitude > Mathf.Epsilon
+            ? _baseLocalPosition.normalized
+            : Vector3.down;
+        _baseLocalPosition += localDirection * _laserVisualOffset;
     }
 
     void LateUpdate()
@@ -70,7 +86,9 @@ public class Boss2BeanControl : MonoBehaviour
 
     Vector2 GetRayOrigin()
     {
-        return (Vector2)transform.position;
+        float halfLength = GetCurrentLaserWorldLength() * 0.5f;
+        Vector2 direction = GetRayDirection();
+        return (Vector2)transform.position - direction * halfLength + direction * _rayStartOffset;
     }
 
     RaycastHit2D GetImpactHit()
@@ -100,7 +118,13 @@ public class Boss2BeanControl : MonoBehaviour
 
     Vector2 GetRayDirection()
     {
-        return -transform.up;
+        Vector3 localDirection = _baseLocalPosition.sqrMagnitude > Mathf.Epsilon
+            ? _baseLocalPosition.normalized
+            : Vector3.down;
+
+        return transform.parent != null
+            ? (Vector2)transform.parent.TransformDirection(localDirection).normalized
+            : (Vector2)localDirection.normalized;
     }
 
     void UpdateLaserVisual(float hitDistance)
@@ -115,7 +139,7 @@ public class Boss2BeanControl : MonoBehaviour
         localScale.x = _laserThickness;
         localScale.y = targetLocalLength;
         transform.localScale = localScale;
-        transform.localPosition = _laserBaseLocalPosition * ratio;
+        transform.localPosition = _baseLocalPosition * ratio;
     }
 
     void ResetLaserVisual()
@@ -124,7 +148,7 @@ public class Boss2BeanControl : MonoBehaviour
         localScale.x = _laserThickness;
         localScale.y = _laserBaseLength;
         transform.localScale = localScale;
-        transform.localPosition = _laserBaseLocalPosition;
+        transform.localPosition = _baseLocalPosition;
     }
 
     float GetCurrentLaserWorldLength()
