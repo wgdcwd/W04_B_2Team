@@ -178,6 +178,90 @@ MonoBehaviour:
   _laserThickness: 0.5
   _laserBaseLength: 20
   _laserBaseLocalPosition: {x: 0, y: 10, z: -1}
+--- !u!1 &1333425422953221972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8548640014561605693}
+  - component: {fileID: 6197843891224268967}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8548640014561605693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333425422953221972}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5164756355277751645}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6197843891224268967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333425422953221972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 2
+  m_LightType: 3
+  m_BlendStyleIndex: 2
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 2
+  m_LightVolumeIntensity: 0.25
+  m_LightVolumeEnabled: 1
+  m_ApplyToSortingLayers: ad46c16001e3487f0000000071599e6fdd791971291b928c5999d01541c13eef3d2c67154bb6f0bbd33d91412791be69d7338badb98d2642
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 1
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 1
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 180
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 10
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &2410648725545536852
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5164756355277751645}
   - component: {fileID: 7710900580455555167}
+  - component: {fileID: 7560121660022232286}
   - component: {fileID: 4174678760699447534}
   - component: {fileID: 8883243385551153527}
   m_Layer: 0
@@ -383,6 +468,7 @@ Transform:
   - {fileID: 5642787294414048932}
   - {fileID: 354928709474126626}
   - {fileID: 84645631469112160}
+  - {fileID: 8548640014561605693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7710900580455555167
@@ -401,6 +487,7 @@ MonoBehaviour:
   _attackDamage: 1
   _markIndicator: {fileID: 0}
   _aimTarget: {fileID: 5112030171822486440}
+  _alertLight: {fileID: 7560121660022232286}
   colorTransitionTime: 1
   blinkInterval: 0.1
   blinkCount: 4
@@ -412,6 +499,20 @@ MonoBehaviour:
   - {fileID: 9089860811144379622, guid: 266013473a4930e40a33cf4dd09c71e7, type: 3}
   _spawnOffset: {x: 0, y: 0.6, z: 0}
   spawnInterval: 15
+--- !u!114 &7560121660022232286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6865435514111145977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5109b889e40d1744927602d3bf5c68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossEyeAlertLight
+  _targetLight: {fileID: 6197843891224268967}
+  _disableWhenOff: 1
 --- !u!50 &4174678760699447534
 Rigidbody2D:
   serializedVersion: 5

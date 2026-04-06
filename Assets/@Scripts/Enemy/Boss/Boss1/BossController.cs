@@ -23,6 +23,13 @@ public class BossController : MonoBehaviour
     public float idleDuration = 5f;
     public float patternRecoveryDuration = 0.2f;
 
+    [Header("레이저 선딜")]
+    public float laserTelegraphDuration = 0.25f;
+    public float laserTelegraphRotateAngle = 180f;
+    [Range(2, 6)] public int laserTelegraphTickCount = 3;
+    public float laserTelegraphClockwiseKickAngle = 15f;
+    public Ease laserTelegraphEase = Ease.OutQuad;
+
     [Header("돌진 설정")]
     public float dashBackDistance = 1.5f;
     public float dashBackSpeed = 2f;
@@ -48,12 +55,14 @@ public class BossController : MonoBehaviour
     private Transform _player;
     private Vector3 _originPos;
     private Tween _moveTween;
+    private Tween _laserTelegraphTween;
     private BossPattern _lastPattern;
     private int _samePatternStreak;
 
     void OnDisable()
     {
         KillMoveTween();
+        KillLaserTelegraphTween();
     }
 
     void Start()
@@ -112,7 +121,10 @@ public class BossController : MonoBehaviour
         List<BossEye> targets = PickRandom(readyEyes, laserShotCount);
 
         foreach (BossEye eye in targets)
-            eye.BeginLaser(laserDuration);
+            eye.BeginLaser(laserDuration, laserTelegraphDuration);
+
+        yield return StartCoroutine(WaitForLaserTelegraphReady(targets));
+        yield return StartCoroutine(PlayLaserTelegraph());
 
         yield return StartCoroutine(WaitForLaserTargets(targets));
         yield return StartCoroutine(WaitForPatternRecovery());
@@ -200,6 +212,32 @@ public class BossController : MonoBehaviour
         }
     }
 
+    IEnumerator WaitForLaserTelegraphReady(List<BossEye> targets)
+    {
+        while (true)
+        {
+            bool allReady = true;
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                BossEye eye = targets[i];
+                if (eye == null || eye.IsDead)
+                    continue;
+
+                if (eye.EyeCurrentState != BossEye.EyeState.Laser)
+                {
+                    allReady = false;
+                    break;
+                }
+            }
+
+            if (allReady)
+                yield break;
+
+            yield return null;
+        }
+    }
+
     IEnumerator WaitForPatternRecovery()
     {
         if (patternRecoveryDuration <= 0f)
@@ -215,6 +253,63 @@ public class BossController : MonoBehaviour
 
         _moveTween.Kill();
         _moveTween = null;
+    }
+
+    IEnumerator PlayLaserTelegraph()
+    {
+        if (laserTelegraphDuration <= 0f || Mathf.Abs(laserTelegraphRotateAngle) <= Mathf.Epsilon)
+            yield break;
+
+        KillLaserTelegraphTween();
+        _laserTelegraphTween = BuildLaserTelegraphSequence();
+
+        yield return _laserTelegraphTween.WaitForCompletion();
+        _laserTelegraphTween = null;
+    }
+
+    Tween BuildLaserTelegraphSequence()
+    {
+        Sequence sequence = DOTween.Sequence();
+
+        int tickCount = Mathf.Max(1, laserTelegraphTickCount);
+        float tickDuration = laserTelegraphDuration / (tickCount * 2f);
+        float currentZ = transform.localEulerAngles.z;
+        float stepAngle = laserTelegraphRotateAngle / tickCount;
+
+        for (int i = 0; i < tickCount; i++)
+        {
+            bool shouldKickClockwise = Random.value > 0.5f;
+            float kickTarget = shouldKickClockwise
+                ? currentZ - laserTelegraphClockwiseKickAngle
+                : currentZ;
+            float settleTarget = currentZ + stepAngle;
+
+            sequence.Append(
+                transform.DOLocalRotate(
+                    new Vector3(0f, 0f, kickTarget),
+                    tickDuration,
+                    RotateMode.Fast));
+
+            sequence.Append(
+                transform.DOLocalRotate(
+                    new Vector3(0f, 0f, settleTarget),
+                    tickDuration,
+                    RotateMode.FastBeyond360)
+                .SetEase(laserTelegraphEase));
+
+            currentZ = settleTarget;
+        }
+
+        return sequence;
+    }
+
+    void KillLaserTelegraphTween()
+    {
+        if (_laserTelegraphTween == null || !_laserTelegraphTween.IsActive())
+            return;
+
+        _laserTelegraphTween.Kill();
+        _laserTelegraphTween = null;
     }
 
     float CalculateTotalHp()
@@ -348,6 +443,7 @@ public class BossController : MonoBehaviour
 
         _isDead = true;
         KillMoveTween();
+        KillLaserTelegraphTween();
         StopAllCoroutines();
 
         foreach (BossEye eye in eyes)
