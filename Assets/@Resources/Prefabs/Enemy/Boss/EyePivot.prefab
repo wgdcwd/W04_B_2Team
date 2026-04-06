@@ -486,6 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642787294414048932}
   - component: {fileID: 8087490406908902439}
+  - component: {fileID: 6724428801351193401}
   m_Layer: 0
   m_Name: WarningLaser
   m_TagString: Untagged
@@ -567,3 +568,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &6724428801351193401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7222299281506067624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef755ef7f36570344865acd93f467c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossLaserImpactMarker
+  _impactPrefab: {fileID: 0}
+  _rayDistance: 100
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  _positionOffset: {x: 0, y: 0, z: 0}
+  _alignToNormal: 1
+  _alignToLaserPerpendicular: 1
+  _impactRotationOffset: 90
+  _rayStartOffset: 0.05
+  _laserThickness: 0.01
+  _laserBaseLength: 20
+  _laserBaseLocalPosition: {x: 0, y: 10.5, z: -1}
