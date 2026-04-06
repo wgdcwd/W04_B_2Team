@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossLaserImpactMarker : MonoBehaviour
 {
+    private const string BreakableTileLayerName = "BreakableTile";
+
     [Header("Laser Collision")]
     [SerializeField] private GameObject _impactPrefab;
     [SerializeField] private float _rayDistance = 30f;
@@ -79,6 +81,7 @@ public class BossLaserImpactMarker : MonoBehaviour
         Vector2 origin = GetRayOrigin();
         Vector2 direction = GetRayDirection();
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, _rayDistance);
+        LayerMask collisionMask = GetCollisionMask();
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -89,7 +92,7 @@ public class BossLaserImpactMarker : MonoBehaviour
             if (hitCollider == _selfCollider)
                 continue;
 
-            if (!IsInLayerMask(hitCollider.gameObject.layer, _groundLayerMask))
+            if (!IsInLayerMask(hitCollider.gameObject.layer, collisionMask))
                 continue;
 
             return hits[i];
@@ -144,6 +147,15 @@ public class BossLaserImpactMarker : MonoBehaviour
     bool IsInLayerMask(int layer, LayerMask layerMask)
     {
         return (layerMask.value & (1 << layer)) != 0;
+    }
+
+    LayerMask GetCollisionMask()
+    {
+        int breakableTileLayer = LayerMask.NameToLayer(BreakableTileLayerName);
+        if (breakableTileLayer < 0)
+            return _groundLayerMask;
+
+        return _groundLayerMask | (1 << breakableTileLayer);
     }
 
     void ApplyImpactRotation(RaycastHit2D hit)
