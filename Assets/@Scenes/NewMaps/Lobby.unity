@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 189868514}
   - component: {fileID: 189868515}
+  - component: {fileID: 189868516}
   m_Layer: 5
   m_Name: ClearPanel
   m_TagString: Untagged
@@ -180,6 +181,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClearPanel
   _panel: {fileID: 189868513}
+--- !u!95 &189868516
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189868513}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f4d0dbdf6bb58354fa170bd12b35f55f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &410919495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -238,7 +261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1663618056542622975, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -9.4
       objectReference: {fileID: 0}
     - target: {fileID: 5401589691422197770, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: multiplier.x
@@ -258,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6378302313166294961, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.8
       objectReference: {fileID: 0}
     - target: {fileID: 7352769860539100490, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: m_LocalScale.y
@@ -266,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352769860539100490, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5.1
       objectReference: {fileID: 0}
     - target: {fileID: 7742401256234382431, guid: c6de7f29ca4d964499675288b86c6737, type: 3}
       propertyPath: target

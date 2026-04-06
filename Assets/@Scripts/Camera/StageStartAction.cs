@@ -2,6 +2,8 @@ using DG.Tweening;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.U2D;
 
 public class StageStartAction : MonoBehaviour
 {
@@ -12,17 +14,18 @@ public class StageStartAction : MonoBehaviour
     {
         _vcam = GetComponent<CinemachineCamera>();
 
-        // 블렌드 없이 즉시 전환
         CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
         var originalBlend = brain.DefaultBlend;
         brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0f);
-
         _vcam.Priority = 100;
         float defaultSize = _vcam.Lens.OrthographicSize;
         _vcam.Lens.OrthographicSize = 0.1f;
 
-        // 다음 프레임에 블렌드 복구 (즉시 복구하면 전환 전에 복구될 수 있음)
         StartCoroutine(RestoreBlend(brain, originalBlend));
+
+        // PixelPerfectCamera 끄기
+        PixelPerfectCamera pixelPerfect = Camera.main.GetComponent<PixelPerfectCamera>();
+        if (pixelPerfect != null) pixelPerfect.enabled = false;
 
         DOTween.To(
             () => _vcam.Lens.OrthographicSize,
@@ -32,6 +35,9 @@ public class StageStartAction : MonoBehaviour
         ).SetEase(Ease.OutCubic)
         .OnComplete(() =>
         {
+            // 줌 끝나면 다시 켜기
+            if (pixelPerfect != null) pixelPerfect.enabled = true;
+
             _vcam.Priority = 0;
             gameObject.SetActive(false);
         });
@@ -39,7 +45,7 @@ public class StageStartAction : MonoBehaviour
 
     IEnumerator RestoreBlend(CinemachineBrain brain, CinemachineBlendDefinition original)
     {
-        yield return null; // 한 프레임 대기
+        yield return null;
         brain.DefaultBlend = original;
     }
 }

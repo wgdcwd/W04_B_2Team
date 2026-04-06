@@ -32,6 +32,22 @@ public class MetaUIVignetteBinder : MonoBehaviour
     private HeartbeatStage _activeStage;
     private int _activeThreshold = -1;
 
+    private void OnEnable()
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        GameManager.Instance.OnSceneChanged += HandleSceneChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        GameManager.Instance.OnSceneChanged -= HandleSceneChanged;
+    }
+
     public void Bind(PlayerHealth playerHealth)
     {
         if (_playerHealth == playerHealth)
@@ -80,6 +96,12 @@ public class MetaUIVignetteBinder : MonoBehaviour
     }
 
     private void HandleDie()
+    {
+        StopHeartbeat();
+        ApplyDefault();
+    }
+
+    private void HandleSceneChanged()
     {
         StopHeartbeat();
         ApplyDefault();
