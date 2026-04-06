@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 5345433027662146576}
   - component: {fileID: 5199740061687718477}
   - component: {fileID: 6415715264941508055}
+  - component: {fileID: 2035458835228585123}
   m_Layer: 0
   m_Name: CMCamera_Zone2
   m_TagString: Untagged
@@ -153,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 8584197683700898714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 98.2, y: -12.2, z: -10}
+  m_LocalPosition: {x: -7.4, y: -12.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -184,7 +185,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 17
+    OrthographicSize: 20
     NearClipPlane: 0.3
     FarClipPlane: 100
     Dutch: 0
@@ -257,3 +258,15 @@ MonoBehaviour:
     FrequencyGain: 0.5
     Duration: 2
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &2035458835228585123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8584197683700898714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
