@@ -18,6 +18,10 @@ public class MetaUIVignetteBinder : MonoBehaviour
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private VignetteService _vignetteService;
 
+    [Header("Default")]
+    [SerializeField] [Range(0f, 1f)] private float _defaultIntensity = 0f;
+    [SerializeField] private Color _defaultColor = Color.black;
+
     [Header("Default Hit")]
     [SerializeField] private VignetteEffectSettings _hitSettings;
 
@@ -72,12 +76,13 @@ public class MetaUIVignetteBinder : MonoBehaviour
     private void HandleHeal(int amount)
     {
         StopHeartbeat();
-        _vignetteService.RestoreDefault();
+        ApplyDefault();
     }
 
     private void HandleDie()
     {
         StopHeartbeat();
+        ApplyDefault();
     }
 
     private void RefreshHeartbeatState()
@@ -145,6 +150,11 @@ public class MetaUIVignetteBinder : MonoBehaviour
         }
 
         _activeThreshold = -1;
+    }
+
+    private void ApplyDefault()
+    {
+        _vignetteService?.SetImmediate(_defaultIntensity, _defaultColor);
     }
 
     private IEnumerator HeartbeatRoutine()
