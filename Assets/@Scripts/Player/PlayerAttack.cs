@@ -70,6 +70,10 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 _pistolBaseScale;
     private Vector3 _shotgunBaseScale;
     private bool _lastLookingLeft;
+    private bool _isShotgunAngleLocked;
+    private float _lockedShotgunAngle = 90f;
+    private bool? _forcedShotgunLookLeft;
+    private int _cutsceneShotgunShotCount;
 
     // 몬스터가 총알 채워주는 경우 쿨타임
     private bool _canAddAmmo = true;
@@ -131,8 +135,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         //_hapticManager?.PlayShotgunShot();
-        float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg;
-        _shotgunPivot.DORotate(new Vector3(0f, 0f, angle), 0f); // 0f = 즉시 회전
+        ApplyShotgunRotation();
     }
 
 
@@ -305,12 +308,30 @@ public class PlayerAttack : MonoBehaviour
 
     public void RaiseShotgun()
     {
-        _shotgunPivot.DORotate(new Vector3(0f, 0f, _shotgunIdleAngle), 0.2f);
+        if (_shotgunPivot == null)
+            return;
+
+        float targetAngle = _isShotgunAngleLocked ? _lockedShotgunAngle : _shotgunIdleAngle;
+        _shotgunPivot.DOKill();
+        _shotgunPivot.localRotation = Quaternion.Euler(0f, 0f, targetAngle);
+    }
+
+    void ApplyShotgunRotation()
+    {
+        if (_shotgunPivot == null)
+            return;
+
+        float angle = _isShotgunAngleLocked
+            ? _lockedShotgunAngle
+            : Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg;
+
+        _shotgunPivot.DOKill();
+        _shotgunPivot.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void UpdateWeaponFlip()
     {
-        bool isLookingLeft = _player.playerAimer.IsLookingLeft;
+        bool isLookingLeft = _forcedShotgunLookLeft ?? _player.playerAimer.IsLookingLeft;
 
         if (_lastLookingLeft == isLookingLeft)
             return;
@@ -385,6 +406,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void CutsceneFireLeft()
     {
+        LockCutsceneShotgunLeft();
+
         SO_WeaponBase data = _shotgunData;
         Vector2 aimDir = Vector2.left;
 
@@ -402,7 +425,40 @@ public class PlayerAttack : MonoBehaviour
         _rb.AddForce(-shootDir * data.recoilForce, ForceMode2D.Impulse);
 
         _hapticManager?.PlayOneShot(data.lowFrequency, data.highFrequency, data.duration);
+        ApplyShotgunRotation();
 
         TriggerRecoilRoutines(shootDir);
+
+        _cutsceneShotgunShotCount++;
+        if (_cutsceneShotgunShotCount >= 4)
+        {
+            _cutsceneShotgunShotCount = 0;
+            UnlockCutsceneShotgun();
+        }
+    }
+
+    public void LockCutsceneShotgunLeft()
+    {
+        _isShotgunAngleLocked = true;
+        _lockedShotgunAngle = 180f;
+        _forcedShotgunLookLeft = true;
+        _lastLookingLeft = !(_forcedShotgunLookLeft ?? _player.playerAimer.IsLookingLeft);
+        UpdateWeaponFlip();
+        ApplyShotgunRotation();
+    }
+
+    public void UnlockCutsceneShotgun()
+    {
+        _isShotgunAngleLocked = false;
+        _forcedShotgunLookLeft = null;
+        _lastLookingLeft = !(_forcedShotgunLookLeft ?? _player.playerAimer.IsLookingLeft);
+        UpdateWeaponFlip();
+        RaiseShotgun();
+    }
+
+    public void ResetCutsceneShotgunSequence()
+    {
+        _cutsceneShotgunShotCount = 0;
+        UnlockCutsceneShotgun();
     }
 }

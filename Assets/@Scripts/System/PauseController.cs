@@ -3,6 +3,7 @@ using UnityEngine;
 public class PauseController : MonoBehaviour, IInitializable
 {
     public bool IsInitialized { get; private set; }
+    public bool IsPauseBlocked { get; private set; }
 
     private InputManager _inputManager;
     private GameStateManager _gameStateManager;
@@ -31,7 +32,7 @@ public class PauseController : MonoBehaviour, IInitializable
 
         GameState currentState = _gameStateManager.CurrentState;
 
-        if (!ctx.started || currentState == GameState.GameOver)
+        if (!ctx.started || currentState == GameState.GameOver || IsPauseBlocked)
             return;
 
         if (currentState == GameState.Playing)
@@ -66,6 +67,11 @@ public class PauseController : MonoBehaviour, IInitializable
         _gameStateManager.ChangeState(GameState.Playing);
 
         Debug.Log("Game Resumed");
+    }
+
+    public void SetPauseBlocked(bool blocked)
+    {
+        IsPauseBlocked = blocked;
     }
 
     private void OnDestroy()

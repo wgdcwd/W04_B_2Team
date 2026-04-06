@@ -32,14 +32,18 @@ public class Boss1Cutscene : MonoBehaviour
     private bool _triggered = false;
     private PlayerAimer _playerAimer;
     private PlayerHeadRotate _playerHeadRotate;
+    private PlayerAttack _playerAttack;
     private Laser[] _playerLasers;
+    private PauseController _pauseController;
 
     void Start()
     {
         _startPos = _player.position;
         _playerAimer = _player != null ? _player.GetComponent<PlayerAimer>() : null;
         _playerHeadRotate = _player != null ? _player.GetComponent<PlayerHeadRotate>() : null;
+        _playerAttack = _player != null ? _player.GetComponent<PlayerAttack>() : null;
         _playerLasers = _player != null ? _player.GetComponentsInChildren<Laser>(true) : new Laser[0];
+        ManagerRegistry.TryGet(out _pauseController);
         //_sequencerCam.Priority = 0; // 시작엔 비활성
 
         director.stopped += OnTimelineFinished;
@@ -60,6 +64,8 @@ public class Boss1Cutscene : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ManagerRegistry.Get<InputManager>().DisablePlayerInput();
+            _pauseController?.SetPauseBlocked(true);
+            _playerAttack?.ResetCutsceneShotgunSequence();
             other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // 플레이어 이동 멈춤
             SetCutscenePointerVisible(false);
             SetPlayerLookRightUp();
@@ -86,6 +92,8 @@ public class Boss1Cutscene : MonoBehaviour
     {
         ReleasePlayerLookLock();
         SetCutscenePointerVisible(true);
+        _playerAttack?.ResetCutsceneShotgunSequence();
+        _pauseController?.SetPauseBlocked(false);
         ManagerRegistry.Get<InputManager>().EnablePlayerInput();
         // 여기에 게임 시작 코드 추가
         Debug.Log("컷씬 완료 - 게임 시작!");
@@ -95,11 +103,13 @@ public class Boss1Cutscene : MonoBehaviour
 
     public void SetPlayerLookRightUp()
     {
+        _playerAttack?.ResetCutsceneShotgunSequence();
         ApplyCutsceneLook(false);
     }
 
     public void SetPlayerLookLeftUp()
     {
+        _playerAttack?.LockCutsceneShotgunLeft();
         ApplyCutsceneLook(true);
     }
 
@@ -111,6 +121,8 @@ public class Boss1Cutscene : MonoBehaviour
 
     void OnDestroy()
     {
+        _playerAttack?.ResetCutsceneShotgunSequence();
+        _pauseController?.SetPauseBlocked(false);
     }
 
     public IEnumerator FadeOutIn(float duration = 0.4f)
