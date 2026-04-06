@@ -112,6 +112,31 @@ public class BossEye : EnemyBase
     public override void TakeDamage(int damage, bool isAddGauge = false) => ProcessDamage(damage);
     public override void Die() => EyeDie();
 
+    public void ForceStopPattern()
+    {
+        if (IsDead)
+            return;
+
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+            _transitionCoroutine = null;
+        }
+
+        StopAllCoroutines();
+        _isTransitioning = false;
+        EyeCurrentState = EyeState.Idle;
+        IsLaserFinished = true;
+
+        _warningLaser.SetActive(false);
+        _fireLaser.transform.DOKill();
+        _laserExpandTween = null;
+        _fireLaser.SetActive(false);
+        _fireLaser.transform.localScale = _fireLaserOriginalScale;
+        _alertLight?.SetColor(ColorIdle);
+        _alertLight?.SetEnabled(true);
+    }
+
     // =====================
     // Manager가 호출
     // =====================
