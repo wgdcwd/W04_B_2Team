@@ -77,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 365992281
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a12596bcb0491774bbd18038c07e1bfb, type: 3}
@@ -368,8 +368,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 365992281
+  m_SortingLayer: 6
   m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: c152b82af1d5f3b4292ab2f771c26bcf, type: 3}
@@ -459,8 +459,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 365992281
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ff7b095ba71fe7d4a9be0fbcdfabe24c, type: 3}
@@ -488,6 +488,14 @@ PrefabInstance:
     - target: {fileID: 5299990052806935206, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298369373950301755, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298369373950301755, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 365992281
       objectReference: {fileID: 0}
     - target: {fileID: 8917887625052944381, guid: 4fdf0e560961e9d458f38fa1ea4113f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -549,6 +557,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2868866973944639936}
     m_Modifications:
+    - target: {fileID: 3267517818304587801, guid: d85031b4274493e4ab61530e226e11fc, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3267517818304587801, guid: d85031b4274493e4ab61530e226e11fc, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 365992281
+      objectReference: {fileID: 0}
     - target: {fileID: 5470261579330458976, guid: d85031b4274493e4ab61530e226e11fc, type: 3}
       propertyPath: m_Name
       value: RushParticle
@@ -659,6 +675,14 @@ PrefabInstance:
     - target: {fileID: 5454389088731748613, guid: 52547b60837967943b3cb00138148c52, type: 3}
       propertyPath: m_Name
       value: EnemyHitParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 8469180193469870030, guid: 52547b60837967943b3cb00138148c52, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8469180193469870030, guid: 52547b60837967943b3cb00138148c52, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 365992281
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
