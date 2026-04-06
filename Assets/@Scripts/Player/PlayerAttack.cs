@@ -20,6 +20,10 @@ public class PlayerAttack : MonoBehaviour
 {
     Player _player;
     Rigidbody2D _rb;
+    
+    [Header("파티클 레퍼런스")]
+    [SerializeField] private ParticleSystem _bulletShellParticle;
+    [SerializeField] private ParticleSystem _pistolShellParticle;
 
     // 샷건
     [SerializeField] private SO_WeaponBase _shotgunData;
@@ -78,6 +82,7 @@ public class PlayerAttack : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _shotgunInstance = new WeaponInstance(_shotgunData);
         _currentWeaponInstance = new WeaponInstance(currentWeaponData);
+        _bulletShellParticle.gameObject.SetActive(true);
     }
 
     private void Start()
@@ -120,6 +125,11 @@ public class PlayerAttack : MonoBehaviour
 
         Fire(_shotgunData);
 
+        if (_bulletShellParticle != null)
+        {
+            _bulletShellParticle.Emit(1);
+        }
+
         //_hapticManager?.PlayShotgunShot();
         float angle = Mathf.Atan2(_player.playerAimer.AimDirection.y, _player.playerAimer.AimDirection.x) * Mathf.Rad2Deg;
         _shotgunPivot.DORotate(new Vector3(0f, 0f, angle), 0f); // 0f = 즉시 회전
@@ -136,6 +146,11 @@ public class PlayerAttack : MonoBehaviour
 
         if (!TryFireWeapon(_currentWeaponInstance, false))
             return;
+        
+        if (_pistolShellParticle != null)
+        {
+            _pistolShellParticle.Emit(1);
+        }
 
         //SoundManager.instance.HandlePistolSFX();
         Fire(currentWeaponData);

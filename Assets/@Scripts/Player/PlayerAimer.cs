@@ -39,6 +39,10 @@ public class PlayerAimer : MonoBehaviour
     [SerializeField] float _returnDelay = 1.5f;
     [SerializeField] float _returnSmooth = 1.5f;
 
+    [Header("Particle Rotational Reference")]
+    [SerializeField] Transform _shotgunParticleTransfrom;
+    [SerializeField] Transform _pistolParticleTransfrom;
+
     Vector2 _lastMoveDir = Vector2.zero;
     Vector2 _lookaheadOffset = Vector2.zero;
     float _stopTimer = 0f;
@@ -62,6 +66,8 @@ public class PlayerAimer : MonoBehaviour
         _composer = _vcam.GetComponent<CinemachinePositionComposer>();
         _defaultBaseOffset = _composer.TargetOffset;
         _baseOffset = _defaultBaseOffset;
+
+        _pistolParticleTransfrom.rotation = Quaternion.identity;
 
         // 기본 카메라 원본 등록
         _originalOffsets[_composer] = _defaultBaseOffset;
@@ -141,6 +147,11 @@ public class PlayerAimer : MonoBehaviour
         float angle = Mathf.Atan2(AimDirection.y, AimDirection.x) * Mathf.Rad2Deg;
 
         IsLookingLeft = angle > 90f || angle < -90f;
+        
+        // 플레이어 탄피 소환 방향 생성
+        float _pistolParticleXRotation = IsLookingLeft ? -55 : -130;
+        _pistolParticleTransfrom.rotation = Quaternion.Euler(_pistolParticleXRotation, -90, -90);
+        _shotgunParticleTransfrom.rotation = Quaternion.Euler(angle,-90,-90);
 
         if (angle > 90f)
             angle -= 180f;
