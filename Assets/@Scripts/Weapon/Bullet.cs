@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -9,10 +8,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _lifetime = 1f;
     [SerializeField] private bool _isPiercing = false; // 관통 여부
     [SerializeField] private bool _giveGauge = true;
+    [SerializeField] private bool _canExplode = false;
 
     // Hit 효과
     [SerializeField] private GameObject _hitParticlePrefab;
     [SerializeField] private Light2D _light;
+
+    public bool CanExplode => _canExplode;
 
     private Coroutine _lifeRoutine;
     private Rigidbody2D _rb;

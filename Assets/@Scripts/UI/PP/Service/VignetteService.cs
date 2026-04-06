@@ -64,6 +64,15 @@ public class VignetteService : MonoBehaviour
         SetState(_defaultIntensity, _defaultColor);
     }
 
+    public void SetImmediate(float intensity, Color color)
+    {
+        if (_vignette == null)
+            return;
+
+        StopEffect();
+        SetState(intensity, color);
+    }
+
     private void SetState(float intensity, Color color)
     {
         _vignette.intensity.value = intensity;

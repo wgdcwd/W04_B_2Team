@@ -317,7 +317,6 @@ public class DeadeyeSkill : MonoBehaviour
         }
 
         _isFiring = false;
-        _player.playerAttack.ReloadAll();
         ExitDeadeye();
     }
 
@@ -337,6 +336,7 @@ public class DeadeyeSkill : MonoBehaviour
             if (enemy != null) enemy.ShowMark(false);
         _targets.Clear();
 
+        _player.playerAttack.ReloadAll();
         ExitSlow(); // 슬로우 자동 해제
     }
     #endregion

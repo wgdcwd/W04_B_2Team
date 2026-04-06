@@ -489,6 +489,7 @@ MonoBehaviour:
   _uiManager: {fileID: 1615416476636817570}
   _cameraManager: {fileID: 7084693066066367853}
   _autoStartInEditor: 1
+  isClear: 0
 --- !u!1 &8554041078713320890
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +588,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MetaUIVignetteBinder
   _playerHealth: {fileID: 0}
   _vignetteService: {fileID: 1065410880442745171}
+  _defaultIntensity: 0.3
+  _defaultColor: {r: 0, g: 0, b: 0, a: 1}
   _hitSettings:
     startColor: {r: 0.6679245, g: 0, b: 0, a: 1}
     endColor: {r: 0, g: 0, b: 0, a: 1}
