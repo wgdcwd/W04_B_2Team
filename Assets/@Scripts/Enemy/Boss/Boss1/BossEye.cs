@@ -25,6 +25,10 @@ public class BossEye : EnemyBase
     public float warningDuration = 0.8f;
     public float laserExpandTime = 0.15f;
 
+    [Header("저체력 연출")]
+    [SerializeField] private ParticleSystem _lowHealthEffect;
+    [Range(0f, 1f)] public float lowHealthThreshold = 0.35f;
+
     [Header("소환 설정")]
     [SerializeField] private GameObject[] _minionPrefabs;
     [SerializeField] private Vector3 _spawnOffset = new Vector3(0f, 0.6f, 0f);
@@ -56,6 +60,8 @@ public class BossEye : EnemyBase
         _rend = GetComponentInChildren<Renderer>();
         if (_alertLight == null)
             _alertLight = GetComponentInChildren<BossEyeAlertLight>(true);
+        if (_lowHealthEffect == null)
+            _lowHealthEffect = GetComponentInChildren<ParticleSystem>(true);
 
         _currentHp = _maxHp;
         _rend.material.color = ColorIdle;
@@ -65,6 +71,7 @@ public class BossEye : EnemyBase
         _fireLaser.transform.DOKill();
         _fireLaserOriginalScale = _fireLaser.transform.localScale;
         _alertLight?.SetState(ColorIdle, true);
+        SetLowHealthEffect(false);
     }
 
     void Start()
@@ -95,6 +102,8 @@ public class BossEye : EnemyBase
             return;
         }
 
+        UpdateLowHealthEffect();
+
         if (!_isBlinking)
             StartCoroutine(HitBlinkRoutine());
     }
@@ -102,6 +111,31 @@ public class BossEye : EnemyBase
     public override void TakeDamage(int damage) => ProcessDamage(damage);
     public override void TakeDamage(int damage, bool isAddGauge = false) => ProcessDamage(damage);
     public override void Die() => EyeDie();
+
+    public void ForceStopPattern()
+    {
+        if (IsDead)
+            return;
+
+        if (_transitionCoroutine != null)
+        {
+            StopCoroutine(_transitionCoroutine);
+            _transitionCoroutine = null;
+        }
+
+        StopAllCoroutines();
+        _isTransitioning = false;
+        EyeCurrentState = EyeState.Idle;
+        IsLaserFinished = true;
+
+        _warningLaser.SetActive(false);
+        _fireLaser.transform.DOKill();
+        _laserExpandTween = null;
+        _fireLaser.SetActive(false);
+        _fireLaser.transform.localScale = _fireLaserOriginalScale;
+        _alertLight?.SetColor(ColorIdle);
+        _alertLight?.SetEnabled(true);
+    }
 
     // =====================
     // Manager가 호출
@@ -234,6 +268,7 @@ public class BossEye : EnemyBase
         _fireLaser.SetActive(false);
         _fireLaser.transform.localScale = _fireLaserOriginalScale;
         _alertLight?.SetEnabled(false);
+        SetLowHealthEffect(false);
         GetComponent<Collider2D>().enabled = false;
 
         _transitionCoroutine = StartCoroutine(TransitionRoutine(EyeState.Dead, ColorDead, () =>
@@ -305,5 +340,30 @@ public class BossEye : EnemyBase
         }
 
         _isBlinking = false;
+    }
+
+    void UpdateLowHealthEffect()
+    {
+        if (_maxHp <= 0)
+            return;
+
+        float hpRatio = (float)_currentHp / _maxHp;
+        SetLowHealthEffect(hpRatio <= lowHealthThreshold);
+    }
+
+    void SetLowHealthEffect(bool isEnabled)
+    {
+        if (_lowHealthEffect == null)
+            return;
+
+        if (isEnabled)
+        {
+            if (!_lowHealthEffect.isPlaying)
+                _lowHealthEffect.Play(true);
+            return;
+        }
+
+        if (_lowHealthEffect.isPlaying)
+            _lowHealthEffect.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 }

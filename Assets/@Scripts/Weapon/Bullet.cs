@@ -62,6 +62,10 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         int otherLayer = other.gameObject.layer;
+        if (other.GetComponent<BreakablePlatform>() )
+        {
+            return;
+        }
 
         if (otherLayer == LayerMask.NameToLayer("Ground") || otherLayer == LayerMask.NameToLayer("Obstacle"))
         {
