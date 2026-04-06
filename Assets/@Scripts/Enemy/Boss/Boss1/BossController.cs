@@ -55,8 +55,6 @@ public class BossController : MonoBehaviour
     public Ease dashOvershootEase = Ease.OutQuad;
     public Ease returnEase = Ease.OutQuad;
 
-    [Header("보스 인트로")]
-    [SerializeField] float _bossIntro = 5f;
 
     [Header("Debug")]
     [SerializeField] private bool _startFromPhase2;
@@ -98,7 +96,6 @@ public class BossController : MonoBehaviour
             return;
         }
 
-        StartCoroutine(BeginAfterIntro());
     }
 
     void Update()
@@ -534,16 +531,6 @@ public class BossController : MonoBehaviour
         StartCoroutine(DeathCheckRoutine());
     }
 
-    IEnumerator BeginAfterIntro()
-    {
-        if (_bossIntro > 0f)
-            yield return new WaitForSeconds(_bossIntro);
-
-        if (_isDead)
-            yield break;
-
-        StartBoss();
-    }
 
     public void CutsceneLaser()
     {
