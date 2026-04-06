@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -33,6 +33,7 @@ public class BossEye : EnemyBase
     [SerializeField] private GameObject[] _minionPrefabs;
     [SerializeField] private Vector3 _spawnOffset = new Vector3(0f, 0.6f, 0f);
     public float spawnInterval = 20f;
+    [SerializeField] private BoxCollider2D _spawnArea; // 소환 가능 영역
 
     public EyeState EyeCurrentState { get; private set; } = EyeState.Idle;
     public bool IsDead => EyeCurrentState == EyeState.Dead;
@@ -283,8 +284,14 @@ public class BossEye : EnemyBase
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval);
-            GameObject prefab = _minionPrefabs[Random.Range(0, _minionPrefabs.Length)];
+
             Vector3 spawnPos = transform.TransformPoint(_spawnOffset);
+
+            // 소환 위치가 박스콜라이더 내부인지 체크
+            if (_spawnArea != null && !_spawnArea.OverlapPoint(spawnPos))
+                continue; // 범위 밖이면 소환 안 함
+
+            GameObject prefab = _minionPrefabs[Random.Range(0, _minionPrefabs.Length)];
             Instantiate(prefab, spawnPos, Quaternion.identity);
         }
     }
