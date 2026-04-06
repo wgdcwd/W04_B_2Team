@@ -86,6 +86,7 @@ public class BossController : MonoBehaviour
         _originPos = transform.position;
         _currentRotationSpeed = rotationSpeedMin;
         _damageZones = GetComponentsInChildren<BoseDamageZone>(true);
+        SetBodyContactDamageEnabled(false);
 
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
@@ -528,6 +529,7 @@ public class BossController : MonoBehaviour
     void StartBoss()
     {
         _isActive = true;
+        SetBodyContactDamageEnabled(true);
         StartCoroutine(PatternCycleRoutine());
         StartCoroutine(DeathCheckRoutine());
     }
@@ -545,11 +547,23 @@ public class BossController : MonoBehaviour
 
     public void CutsceneLaser()
     {
-        eyes[2].BeginLaser(2.0f);
+        BeginCutsceneLaser(2);
     }
 
     public void CutsceneLaserMiddle()
     {
-        eyes[3].BeginLaser(2.0f);
+        BeginCutsceneLaser(3);
+    }
+
+    void BeginCutsceneLaser(int eyeIndex)
+    {
+        if (eyes == null || eyeIndex < 0 || eyeIndex >= eyes.Length)
+            return;
+
+        BossEye eye = eyes[eyeIndex];
+        if (eye == null || eye.IsDead)
+            return;
+
+        eye.BeginLaser(2.0f);
     }
 }
