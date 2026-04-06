@@ -17,7 +17,8 @@ public class CollapseWave : MonoBehaviour
     public PathSegment[] segments;
 
     [Header("붕괴")]
-    public Tilemap tilemap;          // 붕괴시킬 타일맵
+    public Tilemap tilemap;        // ground 타일맵
+    public Tilemap spikeTilemap;   // spike 타일맵
     public float collapseRadius = 3f;
     public float startDelay = 1f;
     public float queryInterval = 0.5f; // 타일 검사 주기 (초당 2회)
@@ -124,7 +125,17 @@ public class CollapseWave : MonoBehaviour
 
     void CollapseNearbyTiles()
     {
-        Vector3Int center = tilemap.WorldToCell(transform.position);
+        CollapseMap(tilemap);
+        CollapseMap(spikeTilemap);
+        SpawnBurstParticles();
+
+    }
+
+    void CollapseMap(Tilemap map)
+    {
+        if (map == null) return;
+
+        Vector3Int center = map.WorldToCell(transform.position);
         int radiusInCells = Mathf.CeilToInt(collapseRadius);
 
         for (int x = -radiusInCells; x <= radiusInCells; x++)
@@ -134,18 +145,19 @@ public class CollapseWave : MonoBehaviour
                 Vector3Int cell = center + new Vector3Int(x, y, 0);
 
                 if (_removed.Contains(cell)) continue;
-                if (!tilemap.HasTile(cell)) continue;
+                if (!map.HasTile(cell)) continue;
 
-                Vector3 worldPos = tilemap.GetCellCenterWorld(cell);
+                Vector3 worldPos = map.GetCellCenterWorld(cell);
                 if (Vector3.Distance(transform.position, worldPos) > collapseRadius) continue;
 
-                RemoveTile(cell, worldPos);
+                _removed.Add(cell);
+                map.SetTile(cell, null);
             }
         }
 
         SpawnBurstParticles();
-
     }
+
     void TryDamagePlayer()
     {
         if (_playerHealth == null) return;

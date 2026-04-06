@@ -11108,7 +11108,7 @@ MonoBehaviour:
     m_Bits: 33792
   _laserRange: 60
   _cursorDot: {fileID: 0}
-  _cursorVisibleRange: 7
+  _cursorVisibleRange: 60
 --- !u!1 &7689232750111442943
 GameObject:
   m_ObjectHideFlags: 0
