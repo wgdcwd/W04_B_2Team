@@ -21,6 +21,7 @@ public class BossController : MonoBehaviour
     [Header("레이저 페이즈 설정")]
     public float laserDuration = 5f;
     public float idleDuration = 5f;
+    public float patternRecoveryDuration = 0.2f;
 
     [Header("돌진 설정")]
     public float dashBackDistance = 1.5f;
@@ -114,6 +115,7 @@ public class BossController : MonoBehaviour
             eye.BeginLaser(laserDuration);
 
         yield return StartCoroutine(WaitForLaserTargets(targets));
+        yield return StartCoroutine(WaitForPatternRecovery());
     }
 
     IEnumerator ExecuteDashPattern()
@@ -136,6 +138,7 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSeconds(dashCooldown);
         yield return StartCoroutine(MoveToTarget(_originPos, returnSpeed, returnEase));
+        yield return StartCoroutine(WaitForPatternRecovery());
 
         _currentRotationSpeed = savedRotationSpeed;
     }
@@ -195,6 +198,14 @@ public class BossController : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    IEnumerator WaitForPatternRecovery()
+    {
+        if (patternRecoveryDuration <= 0f)
+            yield break;
+
+        yield return new WaitForSeconds(patternRecoveryDuration);
     }
 
     void KillMoveTween()
