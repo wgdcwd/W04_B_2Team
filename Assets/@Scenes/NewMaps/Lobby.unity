@@ -543,6 +543,10 @@ PrefabInstance:
       propertyPath: _sceneName
       value: Stage00
       objectReference: {fileID: 0}
+    - target: {fileID: -2644943203563758567, guid: d379856a3c63a804b806557fdc4a6a67, type: 3}
+      propertyPath: _isBossStage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 316619431082594939, guid: d379856a3c63a804b806557fdc4a6a67, type: 3}
       propertyPath: m_Name
       value: NextStageDoor
@@ -642,7 +646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7711112655822185066, guid: 96008f570eb2c9f48a1005af12edb091, type: 3}
       propertyPath: isClear
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8188686934479407690, guid: 96008f570eb2c9f48a1005af12edb091, type: 3}
       propertyPath: m_Name
@@ -785,6 +789,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 86269360}
+    - target: {fileID: 8521743433418877502, guid: cf4d54cccb086ba41b5bbeff3107b5ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TitleNextStage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

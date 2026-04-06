@@ -52,6 +52,32 @@ public class NextScene : MonoBehaviour
             _sceneFlowManager.LoadStage();
         });
     }
+
+    public void TitleNextStage()
+    {
+        LoadNextStageCore();
+    }
+
+    private void LoadNextStageCore()
+    {
+        if (_sceneFlowManager == null)
+            return;
+
+        if (_gameStateManager == null || _gameStateManager.CurrentState != GameState.Respawning)
+        {
+            _checkpointManager?.ClearCheckpoint();
+        }
+
+        if (_isLastStage)
+        {
+            GameManager.Instance.GameClear();
+            return;
+        }
+
+        _sceneFlowManager.SetCurrentStage(_sceneName);
+        _sceneFlowManager.LoadStage();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
