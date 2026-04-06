@@ -504,7 +504,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2644943203563758567, guid: d379856a3c63a804b806557fdc4a6a67, type: 3}
       propertyPath: _sceneName
-      value: Stage01_
+      value: Stage00
       objectReference: {fileID: 0}
     - target: {fileID: 316619431082594939, guid: d379856a3c63a804b806557fdc4a6a67, type: 3}
       propertyPath: m_Name
