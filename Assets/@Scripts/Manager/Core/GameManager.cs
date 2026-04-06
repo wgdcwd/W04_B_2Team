@@ -311,5 +311,6 @@ public class GameManager : PersistentMonoSingleton<GameManager>
     public void GameClear()
     {
         isClear = true;
+        Cursor.visible = true;
     }
 }

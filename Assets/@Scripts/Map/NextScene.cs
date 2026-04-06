@@ -44,7 +44,7 @@ public class NextScene : MonoBehaviour
             {
                 _checkpointManager?.ClearCheckpoint();
             }
-            if (_isBossStage)
+            if (_isLastStage)
             {
                 GameManager.Instance.GameClear();
             }
