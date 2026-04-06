@@ -93,7 +93,7 @@ public class BossController : MonoBehaviour
         BossEye[] ready = GetReadyEyes();
         if (ready.Length == 0) yield break;
 
-        int count = Mathf.Min(Random.Range(1, 4), ready.Length);
+        int count = Mathf.Min(GetLaserShotCountByDeadEyes(), ready.Length);
         List<BossEye> targets = PickRandom(ready, count);
         foreach (var eye in targets)
             eye.BeginLaser(laserDuration);
@@ -157,6 +157,19 @@ public class BossController : MonoBehaviour
     int DeadCount()
     {
         return System.Array.FindAll(eyes, e => e.IsDead).Length;
+    }
+
+    int GetLaserShotCountByDeadEyes()
+    {
+        int deadCount = DeadCount();
+
+        if (deadCount <= 1)
+            return 2;
+
+        if (deadCount <= 3)
+            return 3;
+
+        return eyes.Length - deadCount;
     }
 
     List<BossEye> PickRandom(BossEye[] pool, int count)
