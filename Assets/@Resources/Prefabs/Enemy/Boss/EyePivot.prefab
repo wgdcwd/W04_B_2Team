@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 365529084562801178}
   - component: {fileID: 3506095527925048584}
   - component: {fileID: 4489168841992334284}
+  - component: {fileID: 155047682098656603}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -60,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 12ed3f4889df207499fac0a1509f55d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,6 +153,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserDamageZone
   damage: 1
+--- !u!114 &155047682098656603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005420757375982495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef755ef7f36570344865acd93f467c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossLaserImpactMarker
+  _impactPrefab: {fileID: 5933101806571154467, guid: 27a418d5da7bc804285a42d9998536a5, type: 3}
+  _rayDistance: 100
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  _positionOffset: {x: 0, y: 0, z: 0}
+  _alignToNormal: 1
+  _alignToLaserPerpendicular: 1
+  _impactRotationOffset: 90
+  _rayStartOffset: 0.05
+  _laserThickness: 0.5
+  _laserBaseLength: 20
+  _laserBaseLocalPosition: {x: 0, y: 10, z: -1}
 --- !u!1 &2410648725545536852
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,8 +255,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -281099967
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
@@ -460,6 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642787294414048932}
   - component: {fileID: 8087490406908902439}
+  - component: {fileID: 6724428801351193401}
   m_Layer: 0
   m_Name: WarningLaser
   m_TagString: Untagged
@@ -508,7 +535,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -541,3 +568,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &6724428801351193401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7222299281506067624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef755ef7f36570344865acd93f467c1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossLaserImpactMarker
+  _impactPrefab: {fileID: 0}
+  _rayDistance: 100
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  _positionOffset: {x: 0, y: 0, z: 0}
+  _alignToNormal: 1
+  _alignToLaserPerpendicular: 1
+  _impactRotationOffset: 90
+  _rayStartOffset: 0.05
+  _laserThickness: 0.01
+  _laserBaseLength: 20
+  _laserBaseLocalPosition: {x: 0, y: 10.5, z: -1}

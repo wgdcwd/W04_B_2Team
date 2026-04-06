@@ -21,7 +21,7 @@ public class Boss2Controller : EnemyBase
 
     [Header("소환 설정")]
     [SerializeField] private GameObject[] _minionPrefabs;
-    [SerializeField] private Vector3 _spawnOffset = new Vector3(0f, 0.6f, 0f);
+    [SerializeField] private Transform _spawnPointY;
     [SerializeField] private int _spawnCountPerCycle = 2; // 스킬 사이마다 소환할 수
     private PoolManager _pool;
 
@@ -62,6 +62,8 @@ public class Boss2Controller : EnemyBase
             else
                 Debug.LogWarning($"{skill.name}은 ISkill을 구현하지 않았습니다.");
         }
+
+        //StartBoss2();
     }
 
     public override void Die() => Boss2Die();
@@ -175,10 +177,12 @@ public class Boss2Controller : EnemyBase
     {
         if (_minionPrefabs == null || _minionPrefabs.Length == 0) return;
 
+        float spawnY = _spawnPointY != null ? _spawnPointY.position.y : transform.position.y;
+
         for (int i = 0; i < _spawnCountPerCycle; i++)
         {
             GameObject prefab = _minionPrefabs[Random.Range(0, _minionPrefabs.Length)];
-            Vector3 spawnPos = transform.TransformPoint(_spawnOffset);
+            Vector3 spawnPos = new Vector3(transform.position.x + Random.Range(-10f, 10f), spawnY, 0f);
 
             if (_pool != null)
                 _pool.Get(prefab, spawnPos, Quaternion.identity);

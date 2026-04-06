@@ -16,6 +16,9 @@ public class Boss2Skill2 : MonoBehaviour, ISkill
     public float fireInterval = 0.5f;
     public float skillDuration = 5f;
 
+    [Header("경고")]
+    public GameObject warningSpace;
+
     private PoolManager _pool;
     private bool _isMoving = false; // 이동 제어 플래그
 
@@ -26,11 +29,19 @@ public class Boss2Skill2 : MonoBehaviour, ISkill
 
     public IEnumerator SkillRoutine()
     {
+        if (warningSpace != null)
+            warningSpace.SetActive(true);
+
+        yield return new WaitForSeconds(1f); // 경고 1초 대기
+
         _isMoving = true;
         Coroutine moveCoroutine = StartCoroutine(MoveRoutine());
         yield return StartCoroutine(FireRoutine());
-        _isMoving = false; // 플래그로 MoveRoutine 종료
-        yield return null; // 한 프레임 대기해서 MoveRoutine 정리
+        _isMoving = false;
+        yield return null;
+
+        if (warningSpace != null)
+            warningSpace.SetActive(false);
     }
 
     // =====================

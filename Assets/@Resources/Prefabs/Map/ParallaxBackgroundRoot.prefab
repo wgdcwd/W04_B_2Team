@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1955012434437186604}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 51.2, y: -10, z: 0}
+  m_LocalPosition: {x: 51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a2b676f4a021f9d4282c37e7d115dc80, type: 3}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &3102359295549399486
 GameObject:
@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 3102359295549399486}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 51.2, y: -10, z: 0}
+  m_LocalPosition: {x: 51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -185,8 +185,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 8cef39b5df145c7499a1c59894686d91, type: 3}
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &4229317063010929339
 GameObject:
@@ -292,8 +292,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 19142580b85725245b38604c96507123, type: 3}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &4355721530003207166
 GameObject:
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
   multiplier: {x: 0.2, y: 0.95}
-  minYOffset: -88
+  minYOffset: -100
   maxYOffset: 100
 --- !u!1 &5443824878963553828
 GameObject:
@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 5443824878963553828}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -51.2, y: -10, z: 0}
+  m_LocalPosition: {x: -51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -449,8 +449,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a2b676f4a021f9d4282c37e7d115dc80, type: 3}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &6312548793977514283
 GameObject:
@@ -608,8 +608,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -4
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a2b676f4a021f9d4282c37e7d115dc80, type: 3}
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &6998055467141030923
 GameObject:
@@ -664,7 +664,7 @@ Transform:
   m_GameObject: {fileID: 6998055467141030923}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -51.2, y: -10, z: 0}
+  m_LocalPosition: {x: -51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -715,8 +715,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 8cef39b5df145c7499a1c59894686d91, type: 3}
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &7481495980756761885
 GameObject:
@@ -771,7 +771,7 @@ Transform:
   m_GameObject: {fileID: 7481495980756761885}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -51.2, y: -10, z: 0}
+  m_LocalPosition: {x: -51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -822,8 +822,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 19142580b85725245b38604c96507123, type: 3}
@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &7544673223801614711
 GameObject:
@@ -878,7 +878,7 @@ Transform:
   m_GameObject: {fileID: 7544673223801614711}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 51.2, y: -10, z: 0}
+  m_LocalPosition: {x: 51.15, y: -10, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -929,8 +929,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 19142580b85725245b38604c96507123, type: 3}
@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3
 --- !u!1 &8198991983609465594
 GameObject:
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
   multiplier: {x: 0.3, y: 0.97}
-  minYOffset: -88
+  minYOffset: -100
   maxYOffset: 100
 --- !u!1 &8455152158696207396
 GameObject:
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLayer
   multiplier: {x: 0.4, y: 0.99}
-  minYOffset: -88
+  minYOffset: -100
   maxYOffset: 100
 --- !u!1 &8757644394315583495
 GameObject:
@@ -1136,8 +1136,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1623279277
+  m_SortingLayer: -2
   m_SortingOrder: -3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 8cef39b5df145c7499a1c59894686d91, type: 3}
@@ -1163,5 +1163,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxLoop
   target: {fileID: 0}
-  spriteWidth: 51.2
+  spriteWidth: 51.15
   pieceCount: 3

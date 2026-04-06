@@ -152,4 +152,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c7895c9205f864ea566a222f483853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageStartAction
-  ZoomOutDuration: 7
+  ZoomOutDuration: 3

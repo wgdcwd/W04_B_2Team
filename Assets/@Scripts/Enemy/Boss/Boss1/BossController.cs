@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    enum BossPattern
+    {
+        Laser,
+        Dash
+    }
+
     [Header("Eye 연결")]
     public BossEye[] eyes;
 
@@ -22,24 +29,30 @@ public class BossController : MonoBehaviour
     public float dashDistance = 8f;
     public float returnSpeed = 5f;
     public float dashCooldown = 1f;
+    [Range(0f, 0.2f)] public float dashOvershootRatio = 0.08f;
+    public float dashOvershootReturnSpeed = 18f;
+    public Ease dashBackEase = Ease.OutSine;
+    public Ease dashEase = Ease.InExpo;
+    public Ease dashOvershootEase = Ease.OutQuad;
+    public Ease returnEase = Ease.OutQuad;
 
     [Header("보스 인트로")]
-    [SerializeField] float _bossIntro = 5;
+    [SerializeField] float _bossIntro = 5f;
 
     public float TotalHp => CalculateTotalHp();
 
     private float _currentRotationSpeed;
-    private bool _isDead = false;
-    private int _prevDeadCount = 0;
+    private bool _isDead;
+    private int _prevDeadCount;
     private Transform _player;
     private Vector3 _originPos;
+    private Tween _moveTween;
+    private BossPattern _lastPattern;
+    private int _samePatternStreak;
 
-    private void OnEnable()
+    void OnDisable()
     {
-    }
-
-    private void OnDisable()
-    {
+        KillMoveTween();
     }
 
     void Start()
@@ -48,130 +61,253 @@ public class BossController : MonoBehaviour
         _currentRotationSpeed = rotationSpeedMin;
 
         GameObject playerObj = GameObject.FindWithTag("Player");
-        if (playerObj != null) _player = playerObj.transform;
+        if (playerObj != null)
+            _player = playerObj.transform;
+
+        StartBoss();
     }
 
     void Update()
     {
-        if (_isDead) return;
+        if (_isDead)
+            return;
+
         transform.Rotate(0f, 0f, -_currentRotationSpeed * Time.deltaTime);
     }
 
-    // =====================
-    // 회전 속도 갱신
-    // =====================
     void UpdateRotationSpeed()
     {
         float t = (float)DeadCount() / eyes.Length;
         _currentRotationSpeed = Mathf.Lerp(rotationSpeedMin, rotationSpeedMax, t);
     }
 
-    // =====================
-    // 패턴 사이클
-    // =====================
     IEnumerator PatternCycleRoutine()
     {
         while (!_isDead)
         {
-            int pattern = Random.Range(0, 2);
-
-            if (pattern == 0)
-                yield return StartCoroutine(LaserPattern());
-            else
-                yield return StartCoroutine(DashPattern());
-
+            yield return StartCoroutine(ExecuteNextPattern());
             yield return new WaitForSeconds(idleDuration);
         }
     }
 
-    // =====================
-    // 레이저 패턴
-    // =====================
-    IEnumerator LaserPattern()
+    IEnumerator ExecuteNextPattern()
     {
-        BossEye[] ready = GetReadyEyes();
-        if (ready.Length == 0) yield break;
+        BossPattern nextPattern = ChooseNextPattern();
+        TrackPatternUsage(nextPattern);
 
-        int count = Mathf.Min(Random.Range(1, 4), ready.Length);
-        List<BossEye> targets = PickRandom(ready, count);
-        foreach (var eye in targets)
-            eye.BeginLaser(laserDuration);
-
-        yield return new WaitForSeconds(laserDuration);
+        if (nextPattern == BossPattern.Laser)
+            yield return StartCoroutine(ExecuteLaserPattern());
+        else
+            yield return StartCoroutine(ExecuteDashPattern());
     }
 
-    // =====================
-    // 돌진 패턴
-    // =====================
-    IEnumerator DashPattern()
+    IEnumerator ExecuteLaserPattern()
     {
-        if (_player == null) yield break;
+        BossEye[] readyEyes = GetReadyEyes();
+        if (readyEyes.Length == 0)
+            yield break;
 
-        float savedRotSpeed = _currentRotationSpeed;
+        int laserShotCount = Mathf.Min(GetLaserShotCountByDeadEyes(), readyEyes.Length);
+        List<BossEye> targets = PickRandom(readyEyes, laserShotCount);
+
+        foreach (BossEye eye in targets)
+            eye.BeginLaser(laserDuration);
+
+        yield return StartCoroutine(WaitForLaserTargets(targets));
+    }
+
+    IEnumerator ExecuteDashPattern()
+    {
+        if (_player == null)
+            yield break;
+
+        float savedRotationSpeed = _currentRotationSpeed;
         _currentRotationSpeed = 0f;
 
         Vector3 startPos = transform.position;
-        Vector3 toPlayer = (_player.position - transform.position).normalized;
+        Vector3 dashDirection = (_player.position - transform.position).normalized;
 
-        Vector3 backTarget = startPos + (-toPlayer * dashBackDistance);
-        yield return StartCoroutine(MoveToPosition(backTarget, dashBackSpeed));
+        Vector3 backTarget = startPos + (-dashDirection * dashBackDistance);
+        yield return StartCoroutine(MoveToTarget(backTarget, dashBackSpeed, dashBackEase));
 
-        Vector3 dashTarget = startPos + (toPlayer * dashDistance);
-        yield return StartCoroutine(MoveToPosition(dashTarget, dashSpeed));
+        Vector3 dashTarget = startPos + (dashDirection * dashDistance);
+        yield return StartCoroutine(MoveToTarget(dashTarget, dashSpeed, dashEase));
+        yield return StartCoroutine(ApplyDashOvershoot(dashTarget, dashDirection));
 
         yield return new WaitForSeconds(dashCooldown);
+        yield return StartCoroutine(MoveToTarget(_originPos, returnSpeed, returnEase));
 
-        yield return StartCoroutine(MoveToPosition(_originPos, returnSpeed));
-
-        _currentRotationSpeed = savedRotSpeed;
+        _currentRotationSpeed = savedRotationSpeed;
     }
 
-    IEnumerator MoveToPosition(Vector3 target, float speed)
+    IEnumerator MoveToTarget(Vector3 target, float speed, Ease ease)
     {
-        while (Vector3.Distance(transform.position, target) > 0.05f)
+        float distance = Vector3.Distance(transform.position, target);
+        if (distance <= 0.05f || speed <= Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            transform.position = target;
+            yield break;
+        }
+
+        float duration = distance / speed;
+
+        KillMoveTween();
+        _moveTween = transform.DOMove(target, duration).SetEase(ease);
+
+        yield return _moveTween.WaitForCompletion();
+
+        transform.position = target;
+        _moveTween = null;
+    }
+
+    IEnumerator ApplyDashOvershoot(Vector3 dashTarget, Vector3 dashDirection)
+    {
+        float overshootDistance = dashDistance * dashOvershootRatio;
+        if (overshootDistance <= 0f)
+            yield break;
+
+        Vector3 overshootTarget = dashTarget + (dashDirection.normalized * overshootDistance);
+        yield return StartCoroutine(MoveToTarget(overshootTarget, dashOvershootReturnSpeed, dashOvershootEase));
+        yield return StartCoroutine(MoveToTarget(dashTarget, dashOvershootReturnSpeed, dashOvershootEase));
+    }
+
+    IEnumerator WaitForLaserTargets(List<BossEye> targets)
+    {
+        while (true)
+        {
+            bool allFinished = true;
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                BossEye eye = targets[i];
+                if (eye == null || eye.IsDead)
+                    continue;
+
+                if (!eye.IsLaserFinished)
+                {
+                    allFinished = false;
+                    break;
+                }
+            }
+
+            if (allFinished)
+                yield break;
+
             yield return null;
         }
-        transform.position = target;
     }
 
-    // =====================
-    // 체력
-    // =====================
+    void KillMoveTween()
+    {
+        if (_moveTween == null || !_moveTween.IsActive())
+            return;
+
+        _moveTween.Kill();
+        _moveTween = null;
+    }
+
     float CalculateTotalHp()
     {
         float total = 0f;
-        foreach (var eye in eyes)
+
+        foreach (BossEye eye in eyes)
+        {
             if (!eye.IsDead)
                 total += eye.CurrentHp;
+        }
+
         return total;
     }
 
     BossEye[] GetReadyEyes()
     {
-        return System.Array.FindAll(eyes, e => e.CanBeginLaser);
+        return System.Array.FindAll(eyes, eye => eye.CanBeginLaser);
     }
 
     int DeadCount()
     {
-        return System.Array.FindAll(eyes, e => e.IsDead).Length;
+        return System.Array.FindAll(eyes, eye => eye.IsDead).Length;
+    }
+
+    int GetLaserShotCountByDeadEyes()
+    {
+        int deadCount = DeadCount();
+
+        if (deadCount <= 1)
+            return 2;
+
+        if (deadCount <= 3)
+            return 3;
+
+        return eyes.Length - deadCount;
+    }
+
+    BossPattern ChooseNextPattern()
+    {
+        bool canUseLaser = CanUseLaserPattern();
+        bool canUseDash = CanUseDashPattern();
+
+        if (!canUseLaser && !canUseDash)
+            return BossPattern.Laser;
+
+        if (!canUseLaser)
+            return BossPattern.Dash;
+
+        if (!canUseDash)
+            return BossPattern.Laser;
+
+        BossPattern randomPattern = (BossPattern)Random.Range(0, 2);
+        if (ShouldForceAlternatePattern(randomPattern))
+            return GetAlternatePattern(randomPattern);
+
+        return randomPattern;
+    }
+
+    bool CanUseLaserPattern()
+    {
+        return GetReadyEyes().Length > 0;
+    }
+
+    bool CanUseDashPattern()
+    {
+        return _player != null;
+    }
+
+    bool ShouldForceAlternatePattern(BossPattern nextPattern)
+    {
+        return _samePatternStreak >= 2 && _lastPattern == nextPattern;
+    }
+
+    BossPattern GetAlternatePattern(BossPattern currentPattern)
+    {
+        return currentPattern == BossPattern.Laser ? BossPattern.Dash : BossPattern.Laser;
+    }
+
+    void TrackPatternUsage(BossPattern usedPattern)
+    {
+        if (_samePatternStreak == 0 || _lastPattern != usedPattern)
+        {
+            _lastPattern = usedPattern;
+            _samePatternStreak = 1;
+            return;
+        }
+
+        _samePatternStreak++;
     }
 
     List<BossEye> PickRandom(BossEye[] pool, int count)
     {
         List<BossEye> list = new List<BossEye>(pool);
+
         for (int i = list.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
             (list[i], list[j]) = (list[j], list[i]);
         }
+
         return list.GetRange(0, count);
     }
 
-    // =====================
-    // 사망 감지
-    // =====================
     IEnumerator DeathCheckRoutine()
     {
         while (!_isDead)
@@ -196,17 +332,20 @@ public class BossController : MonoBehaviour
 
     void Die()
     {
-        if (_isDead) return;
+        if (_isDead)
+            return;
+
         _isDead = true;
+        KillMoveTween();
         StopAllCoroutines();
 
-        foreach (var eye in eyes)
+        foreach (BossEye eye in eyes)
         {
             if (eye != null)
                 Destroy(eye.gameObject);
         }
 
-        gameObject.GetComponent<BossPhase2>().SetPhase2();
+        GetComponent<BossPhase2>().SetPhase2();
         Destroy(this);
     }
 
