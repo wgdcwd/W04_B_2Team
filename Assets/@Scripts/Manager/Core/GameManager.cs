@@ -59,14 +59,12 @@ public class GameManager : PersistentMonoSingleton<GameManager>
 
         Debug.Log("GameManager Initialized");
 
-        StartGame();
-
-        //#if UNITY_EDITOR
-        //        if (_autoStartInEditor)
-        //        {
-        //            StartGame();
-        //        }
-        //#endif
+#if UNITY_EDITOR
+        if (_autoStartInEditor)
+        {
+            StartGame();
+        }
+#endif
     }
 
     private void Start()
@@ -305,11 +303,17 @@ public class GameManager : PersistentMonoSingleton<GameManager>
         }
 
         _inputManager.EnablePlayerInput();
+
+        // 클리어 상태면 Playing으로 바꾸지 않음
+        if (isClear) return;
+
         _gameStateManager.ChangeState(GameState.Playing);
     }
     
     public void GameClear()
     {
         isClear = true;
+        _gameStateManager.ChangeState(GameState.Clear);
+
     }
 }
