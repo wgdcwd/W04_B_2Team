@@ -6,41 +6,68 @@ public class ParallaxBackground : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private List<ParallaxLayer> layers = new();
 
-    private Vector3 _lastTargetPosition;
-    private float _startTargetY;
+    private bool _isInitialized;
+    private Transform _initializedTarget;
 
     private void Awake()
     {
-        if (target == null && Camera.main != null)
-            target = Camera.main.transform;
-
         if (layers.Count == 0)
-            layers.AddRange(GetComponentsInChildren<ParallaxLayer>());
+            layers.AddRange(GetComponentsInChildren<ParallaxLayer>(true));
     }
 
     private void Start()
     {
-        if (target == null)
-        {
-            enabled = false;
-            return;
-        }
-
-        _lastTargetPosition = target.position;
-        _startTargetY = target.position.y;
-
-        foreach (ParallaxLayer layer in layers)
-            layer.Initialize(_startTargetY);
+        TryInitialize();
     }
 
     private void LateUpdate()
     {
-        float deltaX = target.position.x - _lastTargetPosition.x;
-        float targetY = target.position.y;
+        if (!TryInitialize())
+            return;
+
+        Vector3 targetPosition = target.position;
 
         foreach (ParallaxLayer layer in layers)
-            layer.Move(deltaX, targetY);
+        {
+            if (layer == null)
+                continue;
 
-        _lastTargetPosition = target.position;
+            layer.Move(targetPosition);
+        }
+    }
+
+    private bool TryInitialize()
+    {
+        if (!TryResolveTarget())
+            return false;
+
+        if (_isInitialized && _initializedTarget == target)
+            return true;
+
+        _initializedTarget = target;
+
+        foreach (ParallaxLayer layer in layers)
+        {
+            if (layer == null)
+                continue;
+
+            layer.Initialize(target.position);
+        }
+
+        _isInitialized = true;
+        return true;
+    }
+
+    private bool TryResolveTarget()
+    {
+        if (target != null)
+            return true;
+
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+            return false;
+
+        target = mainCamera.transform;
+        return true;
     }
 }
